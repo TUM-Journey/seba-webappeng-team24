@@ -12,6 +12,38 @@ This is developed during the [Web Application Engineering Master Course](https:/
 
 Learn how to design web sites from the scratch including patterns for recurring problems. Technical aspects for the development of web applications are presented along with generic platforms and architectures.
 
+## Getting Started
+
+The app itself consists of two independent parts: backend (API) server and frontend.
+### Backend
+
+```
+# Install dependencies
+npm install
+
+# Start development live-reload server
+PORT=8080 npm run dev
+
+# Start production server:
+PORT=8080 npm start
+```
+
+#### Docker
+```
+# Build your docker
+docker build -t seba/evaluati-one .
+#            ^       ^            ^
+#          tag   tag name   Dockerfile location
+
+# run your docker
+docker run -p 8080:8080 seba/evaluati-one
+#                 ^            ^
+#          bind the port    container tag
+#          to your host
+#          machine port  
+```
+
+
 ## License
 
 Except where noted, software in this repository is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT).
