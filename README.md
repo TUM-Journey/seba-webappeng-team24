@@ -43,6 +43,9 @@ docker run -p 8080:8080 seba/evaluati-one
 #          machine port  
 ```
 
+## Credits
+
+Backend is based on [Express & ES6 REST API Boilerplate](https://github.com/developit/express-es6-rest-api).
 
 ## License
 
