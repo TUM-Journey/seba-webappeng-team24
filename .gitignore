@@ -43,3 +43,5 @@ jspm_packages
 
 # Distribution files
 dist/
+
+*vcs.xml
