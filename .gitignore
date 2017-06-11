@@ -92,5 +92,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# npm run build - ignore dist folder
+# Distribution files
 dist/
+
+*vcs.xml
