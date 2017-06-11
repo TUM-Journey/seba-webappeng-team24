@@ -36,6 +36,7 @@ build/Release
 
 # Dependency directories
 backend/node_modules/
+frontend/node_modules/
 jspm_packages/
 
 # Typescript v1 declaration files
@@ -92,5 +93,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# npm run build - ignore dist folder
+# Distribution files
 dist/
+
+*vcs.xml
