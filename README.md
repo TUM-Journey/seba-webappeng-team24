@@ -28,6 +28,23 @@ PORT=8080 npm run dev
 PORT=8080 npm start
 ```
 
+### Frontend
+```
+cd frontend
+
+# Install dependencies
+npm install
+
+# Build assest
+npm run build 
+
+# Watch the assets
+npm run watch 
+
+# Start server:
+npm run start
+```
+
 #### Docker
 ```
 # Build your docker
