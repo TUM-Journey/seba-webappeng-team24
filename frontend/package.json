@@ -1,16 +1,16 @@
 {
-  "name": "sebamaster-movie-frontend",
-  "version": "1.0.0",
-  "description": "Movies example application based on AngularJS 1.5+",
+  "name": "evaluati.one",
+  "version": "0.0.1",
+  "description": "Employee Feedback  application based on AngularJS 1.5+",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sebischair/sebamaster-movie-frontend"
+    "url": "https://github.com/wingsofovnia/seba-webappeng-team24"
   },
-  "author": "Adrian Hernandez-Mendez <adrian.hernandez@tum.de>",
+  "author": "SEBA-TEAM-24",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sebischair/sebamaster-movie-frontend/issues"
+    "url": "https://github.com/wingsofovnia/seba-webappeng-team24/issues"
   },
   "homepage": "https://github.com/sebischair/sebamaster-movie-frontend#readme",
   "devDependencies": {
