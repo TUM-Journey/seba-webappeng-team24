@@ -72,5 +72,6 @@ module.exports = {
         }),
 
         new ExtractTextPlugin("[name].css"),
+        new webpack.BannerPlugin("SEBA-TEAM24"),
     ]
 };
