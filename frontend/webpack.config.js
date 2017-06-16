@@ -31,10 +31,14 @@ module.exports = {
                 test: /\.html$/,
                 loader: 'html'
             },
-            // Extract css files
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+            },
+            {
+                test: /\.(jpg|jpeg|gif|png)$/,
+                exclude: /node_modules/,
+                loader:'url-loader?limit=1024&name=images/[name].[ext]'
             }
         ]
     },
@@ -48,6 +52,6 @@ module.exports = {
             template: path.resolve(__dirname,'src/index.html')
         }),
 
-        new ExtractTextPlugin("styles/[name].css"),
+        new ExtractTextPlugin("[name].css"),
     ]
 };
