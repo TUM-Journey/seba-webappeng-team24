@@ -1,22 +1,17 @@
-.md-button.md-default-theme.md-accent:not([disabled]) md-icon, .md-button.md-accent:not([disabled]) md-icon {
-    color: inherit;
-}
-
-md-nav-bar.md-default-theme .md-button._md-nav-button.md-unselected, md-nav-bar .md-button._md-nav-button.md-unselected {
-    color: inherit;
-}
-
-.md-button.md-default-theme.md-accent, .md-button.md-accent {
-    color: #ffffff;
-    font-weight: bold;
-}
-
 app-header > md-toolbar, app-header > md-toolbar > .md-toolbar-tools{
-    min-height: 50px;
-    height: 50px;
+    min-height: 70px;
+    height: 70px;
+    background: #FFFFFF;
+    color: #2c2e35;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-md-nav-bar.md-default-theme md-nav-ink-bar, md-nav-bar md-nav-ink-bar {
-    color: #ffffff;
-    background: #ffffff;
+app-header > md-toolbar ng-md-icon {
+    fill: #2c2e35;
+}
+
+app-header h2.logo {
+    padding-left: 5px;
+    font-weight: 800;
 }
