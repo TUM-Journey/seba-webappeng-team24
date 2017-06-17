@@ -16,7 +16,8 @@
       "sourceType": "module"
     },
     "env": {
-      "node": true
+      "node": true,
+      "port": 8080
     },
     "rules": {
       "no-console": 0,
