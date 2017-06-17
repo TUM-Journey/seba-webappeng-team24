@@ -6,3 +6,7 @@ body {
     color: #2c2e35 !important;
     font-size: 1.6em;
 }
+
+.tooltip-multiline {
+    height: auto !important;
+}
