@@ -45,6 +45,6 @@
     "watch": "webpack  --watch",
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1 ./dist",
-    "dev-server": "webpack-dev-server --progress --open"
+    "start-dev": "webpack-dev-server --progress --open"
   }
 }

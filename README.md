@@ -43,6 +43,9 @@ npm run watch
 
 # Start server:
 npm run start
+
+#Start dev server:
+npm run start-dev
 ```
 
 #### Docker
