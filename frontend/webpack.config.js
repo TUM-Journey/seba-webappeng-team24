@@ -32,6 +32,7 @@ module.exports = {
                 test: /\.html$/,
                 loader: 'html-loader'
             },
+
             // Load CSS
             {
                 test: /\.css$/,
@@ -54,6 +55,7 @@ module.exports = {
                     'file-loader'
                 ]
             },
+
         ]
     },
 
@@ -68,6 +70,7 @@ module.exports = {
         }),
 
         new ExtractTextPlugin("[name].css"),
+
         new webpack.BannerPlugin("SEBA-TEAM-24"),
     ],
     // Webpack dev server configuration
@@ -76,4 +79,5 @@ module.exports = {
         compress: true,
         port: 8000
     }
+
 };
