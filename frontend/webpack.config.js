@@ -36,7 +36,7 @@ module.exports = {
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader")
             },
             {
-                test: /\.(jpg|jpeg|gif|png)$/,
+                test: /\.(jpg|jpeg|gif|png|svg)$/,
                 exclude: /node_modules/,
                 loader:'url-loader?limit=1024&name=images/[name].[ext]'
             }
