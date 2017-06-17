@@ -22,10 +22,10 @@ The app itself consists of two independent parts: backend (API) server and front
 npm install
 
 # Start development live-reload server
-PORT=8080 npm run dev
+env PORT=8000 npm run dev
 
 # Start production server:
-PORT=8080 npm start
+env PORT=8080 npm start
 ```
 
 ### Frontend
