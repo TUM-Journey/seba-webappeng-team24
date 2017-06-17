@@ -71,7 +71,6 @@ module.exports = {
             template: path.resolve(__dirname, 'src/index.html')
         }),
 
-        new ExtractTextPlugin("styles/[name].css"),
-        new webpack.BannerPlugin("SEBA-TEAM24"),
+        new ExtractTextPlugin("[name].css"),
     ]
 };

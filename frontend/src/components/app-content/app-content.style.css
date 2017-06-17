@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin:400,500,700');
+
+body {
+    font-family: 'Cabin', sans-serif;
+    font-weight: normal;
+    color: #2c2e35 !important;
+    font-size: 1.6em;
+}
+
+.tooltip-multiline {
+    height: auto !important;
+}
