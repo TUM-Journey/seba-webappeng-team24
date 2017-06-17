@@ -1,11 +1,8 @@
 
-'use strict';
-
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
 
 module.exports = {
 
@@ -67,11 +64,16 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            title: 'Testing',
             template: path.resolve(__dirname, 'src/index.html')
         }),
 
         new ExtractTextPlugin("[name].css"),
-        new webpack.BannerPlugin("SEBA-TEAM24"),
-    ]
+        new webpack.BannerPlugin("SEBA-TEAM-24"),
+    ],
+    // Webpack dev server configuration
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 8000
+    }
 };

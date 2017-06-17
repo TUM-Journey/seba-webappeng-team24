@@ -1,18 +1,18 @@
 {
   "name": "evaluati.one",
   "version": "0.0.1",
-  "description": "Employee Feedback  application based on AngularJS 1.5+",
+  "description": "Employee Feedback application based on AngularJS 1.5+",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/wingsofovnia/seba-webappeng-team24"
   },
-  "author": "SEBA-TEAM-24",
+  "author": "SEBA Team #24 & Adrian Hernandez-Mendez <adrian.hernandez@tum.de>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wingsofovnia/seba-webappeng-team24/issues"
   },
-  "homepage": "https://github.com/sebischair/sebamaster-movie-frontend#readme",
+  "homepage": "https://github.com/wingsofovnia/seba-webappeng-team24/blob/master/README.md",
   "devDependencies": {
     "@angular/cli": "^1.1.0",
     "babel-core": "^6.11.4",
@@ -24,7 +24,8 @@
     "html-webpack-plugin": "^2.22.0",
     "http-server": "^0.10.0",
     "style-loader": "^0.18.2",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
     "angular": "^1.5.8",
@@ -40,9 +41,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build-prod": "webpack -p",
     "watch": "webpack  --watch",
     "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1 ./dist"
+    "start": "http-server -a localhost -p 8000 -c-1 ./dist",
+    "dev-server": "webpack-dev-server --progress --open"
   }
 }
