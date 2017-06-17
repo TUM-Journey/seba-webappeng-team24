@@ -1,4 +1,13 @@
+import mongoose from 'mongoose';
+
+// Loading models
+import User from './models/user'
+import Form from './models/form'
+import Matrix from './models/matrix'
+import Feedback from './models/feedback'
+
 export default callback => {
-	// connect to a database if needed, then pass it to `callback`:
-	callback();
+    mongoose.connect('mongodb://localhost/test');
+
+	callback(mongoose.connection);
 }
