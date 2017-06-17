@@ -1,4 +1,16 @@
+import mongoose from 'mongoose';
+import bluebird from 'bluebird';
+import config from './config.json';
+
+// Loading models
+import User from './models/user'
+import Form from './models/form'
+import Matrix from './models/matrix'
+import Feedback from './models/feedback'
+
 export default callback => {
-	// connect to a database if needed, then pass it to `callback`:
-	callback();
+    mongoose.Promise = bluebird;
+    mongoose.connect(config.mongoose);
+
+	callback(mongoose.connection);
 }
