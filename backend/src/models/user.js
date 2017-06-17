@@ -9,5 +9,5 @@ export default mongoose.model('User', mongoose.Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     position: String,
-    created_at: Date
+    created_at: {type: Date, default: Date.now}
 }));

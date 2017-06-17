@@ -1,5 +1,6 @@
 {
-	"port": 8080,
-	"bodyLimit": "100kb",
-	"corsHeaders": ["Link"]
+    "mongoose": "mongodb://localhost/test",
+    "port": 8080,
+    "bodyLimit": "100kb",
+    "corsHeaders": ["Link"]
 }
