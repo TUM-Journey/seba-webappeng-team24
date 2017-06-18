@@ -28,13 +28,19 @@
   "author": "SEBA Team #24",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
-    "body-parser": "^1.13.3",
+    "body-parser": "^1.17.2",
+    "brcypt": "^1.0.1",
     "compression": "^1.5.2",
     "cors": "^2.7.1",
-    "express": "^4.13.3",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "lodash": "^4.17.4",
     "mongoose": "^4.10.6",
     "morgan": "^1.8.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
     "resource-router-middleware": "^0.6.0"
   },
   "devDependencies": {

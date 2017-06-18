@@ -92,8 +92,11 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
+# I use the .mongodb suffix for my db directory
+.mongodb
 # Distribution files
 dist/
 
 *vcs.xml
+
+backend/db\.mongodb/
