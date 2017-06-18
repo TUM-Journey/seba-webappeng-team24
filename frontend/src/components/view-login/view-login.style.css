@@ -31,7 +31,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', end
   font-size: 18px;
 }
 
-.forgot-password a {
+.forgot-password label {
     color: rgb(73,155,234);
     margin-top: 14px;
     font-size: 15px;

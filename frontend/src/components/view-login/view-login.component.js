@@ -40,7 +40,8 @@ class ViewLoginComponentController{
     }
 
     forgotPass(){
-        // Placeholder for forgot password routing.
+        // Placeholder for forgot password routing..
+        //this.$state.go('/',{});
     }
 
     
