@@ -2,7 +2,7 @@
 This dir contains diagrams related to design of the system. Except where noted, diagrams are made with [draw.io](https://draw.io/).
 
 ## Entity Class Diagram
-![cd-evaluatione-entities-v0 2 2](https://user-images.githubusercontent.com/5632544/27254324-7287eb84-5386-11e7-9f69-cdf6352f338f.png)
+![cd-evaluatione-entities-v0 3](https://user-images.githubusercontent.com/5632544/27259355-78f89c6c-5411-11e7-91ac-db1533b873e8.png)
 
 - **Form** - definitions of feedback forms (e.g. 'Feedback form for Java developers')
 - **Matrix** - definitions of competency matrixes (e.g. 'Matix of Competencies for Java devs')
