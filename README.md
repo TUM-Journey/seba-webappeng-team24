@@ -21,7 +21,11 @@ The app itself consists of two independent parts: backend (API) server and front
 # Install dependencies
 npm install
 
+#Run Mongodb
+mongod --db-path <path-to-db-folder>
+
 # Start development live-reload server
+# only run after starting up the DB
 env PORT=8000 npm run dev
 
 # Start production server:
