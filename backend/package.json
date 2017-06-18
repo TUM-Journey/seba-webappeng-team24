@@ -28,7 +28,7 @@
   "author": "SEBA Team #24",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "brcypt": "^1.0.1",

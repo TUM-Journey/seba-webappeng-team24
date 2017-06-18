@@ -3,7 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import User from '../models/user';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import Company from '../models/company-domain'
 
 import passport from 'passport'

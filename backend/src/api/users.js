@@ -1,6 +1,6 @@
 import resource from 'resource-router-middleware';
 import User from '../models/user';
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 
 export default ({ config, db }) => resource({
