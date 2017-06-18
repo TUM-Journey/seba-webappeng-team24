@@ -12,11 +12,11 @@ import UserService from './services/user/user';
 
 import Routes from './config/routes';
 import Middlewares from './config/middlewares';
-import ThemeConfig from './config/theme-config';
 
 import AppContent from './components/app-content/app-content';
 import ViewHome from './components/view-home/view-home';
 import ViewLogin from './components/view-login/view-login';
+import ViewGiveFeedback from './components/feedback/view-give-feedback/view-give-feedback';
 
 let app = angular.module('app', [
     uiRouter,
@@ -25,15 +25,14 @@ let app = angular.module('app', [
     UserService.name,
     AppContent.name,
     ViewHome.name,
-    ViewLogin.name
+    ViewLogin.name,
+    ViewGiveFeedback.name
 ]);
-console.log(ngMaterial);
 
 
 app.constant('API_URL', 'http://5aee6f28.ngrok.io/api');
 app.config(Routes);
 app.config(Middlewares);
-// app.config(ThemeConfig);
 
 
 angular.element(document).ready(function() {
