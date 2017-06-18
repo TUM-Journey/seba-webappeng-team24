@@ -7,10 +7,11 @@
 				<form name="RegistrationForm">
 					<div layout="column" layout-align="center center" id="role_selection">
 						<label class="role_label">Choose your role:</label>
-						<md-radio-group layout="row">
-							<md-radio-button>Manager</md-radio-button>
-							<md-radio-button>Employee</md-radio-button>
+						<md-radio-group ng-model="role" layout="row">
+							<md-radio-button value="Manager">Manager</md-radio-button>
+							<md-radio-button value="Employee" class="md-primary">Employee</md-radio-button>
 						</md-radio-group>
+
 					</div>
 
 					<md-input-container class="md-block">
