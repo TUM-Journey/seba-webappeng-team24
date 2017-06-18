@@ -12,7 +12,7 @@ import passport from 'passport'
 
 let app = express();
 app.server = http.createServer(app);
-passport.use(auth.strategy)
+passport.use(auth.JWTStrategy)
 app.use(passport.initialize())
 
 // logger
@@ -33,9 +33,7 @@ app.use(bodyParser.urlencoded({
 
 app.post("/login", auth.login)
 app.post("/register", auth.register)
-app.get("/secret", passport.authenticate('jwt', { session: false }), function (req, res) {
-	res.json({ message: "Success! You can not see this without a token" });
-});
+app.post("/company", auth.companyRegister)
 
 // connect to db
 initializeDb(db => {
