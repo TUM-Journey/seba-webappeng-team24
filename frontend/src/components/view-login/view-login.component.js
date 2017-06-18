@@ -39,6 +39,12 @@ class ViewLoginComponentController{
         });
     }
 
+    forgotPass(){
+        // Placeholder for forgot password routing.
+    }
+
+    
+
     static get $inject(){
         return ['$state', UserService.name];
     }
