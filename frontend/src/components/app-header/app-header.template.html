@@ -7,7 +7,7 @@
              </md-button>
         </a>
 
-        <span flex></span>
+        <span flex='100'></span>
                     <md-button ng-if="$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="account_circle" ></ng-md-icon></md-icon>
                         {{$ctrl.getCurrentUser()}}
@@ -15,16 +15,16 @@
                     <md-button ng-click="$ctrl.logout($event)" ng-if="$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="logout" ></ng-md-icon></md-icon>
                         Logout
-                    </md-button> 
-                     <md-button  class="md-no-focus" ng-click="$ctrl.register($event)" ng-if="!$ctrl.isAuthenticated()">
-                         <md-icon md-menu-align-target><ng-md-icon icon="flight_takeoff" ></ng-md-icon></md-icon>
-                        Sign Up
-                    </md-button>            
+                    </md-button>             
                     <md-button  class="md-no-focus" ng-click="$ctrl.login($event)" ng-if="!$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="login" ></ng-md-icon></md-icon>
                         Login
                     </md-button>
-          <span flex=2></span>
+
+                     <md-button  class="md-no-focus" ng-click="$ctrl.register($event)" ng-if="!$ctrl.isAuthenticated()">
+                        Sign Up
+                    </md-button>
+          
 
     </div>
 </md-toolbar>
