@@ -5,3 +5,7 @@ footer {
 footer > div > p {
     margin-top: 4px;
 }
+
+span a{
+    color: rgb(73,155,234)
+}
