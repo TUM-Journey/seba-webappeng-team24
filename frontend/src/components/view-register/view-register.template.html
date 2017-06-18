@@ -1,0 +1,59 @@
+<div layout="column" layout-padding="">
+	<span flex="20"></span>
+	<md-content class="login-form" layout="row" flex="35">
+		<span flex></span>
+		<md-card flex="20">
+			<md-card-content>
+				<form name="RegistrationForm">
+					<div layout="column" layout-align="center center" id="role_selection">
+						<label class="role_label">Choose your role:</label>
+						<md-radio-group layout="row">
+							<md-radio-button>Manager</md-radio-button>
+							<md-radio-button>Employee</md-radio-button>
+						</md-radio-group>
+					</div>
+
+					<md-input-container class="md-block">
+						<label>Fullname</label>
+						<input type="text" name="username" ng-model="$ctrl.register.fullname" required />
+						<div ng-messages="RegistrationForm.username.$error" role="alert" multiple="">
+							<div ng-message="required">Please enter your fullname.</div>
+						</div>
+					</md-input-container>
+					<md-input-container class="md-block">
+						<label>Username</label>
+						<input type="text" name="username" ng-model="$ctrl.register.username" required />
+						<div ng-messages="RegistrationForm.username.$error" role="alert" multiple="">
+							<div ng-message="required">Please enter your username.</div>
+						</div>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Email</label>
+						<input type="text" name="email" ng-model="$ctrl.register.email" required />
+						<div ng-messages="RegistrationForm.username.$error" role="alert" multiple="">
+							<div ng-message="required">Please use your work e-mail. Eg: john@company.com.</div>
+						</div>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Password</label>
+						<input type="password" name="password" ng-model="$ctrl.register.password" md-maxlength="64" required/>
+						<div ng-messages="RegistrationForm.password.$error" role="alert" multiple="">
+							<div ng-message="required">Please enter your password.</div>
+						</div>
+					</md-input-container>
+
+					<div layout="column" align-items='flex-end'>
+						<md-button id="sign_up_button" ng-disabled="!RegistrationForm.$valid" ng-click="$ctrl.submit()" class="md-raised md-primary">&nbsp Sign Up! &nbsp</md-button>
+					</div>
+				</form>
+			</md-card-content>
+		</md-card>
+		<span flex></span>
+	</md-content>
+	<div layout="row" layout-align="center" id="registration_alert">
+		<p> Registration Successful! </p>
+	</div>
+	<span flex></span>
+</div>

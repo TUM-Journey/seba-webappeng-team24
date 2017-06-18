@@ -17,6 +17,7 @@ import AppContent from './components/app-content/app-content';
 import ViewHome from './components/view-home/view-home';
 import ViewLogin from './components/view-login/view-login';
 import ViewGiveFeedback from './components/feedback/view-give-feedback/view-give-feedback';
+import ViewRegister from './components/view-register/view-register'
 
 let app = angular.module('app', [
     uiRouter,
@@ -27,6 +28,7 @@ let app = angular.module('app', [
     ViewHome.name,
     ViewLogin.name,
     ViewGiveFeedback.name
+    ViewRegister.name,
 ]);
 
 
@@ -35,7 +37,7 @@ app.config(Routes);
 app.config(Middlewares);
 
 
-angular.element(document).ready(function() {
+angular.element(document).ready(function () {
     return angular.bootstrap(document.body, [app.name], {
         strictDi: true
     });
