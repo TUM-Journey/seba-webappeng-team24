@@ -1,0 +1,29 @@
+version: '3'
+services:
+  backend-server:
+    build: 
+      context: ./backend/
+    volumes:
+    - ./backend:/www
+    ports:
+    - "8080:8080"
+    links:
+    - mongo
+  mongo:
+    image: mongo:latest
+    volumes:
+    - mdb:/data/db
+    - mdbc:/data/configdb
+    ports:
+    - "27017:27017"
+  frontend-server:
+    build: 
+      context: ./frontend/
+    volumes:
+    - ./frontend:/www
+    ports:
+    - "8000:8000"
+volumes:
+  mdb:
+  mdbc:
+

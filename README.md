@@ -48,9 +48,40 @@ npm run start
 npm run start-dev
 ```
 
-#### Docker
+#### Docker-Compose
 ```
+# Run the development stack from the root directory of seba
+
+docker-compose up 
+
+# you might also use the --build flag if you want to 
+# rebuild the images.
+# use the -d flag to run everything as a daemon.
+# Both the frontend and the backend code should be available
+# and hot reloadable.
+# PORTS are 8080 for the backend 8000 for the frontend
+
+# Kill the development stack 
+
+docker-compose down
+
+# NOTES:
+
+# docker by default creates lots of junk such as orphan containers and images
+# run the docker-gc container to get rid all that junk
+
+docker pull spotify/docker-gc
+
+# and then run
+
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc:ro spotify/docker-gc
+
+#everytime you want to remove the junk.
+
+```
+
 # Build your docker
+```
 docker build -t seba/evaluati-one .
 #            ^       ^            ^
 #          tag   tag name   Dockerfile location

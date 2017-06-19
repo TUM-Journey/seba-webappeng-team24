@@ -4,6 +4,7 @@
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets env\"",
+    "dev-docker": "nodemon -L -w ./src --exec \"babel-node src --presets env\"",
     "build": "babel src -s -D -d dist --presets env",
     "start": "node dist",
     "prestart": "npm run -s build",
