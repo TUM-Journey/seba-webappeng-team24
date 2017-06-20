@@ -67,6 +67,10 @@ docker-compose down
 
 # NOTES:
 
+# First add a company, then register a user with the right domain
+# finally login with the username + password
+# Simple API Link (not complete): https://documenter.getpostman.com/view/1033727/evaluatione/6Z6sAsy 
+
 # docker by default creates lots of junk such as orphan containers and images
 # run the docker-gc container to get rid all that junk
 
