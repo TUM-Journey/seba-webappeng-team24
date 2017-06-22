@@ -5,9 +5,12 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import initializeDb from './db';
 import api from './api';
+
 import config from './config.json'
 import * as auth from './api/auth'
 import passport from 'passport'
+
+import { isProduction } from './config'
 
 
 let app = express();
@@ -27,6 +30,7 @@ app.use(bodyParser.json({
 	limit: config.bodyLimit
 }));
 
+
 app.use(bodyParser.urlencoded({
 	extended: true,
 }))
@@ -34,6 +38,11 @@ app.use(bodyParser.urlencoded({
 app.post("/login", auth.login)
 app.post("/register", auth.register)
 app.post("/company", auth.companyRegister)
+
+if (isProduction) {
+	app.use(express.static('/dist'))
+}
+
 
 // connect to db
 initializeDb(db => {

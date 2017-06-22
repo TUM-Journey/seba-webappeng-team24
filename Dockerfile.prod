@@ -1,0 +1,22 @@
+FROM alpine:3.4
+
+RUN apk add --update nodejs bash git
+
+ADD ./backend /app
+ADD ./frontend/dist /dist
+
+ENV PORT 8080
+EXPOSE $PORT
+
+ENV docker_env "true"
+ENV prod_env "true"
+
+
+WORKDIR /app
+
+CMD [ "npm", "run", "install" ];
+CMD [ "npm", "run", "start" ];
+
+
+
+

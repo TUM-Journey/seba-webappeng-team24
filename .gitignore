@@ -100,3 +100,9 @@ dist/
 *vcs.xml
 
 backend/db\.mongodb/
+
+
+\.dockerignore
+
+package-lock.json
+
