@@ -101,3 +101,5 @@ dist/
 backend/db\.mongodb/
 
 \.dockerignore
+
+package-lock.json
