@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import initializeDb from './db';
 import api from './api';
 import config from './config.json';
+import { isProduction } from './config'
 
 let app = express();
 app.server = http.createServer(app);
@@ -19,11 +20,15 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json({
-	limit : config.bodyLimit
+	limit: config.bodyLimit
 }));
 
+if (isProduction) {
+	app.use(express.static('/dist'))
+}
+
 // connect to db
-initializeDb( db => {
+initializeDb(db => {
 	// api router
 	app.use('/api', api({ config, db }));
 

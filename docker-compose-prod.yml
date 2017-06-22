@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    volumes:
+    - mdb:/data/db
+    - mdbc:/data/configdb
+    ports:
+    - "27017:27017"
+  prod-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+    - "8080:8080"
+    links:
+    - mongo
+volumes:
+  mdb:
+  mdbc:
+    

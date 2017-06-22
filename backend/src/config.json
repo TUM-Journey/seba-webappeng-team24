@@ -1,5 +1,6 @@
 {
-    "mongoose": "mongodb://localhost/test",
+    "dockermongoose": "mongodb://mongo/test",
+    "localmongoose": "mongodb://localhost/test",
     "port": 8080,
     "bodyLimit": "100kb",
     "corsHeaders": ["Link"]
