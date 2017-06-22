@@ -3,10 +3,11 @@
 import LoginComponent from './../components/view-login/view-login.component';
 import ViewHomeComponent from './../components/view-home/view-home.component';
 import ViewGiveFeedbackComponent from './../components/feedback/view-give-feedback/view-give-feedback.component';
+import RegisterComponent from './../components/view-register/view-register.component'
 
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
-export default function config ($stateProvider, $urlRouterProvider){
+export default function config($stateProvider, $urlRouterProvider) {
 
     // For any unmatched url, redirect to /home
     $urlRouterProvider.otherwise("/");
@@ -23,6 +24,10 @@ export default function config ($stateProvider, $urlRouterProvider){
         .state('giveFeedback', {
             url: '/feedback/give-feedback',
             component: ViewGiveFeedbackComponent.name,
+        })
+        .state('register', {
+            url: '/register',
+            component: RegisterComponent.name,
         })
 
 
