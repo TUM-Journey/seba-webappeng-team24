@@ -45,3 +45,7 @@ md-content section small {
     color: #606060;
     font-size: 0.7em;
 }
+
+small a {
+    color: rgb(73,155,234);
+}

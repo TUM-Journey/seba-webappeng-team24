@@ -1,6 +1,38 @@
 .login-form md-card {
-    padding: 0 !important;
+padding: 0 !important;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+45,207cca+62,7db9e8+100 */
+background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+
 }
-.login-form md-card md-card-title {
-    background-color: blue;
+.login-form md-card md-card-content {
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);   
+    align-content: center;
+}
+
+.md-block label {
+    color: rgba(167,167,167,.87);
+    font-size: 20px;
+}
+
+
+.login-form .md-raised.md-primary {
+text-transform: capitalize;
+color : white;
+background: rgb(73,155,234); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=1 ); /* IE6-9 */
+  border-radius: 10px 10px 10px 10px;
+  font-size: 18px;
+}
+
+.forgot-password label {
+    color: rgb(73,155,234);
+    margin-top: 14px;
+    font-size: 15px;
 }

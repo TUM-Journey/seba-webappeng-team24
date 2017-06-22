@@ -1,37 +1,30 @@
 <md-toolbar>
-    <div class="md-toolbar-tools">
-        <a layout="row" href="/">
+    <div class="md-toolbar-tools"  layout-align="space-between center">
+        <a layout="row" >
+            <md-button  class="md-no-focus" layout="row" ng-click="$ctrl.goHome($event)">
             <md-icon><ng-md-icon icon="record_voice_over"></ng-md-icon></md-icon>
             <h2 class="logo">EVALUATI.one</h2>
+             </md-button>
         </a>
 
-        <span flex="5"></span>
-        <md-menu>
-            <md-button aria-label="More" class="md-icon-button" ng-click="$ctrl.openMenu($mdMenu, $event)">
-                <md-icon><ng-md-icon icon="more_vert" ></ng-md-icon></md-icon>
-            </md-button>
-            <md-menu-content width="4">
-                <md-menu-item ng-if="$ctrl.isAuthenticated()">
-                    <md-button>
+        <span flex></span>
+                    <md-button ng-if="$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="account_circle" ></ng-md-icon></md-icon>
                         {{$ctrl.getCurrentUser()}}
                     </md-button>
-                </md-menu-item>
-                <md-menu-divider ng-if="$ctrl.isAuthenticated()"></md-menu-divider>
-                <md-menu-item ng-if="$ctrl.isAuthenticated()">
-                    <md-button ng-click="$ctrl.logout($event)">
+                    <md-button ng-click="$ctrl.logout($event)" ng-if="$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="logout" ></ng-md-icon></md-icon>
                         Logout
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item ng-if="!$ctrl.isAuthenticated()">
-                    <md-button ng-click="$ctrl.login($event)">
+                    </md-button> 
+                     <md-button  class="md-no-focus" ng-click="$ctrl.register($event)" ng-if="!$ctrl.isAuthenticated()">
+                         <md-icon md-menu-align-target><ng-md-icon icon="flight_takeoff" ></ng-md-icon></md-icon>
+                        Sign Up
+                    </md-button>            
+                    <md-button  class="md-no-focus" ng-click="$ctrl.login($event)" ng-if="!$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="login" ></ng-md-icon></md-icon>
                         Login
                     </md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
+          <span flex=2></span>
 
     </div>
 </md-toolbar>
