@@ -12,6 +12,9 @@ WORKDIR /www
 #Install app dependencies
 RUN cd /www; npm install
 
+ENV docker_env "true"
+# ENV prod_env "true"
+
 # no need since we're using the docker-compose file
 # # set your port
 # ENV PORT 8080

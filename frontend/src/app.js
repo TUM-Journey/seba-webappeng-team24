@@ -27,7 +27,7 @@ let app = angular.module('app', [
     AppContent.name,
     ViewHome.name,
     ViewLogin.name,
-    ViewGiveFeedback.name
+    ViewGiveFeedback.name,
     ViewRegister.name,
 ]);
 
