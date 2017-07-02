@@ -60,7 +60,7 @@ export default ({config, db}) => resource({
     userGroup.description = description;
     await UserGroup.update(userGroup);
 
-    res.sendStatus(200);
+    res.status(200).send(userGroup);
   },
 
   // DELETE /:userGroupname - Delete a given entity

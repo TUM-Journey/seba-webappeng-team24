@@ -49,7 +49,7 @@ export default ({config, db}) => resource({
 
     await Plan.update(plan);
 
-    res.sendStatus(200);
+    res.status(200).send(plan);
   },
 
   // DELETE /:id - Delete a given entity
