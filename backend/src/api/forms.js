@@ -38,58 +38,27 @@ export default ({config, db}) => resource({
 
   // POST / - Create a new entity
   async create({body}, res) {
-    let {name, description, matrix} = body;
+    let {name, description, matrixId} = body;
 
-    const persistedForm = await new Form({
-      name: name,
-      description: description
-    }).save();
-
-    const persistedMatrix = await new Matrix({
-      _creator: persistedForm._id,
-      name: matrix.name,
-      characteristics: []
-    }).save();
-
-    persistedForm.matrix = persistedMatrix._id;
-    await Form.update(persistedForm);
-
-    let {characteristics} = matrix;
-    if (characteristics.length === 0) {
-      failure(res, 'At least one characteristic is required');
+    const persistedMatrix = await Matrix.findById(matrixId);
+    if (!persistedMatrix) {
+      failure(res, "Matrix not found with given id", 404);
       return;
     }
+    console.log(persistedMatrix);
 
-    for (let i = 0; i < characteristics.length; i++) {
-      let {name, description} = characteristics[i];
-
-      const persistedCharacteristic = await new MatrixCharacteristic({
-        _creator: persistedMatrix._id,
-        name: name,
-        description: description
-      }).save();
-
-      persistedMatrix.characteristics.push(persistedCharacteristic._id);
-    }
-
-    await Matrix.update(persistedMatrix);
+    await new Form({
+      name: name,
+      description: description,
+      matrix: persistedMatrix._id
+    }).save();
 
     res.sendStatus(200);
   },
 
   // DELETE /:id - Delete a given entity
   async delete({form}, res) {
-
-    for (let chr in form.matrix.characteristics) {
-      if (form.matrix.characteristics.hasOwnProperty(chr)) {
-        await MatrixCharacteristic.remove({_id: chr._id});
-      }
-    }
-
-    await Matrix.remove({_id: form.matrix._id});
-
     await Form.remove(form);
-
     res.sendStatus(204);
   }
 });

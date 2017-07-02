@@ -2,6 +2,7 @@ import {version} from '../../package.json';
 import {Router} from 'express';
 
 import users from './users';
+import matrices from './matrices';
 import forms from './forms';
 import feedbacks from './feedbacks';
 import plans from './plans';
@@ -14,6 +15,7 @@ export default ({config, db}) => {
 
   // Mount API Resources
   api.use('/users', users({config, db}));
+  api.use('/matrices', matrices({config, db}));
   api.use('/forms', forms({config, db}));
   api.use('/feedbacks', feedbacks({config, db}));
   api.use('/plans', plans({config, db}));
