@@ -29,6 +29,19 @@ export default ({config, db}) => resource({
     res.json(customer);
   },
 
+  // PUT /:id - Update a given entity
+  async update({customer, body}, res) {
+    for (let key in body) {
+      if (key !== '_id' && body.hasOwnProperty(key)) {
+        customer[key] = body[key];
+      }
+    }
+
+    await Customer.update(customer);
+
+    res.status(200).send(customer);
+  },
+
   // POST / - Create a new entity
   async create({body}, res) {
     let {name, domain} = body;
