@@ -1,5 +1,6 @@
 import resource from 'resource-router-middleware';
 import User from '../models/user';
+import Customer from '../models/customer';
 import bcrypt from 'bcryptjs';
 import {failure} from '../lib/util';
 
@@ -32,11 +33,25 @@ export default ({config, db}) => resource({
   async create({body}, res) {
     let {type, name, username, email, password, position} = body;
 
+    const emailParts = email.split('@');
+    if (emailParts.length < 2) {
+      failure(res, "Invalid email (missed @ sign?)");
+      return;
+    }
+
+    const emailDomain = emailParts[1];
+    const persistedCustomer = await Customer.findOne({domain: emailDomain});
+    if (!persistedCustomer) {
+      failure(res, "Failed to find a customer by domain = " + emailDomain, 404);
+      return;
+    }
+
     const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
     const passwordHash = await bcrypt.hash(password, salt);
 
     try {
       const persistedUser = await new User({
+        customer: persistedCustomer._id,
         type: type,
         name: name,
         username: username,
