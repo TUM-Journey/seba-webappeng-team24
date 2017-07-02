@@ -47,7 +47,7 @@ export default ({config, db}) => resource({
     try {
       await new UserGroup(newGroupData).save();
     } catch (error) {
-      failure(res, 'Failed to ', 500, error.errors ? error.errors : error.toString());
+      failure(res, 'Failed to persist new user group', 500, error.errors ? error.errors : error.toString());
     }
 
     res.sendStatus(200);
@@ -71,79 +71,79 @@ export default ({config, db}) => resource({
 })
 
 // GET /:userGroupname/members - List of user group members
-.get('/:userGroupname/members', async (req, res) => {
-  const userGroupname = req.params.userGroupname;
+  .get('/:userGroupname/members', async (req, res) => {
+    const userGroupname = req.params.userGroupname;
 
-  const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname}).populate('users');
-  if (!persistedUserGroup) {
-    failure(res, 'No user group found with given name', 404);
-    return;
-  }
+    const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname}).populate('users');
+    if (!persistedUserGroup) {
+      failure(res, 'No user group found with given name', 404);
+      return;
+    }
 
-  res.send(persistedUserGroup.users);
-})
+    res.send(persistedUserGroup.users);
+  })
 
-// PUT /:userGroupname/members/:username - Adds user to the user group
-.put('/:userGroupname/members/:username', async (req, res) => {
-  let {userGroupname, username} = req.params;
+  // PUT /:userGroupname/members/:username - Adds user to the user group
+  .put('/:userGroupname/members/:username', async (req, res) => {
+    let {userGroupname, username} = req.params;
 
-  if (!userGroupname || !username) {
-    failure(res, 'No user group or user found with given names', 404);
-    return;
-  }
+    if (!userGroupname || !username) {
+      failure(res, 'No user group or user found with given names', 404);
+      return;
+    }
 
-  const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname});
-  if (!persistedUserGroup) {
-    failure(res, 'No user group found with given name', 404);
-    return;
-  }
+    const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname});
+    if (!persistedUserGroup) {
+      failure(res, 'No user group found with given name', 404);
+      return;
+    }
 
-  const persistedUser = await User.findOne({username: username});
-  if (!persistedUser) {
-    failure(res, 'No user found with given username', 404);
-    return;
-  }
+    const persistedUser = await User.findOne({username: username});
+    if (!persistedUser) {
+      failure(res, 'No user found with given username', 404);
+      return;
+    }
 
-  if (persistedUserGroup.users.indexOf(persistedUser._id) >= 0) {
-    res.sendStatus(304); // Not Modified
-    return;
-  }
+    if (persistedUserGroup.users.indexOf(persistedUser._id) >= 0) {
+      res.sendStatus(304); // Not Modified
+      return;
+    }
 
-  persistedUserGroup.users.push(persistedUser._id);
-  await UserGroup.update(persistedUserGroup);
+    persistedUserGroup.users.push(persistedUser._id);
+    await UserGroup.update(persistedUserGroup);
 
-  res.sendStatus(200);
-})
+    res.sendStatus(200);
+  })
 
-// DELETE /:userGroupname/members/:username - Removes user from the user group
-.delete('/:userGroupname/members/:username', async (req, res) => {
-  let {userGroupname, username} = req.params;
+  // DELETE /:userGroupname/members/:username - Removes user from the user group
+  .delete('/:userGroupname/members/:username', async (req, res) => {
+    let {userGroupname, username} = req.params;
 
-  if (!userGroupname || !username) {
-    failure(res, 'No user group or user found with given names', 404);
-    return;
-  }
+    if (!userGroupname || !username) {
+      failure(res, 'No user group or user found with given names', 404);
+      return;
+    }
 
-  const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname});
-  if (!persistedUserGroup) {
-    failure(res, 'No user group found with given userGroupname', 404);
-    return;
-  }
+    const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname});
+    if (!persistedUserGroup) {
+      failure(res, 'No user group found with given userGroupname', 404);
+      return;
+    }
 
-  const persistedUser = await User.findOne({username: username});
-  if (!persistedUser) {
-    failure(res, 'No user found with given username', 404);
-    return;
-  }
+    const persistedUser = await User.findOne({username: username});
+    if (!persistedUser) {
+      failure(res, 'No user found with given username', 404);
+      return;
+    }
 
-  const userIndex = persistedUserGroup.users.indexOf(persistedUser._id);
-  if (userIndex === -1) {
-    res.sendStatus(304); // Not Modified
-    return;
-  }
+    const userIndex = persistedUserGroup.users.indexOf(persistedUser._id);
+    if (userIndex === -1) {
+      res.sendStatus(304); // Not Modified
+      return;
+    }
 
-  persistedUserGroup.users.splice(userIndex, 1);
-  await UserGroup.update(persistedUserGroup);
+    persistedUserGroup.users.splice(userIndex, 1);
+    await UserGroup.update(persistedUserGroup);
 
-  res.sendStatus(200);
-});
+    res.sendStatus(200);
+  });

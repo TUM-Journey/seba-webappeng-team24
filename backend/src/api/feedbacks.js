@@ -1,79 +1,102 @@
 import resource from 'resource-router-middleware';
+import Form from '../models/form';
 import Feedback from '../models/feedback';
 import FeedbackCompetency from '../models/feedback_competency';
 import MatrixCharacteristic from '../models/matrix_characteristic';
+import {failure} from '../lib/util';
 
 export default ({config, db}) => resource({
 
-    // GET / - List all entities
-    async index({}, res) {
-        const feedbacks = await Feedback.find().populate("competencies").populate("competencies.characteristic");
-        res.json(feedbacks);
-    },
+  id: 'feedback',
 
-    // GET /:id - Return a given entity
-    async read({id}, res) {
-        const feedback = await Feedback.findOne({_id: id}).populate("competencies").populate("competencies.characteristic");
-        res.json(feedback);
-    },
-
-    // POST / - Create a new entity
-    async create({body}, res) {
-        let {summary, competencies} = body;
-
-        const persistedFeedback = await new Form({
-            summary: summary
-        }).save();
-
-
-        for (let cpt in competencies) {
-            if (competencies.hasOwnProperty(cpt)) {
-                let {characteristic, grade} = chr;
-
-                var matrixCharacteristicId = null;
-
-                // Characteristic can be provided as InstanceId (_id) or plain object.
-                // Last should not duplicate MatrixCharacteristics
-                if (typeof characteristic === "object" && !Array.isArray(characteristic)) {
-                    let {name, description} = characteristic;
-                    const mtxChr = await MatrixCharacteristic.findOne({
-                        name: name,
-                        description: description
-                    });
-                    if (mtxChr) matrixCharacteristicId = mtxChr._id;
-                } else {
-                    const mtxChr = await MatrixCharacteristic.findOne({_id: characteristic});
-                    if (mtxChr) matrixCharacteristicId = mtxChr._id;
-                }
-
-                if (!matrixCharacteristicId) {
-                    res.sendStatus(404).send("MatrixCharacteristic not found " + JSON.stringify(characteristic));
-                    break;
-                }
-
-                await new FeedbackCompetency({
-                    _creator: persistedFeedback._id,
-                    characteristic: matrixCharacteristicId,
-                    grade: grade
-                }).save();
-            }
+  // Preloads resource for requests with :username placeholder
+  async load(req, id, callback) {
+    const feedback = await Feedback.findById(id)
+      .populate('competencies')
+      .populate({
+        path: 'competencies',
+        populate: {
+          path: 'characteristic',
+          model: 'MatrixCharacteristic'
         }
+      });
 
-        res.sendStatus(200);
-    },
+    const errorCode = feedback ? null : '404';
 
-    // DELETE /:id - Delete a given entity
-    async delete({id}, res) {
-        const feedback = await Feedback.findOne({_id: id}).populate("competencies");
+    callback(errorCode, feedback);
+  },
 
-        for (let cpt in feedback.competencies) {
-            if (feedback.competencies.hasOwnProperty(cpt)) {
-                await FeedbackCompetency.destroy({_id: cpt._id});
-            }
-        }
+  // GET / - List all entities
+  async list({}, res) {
+    const feedbacks = await Feedback.find();
+    res.json(feedbacks);
+  },
 
-        await Feedback.destroy({_id: id});
+  // GET /:id - Return a given entity
+  async read({feedback}, res) {
+    res.json(feedback);
+  },
 
-        res.sendStatus(204);
+  // POST / - Create a new entity
+  async create({body}, res) {
+    let {formId, summary, competencies} = body;
+
+    if (competencies.length === 0) {
+      failure(res, 'At least one competencies is required');
+      return;
     }
+
+    const persistedForm = await Form.findById(formId);
+    if (!persistedForm) {
+      failure(res, 'No form found with given id');
+      return;
+    }
+
+    const persistedFeedback = await new Feedback({
+      summary: summary,
+      form: persistedForm._id,
+      competencies: []
+    }).save();
+
+    console.log(persistedFeedback);
+
+    const persistedCompetencyIds = [];
+    for (let i = 0; i < competencies.length; i++) {
+      const competency = competencies[i];
+      const {characteristicId, grade} = competency;
+
+      const mtxChr = await MatrixCharacteristic.findById(characteristicId);
+      if (!mtxChr) {
+        failure(res, 'No MatrixCharacteristic found with given id');
+        return;
+      }
+
+      console.log('before FeedbackCompetency');
+      const persistedCompetency = await new FeedbackCompetency({
+        _creator: persistedFeedback._id,
+        characteristic: mtxChr._id,
+        grade: grade
+      }).save();
+      console.log('after FeedbackCompetency');
+
+      persistedCompetencyIds.push(persistedCompetency._id);
+    }
+
+    persistedFeedback.competencies = persistedCompetencyIds;
+    await Feedback.update(persistedFeedback);
+
+    res.sendStatus(200);
+  },
+
+  // DELETE /:id - Delete a given entity
+  async delete({feedback}, res) {
+
+    for (let i = 0; i < feedback.competencies.length; i++) {
+      await FeedbackCompetency.remove(feedback.competencies[i]);
+    }
+
+    await Feedback.remove(feedback);
+
+    res.sendStatus(204);
+  }
 });

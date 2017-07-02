@@ -41,11 +41,6 @@ export default ({config, db}) => resource({
 
   // PUT /:id - Update a given entity
   async update({plan, body}, res) {
-    if (!plan) {
-      res.sendStatus(404);
-      return;
-    }
-
     for (let key in body) {
       if (key !== '_id' && body.hasOwnProperty(key)) {
         plan[key] = body[key];

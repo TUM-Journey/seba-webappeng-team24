@@ -36,7 +36,7 @@ export default ({config, db}) => resource({
     try {
       await new Customer({name: name, domain: domain}).save();
     } catch (error) {
-      failure(res, 'Failed to ', 500, error.errors ? error.errors : error.toString());
+      failure(res, 'Failed to persist new customer', 500, error.errors ? error.errors : error.toString());
     }
 
     res.sendStatus(200);
@@ -50,74 +50,74 @@ export default ({config, db}) => resource({
 })
 
 // GET /:id/subscriptions - List of customer's subscriptions
-.get('/:id/subscriptions', async (req, res) => {
-  const customerId = req.params.id;
+  .get('/:id/subscriptions', async (req, res) => {
+    const customerId = req.params.id;
 
-  const persistedCustomer = await Customer.findById(customerId).populate('subscriptions');
-  if (!persistedCustomer) {
-    res.sendStatus(404);
-    return;
-  }
+    const persistedCustomer = await Customer.findById(customerId).populate('subscriptions');
+    if (!persistedCustomer) {
+      res.sendStatus(404);
+      return;
+    }
 
-  res.send(persistedCustomer.subscriptions);
-})
+    res.send(persistedCustomer.subscriptions);
+  })
 
-// POST /:id/members - Creates new subscription
-.post('/:customerId/subscriptions', async (req, res) => {
-  const customerId = req.params.customerId;
-  const {planId, paymentMethod} = req.body;
+  // POST /:id/members - Creates new subscription
+  .post('/:customerId/subscriptions', async (req, res) => {
+    const customerId = req.params.customerId;
+    const {planId, paymentMethod} = req.body;
 
-  if (!planId || !customerId) {
-    failure(res, 'No plan or customer found with given ids', 404);
-    return;
-  }
+    if (!planId || !customerId) {
+      failure(res, 'No plan or customer found with given ids', 404);
+      return;
+    }
 
-  const persistedCustomer = await Customer.findById(customerId);
-  if (!persistedCustomer) {
-    failure(res, 'No customer found with given id', 404);
-    return;
-  }
+    const persistedCustomer = await Customer.findById(customerId);
+    if (!persistedCustomer) {
+      failure(res, 'No customer found with given id', 404);
+      return;
+    }
 
-  const persistedPlan = await Plan.findById(planId);
-  if (!persistedPlan) {
-    failure(res, 'No plan found with given id', 404);
-    return;
-  }
+    const persistedPlan = await Plan.findById(planId);
+    if (!persistedPlan) {
+      failure(res, 'No plan found with given id', 404);
+      return;
+    }
 
-  const persistedSubscription = await new Subscription({
-    plan: persistedPlan._id,
-    paymentMethod: paymentMethod
-  }).save();
+    const persistedSubscription = await new Subscription({
+      plan: persistedPlan._id,
+      paymentMethod: paymentMethod
+    }).save();
 
-  persistedCustomer.subscriptions.push(persistedSubscription._id);
-  await Customer.update(persistedCustomer);
+    persistedCustomer.subscriptions.push(persistedSubscription._id);
+    await Customer.update(persistedCustomer);
 
-  res.sendStatus(200);
-})
+    res.sendStatus(200);
+  })
 
-// DELETE /:id/members/:username - Removes user from the user group
-.delete('/:customerId/subscriptions/:subscriptionId', async (req, res) => {
-  let {customerId, subscriptionId} = req.params;
+  // DELETE /:id/members/:username - Removes user from the user group
+  .delete('/:customerId/subscriptions/:subscriptionId', async (req, res) => {
+    let {customerId, subscriptionId} = req.params;
 
-  if (!subscriptionId || !customerId) {
-    failure(res, 'No subscription or customer found with given ids', 404);
-    return;
-  }
+    if (!subscriptionId || !customerId) {
+      failure(res, 'No subscription or customer found with given ids', 404);
+      return;
+    }
 
-  const persistedCustomer = await Customer.findById(customerId);
-  if (!persistedCustomer) {
-    failure(res, 'No customer found with given id', 404);
-    return;
-  }
+    const persistedCustomer = await Customer.findById(customerId);
+    if (!persistedCustomer) {
+      failure(res, 'No customer found with given id', 404);
+      return;
+    }
 
-  const subscriptionIndex = persistedCustomer.subscriptions.indexOf(subscriptionId);
-  if (subscriptionIndex === -1) {
-    res.sendStatus(304); // Not Modified
-    return;
-  }
+    const subscriptionIndex = persistedCustomer.subscriptions.indexOf(subscriptionId);
+    if (subscriptionIndex === -1) {
+      res.sendStatus(304); // Not Modified
+      return;
+    }
 
-  persistedCustomer.subscriptions.splice(subscriptionIndex, 1);
-  await Customer.update(persistedCustomer);
+    persistedCustomer.subscriptions.splice(subscriptionIndex, 1);
+    await Customer.update(persistedCustomer);
 
-  res.sendStatus(200);
-});
+    res.sendStatus(200);
+  });

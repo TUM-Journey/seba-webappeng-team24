@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import UserType from './user_type';
+import uniqueValidator from 'mongoose-unique-validator';
 
 export default mongoose.model('User', mongoose.Schema({
   _id: {type: mongoose.Schema.Types.ObjectId, index: true, required: true, auto: true},
@@ -11,4 +12,4 @@ export default mongoose.model('User', mongoose.Schema({
   password: {type: String, required: true},
   position: String,
   created_at: {type: Date, default: Date.now}
-}));
+}).plugin(uniqueValidator));

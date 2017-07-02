@@ -2,64 +2,94 @@ import resource from 'resource-router-middleware';
 import Form from '../models/form';
 import Matrix from '../models/matrix';
 import MatrixCharacteristic from '../models/matrix_characteristic';
+import {failure} from '../lib/util';
 
 export default ({config, db}) => resource({
 
-    // GET / - List all entities
-    async index({}, res) {
-        const forms = await Form.find().populate("matrix").populate("matrix.characteristics");
-        res.json(forms);
-    },
+  id: 'form',
 
-    // GET /:id - Return a given entity
-    async read({id}, res) {
-        const form = await Form.findOne({_id: id}).populate("matrix").populate("matrix.characteristics");
-        res.json(form);
-    },
-
-    // POST / - Create a new entity
-    async create({body}, res) {
-        let {name, description, matrix} = body;
-
-        const persistedForm = await new Form({
-            type: name,
-            description: description
-        }).save();
-
-        const persistedMatrix = new Matrix({
-            _creator: persistedForm._id,
-            name: matrix.name
-        }).save();
-
-        let {characteristics} = matrix;
-        for (let chr in characteristics) {
-            if (characteristics.hasOwnProperty(chr)) {
-                let {name, description} = chr;
-                await new MatrixCharacteristic({
-                    _creator: persistedMatrix._id,
-                    name: name,
-                    description: description
-                })
-            }
+  // Preloads resource for requests with :username placeholder
+  async load(req, id, callback) {
+    const form = await Form.findById(id)
+      .populate('matrix')
+      .populate({
+        path: 'matrix',
+        populate: {
+          path: 'characteristics',
+          model: 'MatrixCharacteristic'
         }
+      });
 
-        res.sendStatus(200);
-    },
+    const errorCode = form ? null : '404';
 
-    // DELETE /:id - Delete a given entity
-    async delete({id}, res) {
-        const form = await Form.findOne({_id: id}).populate("matrix");
+    callback(errorCode, form);
+  },
 
-        for (let chr in form.matrix.characteristics) {
-            if (form.matrix.characteristics.hasOwnProperty(chr)) {
-                await MatrixCharacteristic.destroy({_id: chr._id});
-            }
-        }
+  // GET / - List all entities
+  async list({}, res) {
+    const forms = await Form.find();
+    res.json(forms);
+  },
 
-        await Matrix.destroy({_id: form.matrix._id});
+  // GET /:id - Return a given entity
+  async read({form}, res) {
+    res.json(form);
+  },
 
-        await Form.destroy({_id: id});
+  // POST / - Create a new entity
+  async create({body}, res) {
+    let {name, description, matrix} = body;
 
-        res.sendStatus(204);
+    const persistedForm = await new Form({
+      name: name,
+      description: description
+    }).save();
+
+    const persistedMatrix = await new Matrix({
+      _creator: persistedForm._id,
+      name: matrix.name,
+      characteristics: []
+    }).save();
+
+    persistedForm.matrix = persistedMatrix._id;
+    await Form.update(persistedForm);
+
+    let {characteristics} = matrix;
+    if (characteristics.length === 0) {
+      failure(res, 'At least one characteristic is required');
+      return;
     }
+
+    for (let i = 0; i < characteristics.length; i++) {
+      let {name, description} = characteristics[i];
+
+      const persistedCharacteristic = await new MatrixCharacteristic({
+        _creator: persistedMatrix._id,
+        name: name,
+        description: description
+      }).save();
+
+      persistedMatrix.characteristics.push(persistedCharacteristic._id);
+    }
+
+    await Matrix.update(persistedMatrix);
+
+    res.sendStatus(200);
+  },
+
+  // DELETE /:id - Delete a given entity
+  async delete({form}, res) {
+
+    for (let chr in form.matrix.characteristics) {
+      if (form.matrix.characteristics.hasOwnProperty(chr)) {
+        await MatrixCharacteristic.remove({_id: chr._id});
+      }
+    }
+
+    await Matrix.remove({_id: form.matrix._id});
+
+    await Form.remove(form);
+
+    res.sendStatus(204);
+  }
 });
