@@ -1,65 +1,81 @@
 import resource from 'resource-router-middleware';
 import Form from '../models/form';
 import Matrix from '../models/matrix';
+import UserGroup from '../models/user_groups';
 import MatrixCharacteristic from '../models/matrix_characteristic';
+import {failure} from '../lib/util';
 
 export default ({config, db}) => resource({
 
-    // GET / - List all entities
-    async index({}, res) {
-        const forms = await Form.find().populate("matrix").populate("matrix.characteristics");
-        res.json(forms);
-    },
+  id: 'form',
 
-    // GET /:id - Return a given entity
-    async read({id}, res) {
-        const form = await Form.findOne({_id: id}).populate("matrix").populate("matrix.characteristics");
-        res.json(form);
-    },
-
-    // POST / - Create a new entity
-    async create({body}, res) {
-        let {name, description, matrix} = body;
-
-        const persistedForm = await new Form({
-            type: name,
-            description: description
-        }).save();
-
-        const persistedMatrix = new Matrix({
-            _creator: persistedForm._id,
-            name: matrix.name
-        }).save();
-
-        let {characteristics} = matrix;
-        for (let chr in characteristics) {
-            if (characteristics.hasOwnProperty(chr)) {
-                let {name, description} = chr;
-                await new MatrixCharacteristic({
-                    _creator: persistedMatrix._id,
-                    name: name,
-                    description: description
-                })
-            }
+  // Preloads resource for requests with :username placeholder
+  async load(req, id, callback) {
+    const form = await Form.findById(id)
+      .populate('matrix')
+      .populate({
+        path: 'matrix',
+        populate: {
+          path: 'characteristics',
+          model: 'MatrixCharacteristic'
         }
+      });
 
-        res.sendStatus(200);
-    },
+    const errorCode = form ? null : '404';
 
-    // DELETE /:id - Delete a given entity
-    async delete({id}, res) {
-        const form = await Form.findOne({_id: id}).populate("matrix");
+    callback(errorCode, form);
+  },
 
-        for (let chr in form.matrix.characteristics) {
-            if (form.matrix.characteristics.hasOwnProperty(chr)) {
-                await MatrixCharacteristic.destroy({_id: chr._id});
-            }
-        }
+  // GET / - List all entities (+ optional filter by ?userGroupname)
+  async list(req, res) {
 
-        await Matrix.destroy({_id: form.matrix._id});
+    let searchParams = {};
+    if (req.query.userGroupname) {
+      const persistedUserGroup = await UserGroup.findOne({userGroupname: req.query.userGroupname});
 
-        await Form.destroy({_id: id});
-
-        res.sendStatus(204);
+      if (persistedUserGroup) {
+        searchParams = {userGroup: persistedUserGroup._id};
+      }
     }
+
+    const forms = await Form.find(searchParams);
+    res.json(forms);
+  },
+
+  // GET /:id - Return a given entity
+  async read({form}, res) {
+    res.json(form);
+  },
+
+  // POST / - Create a new entity
+  async create({body}, res) {
+    let {name, userGroupname, description, matrixId} = body;
+
+    const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname});
+    if (!persistedUserGroup) {
+      failure(res, 'UserGroup not found with given userGroupname', 404);
+      return;
+    }
+
+    const persistedMatrix = await Matrix.findById(matrixId);
+    if (!persistedMatrix) {
+      failure(res, 'Matrix not found with given id', 404);
+      return;
+    }
+
+    const persistedForm = await new Form({
+      name: name,
+      userGroup: persistedUserGroup._id,
+      description: description,
+      matrix: persistedMatrix._id
+    }).save();
+
+    res.status(200).send(persistedForm);
+  },
+
+  // DELETE /:id - Delete a given entity
+  async delete({form}, res) {
+    await Form.remove(form);
+    res.sendStatus(202);
+  }
 });

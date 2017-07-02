@@ -1,4 +1,4 @@
 export default {
-    MANAGER: 'MANAGER',
-    EMPLOYEE: 'EMPLOYEE'
+  MANAGER: 'MANAGER',
+  EMPLOYEE: 'EMPLOYEE'
 }

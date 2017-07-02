@@ -45,11 +45,11 @@
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "mongoose": "^4.10.6",
+    "mongoose-unique-validator": "^1.0.5",
     "morgan": "^1.8.0",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "resource-router-middleware": "^0.6.0"
-
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
