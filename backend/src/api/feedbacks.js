@@ -97,6 +97,6 @@ export default ({config, db}) => resource({
 
     await Feedback.remove(feedback);
 
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 });

@@ -66,7 +66,7 @@ export default ({config, db}) => resource({
   // DELETE /:userGroupname - Delete a given entity
   async delete({userGroup}, res) {
     await UserGroup.remove(userGroup);
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 })
 
@@ -145,5 +145,5 @@ export default ({config, db}) => resource({
     persistedUserGroup.users.splice(userIndex, 1);
     await UserGroup.update(persistedUserGroup);
 
-    res.sendStatus(200);
+    res.sendStatus(202);
   });

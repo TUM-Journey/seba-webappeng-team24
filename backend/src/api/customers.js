@@ -58,7 +58,7 @@ export default ({config, db}) => resource({
   // DELETE /:id - Delete a given entity
   async delete({customer}, res) {
     await Customer.remove(customer);
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 })
 
@@ -132,5 +132,5 @@ export default ({config, db}) => resource({
     persistedCustomer.subscriptions.splice(subscriptionIndex, 1);
     await Customer.update(persistedCustomer);
 
-    res.sendStatus(200);
+    res.sendStatus(202);
   });

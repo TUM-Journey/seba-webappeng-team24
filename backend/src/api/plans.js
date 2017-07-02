@@ -55,6 +55,6 @@ export default ({config, db}) => resource({
   // DELETE /:id - Delete a given entity
   async delete({plan}, res) {
     await Plan.remove(plan);
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 });

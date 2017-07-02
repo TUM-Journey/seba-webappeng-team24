@@ -1,5 +1,4 @@
 import resource from 'resource-router-middleware';
-import Form from '../models/form';
 import Matrix from '../models/matrix';
 import MatrixCharacteristic from '../models/matrix_characteristic';
 import {failure} from '../lib/util';
@@ -69,6 +68,6 @@ export default ({config, db}) => resource({
 
     await Matrix.remove(matrix);
 
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 });

@@ -75,6 +75,6 @@ export default ({config, db}) => resource({
   // DELETE /:username - Delete a given entity
   async delete({user}, res) {
     await User.remove(user);
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 });

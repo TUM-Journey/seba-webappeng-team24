@@ -42,7 +42,7 @@ export default ({config, db}) => resource({
 
     const persistedMatrix = await Matrix.findById(matrixId);
     if (!persistedMatrix) {
-      failure(res, "Matrix not found with given id", 404);
+      failure(res, 'Matrix not found with given id', 404);
       return;
     }
     console.log(persistedMatrix);
@@ -59,6 +59,6 @@ export default ({config, db}) => resource({
   // DELETE /:id - Delete a given entity
   async delete({form}, res) {
     await Form.remove(form);
-    res.sendStatus(204);
+    res.sendStatus(202);
   }
 });
