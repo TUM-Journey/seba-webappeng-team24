@@ -105,7 +105,7 @@ export default ({config, db}) => resource({
     persistedCustomer.subscriptions.push(persistedSubscription._id);
     await Customer.update(persistedCustomer);
 
-    res.sendStatus(200);
+    res.status(200).send(persistedSubscription);
   })
 
   // DELETE /:id/members/:username - Removes user from the user group
