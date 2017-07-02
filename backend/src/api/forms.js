@@ -1,6 +1,7 @@
 import resource from 'resource-router-middleware';
 import Form from '../models/form';
 import Matrix from '../models/matrix';
+import UserGroup from '../models/user_groups';
 import MatrixCharacteristic from '../models/matrix_characteristic';
 import {failure} from '../lib/util';
 
@@ -25,9 +26,19 @@ export default ({config, db}) => resource({
     callback(errorCode, form);
   },
 
-  // GET / - List all entities
-  async list({}, res) {
-    const forms = await Form.find();
+  // GET / - List all entities (+ optional filter by ?userGroupname)
+  async list(req, res) {
+
+    let searchParams = {};
+    if (req.query.userGroupname) {
+      const persistedUserGroup = await UserGroup.findOne({userGroupname: req.query.userGroupname});
+
+      if (persistedUserGroup) {
+        searchParams = {userGroup: persistedUserGroup._id};
+      }
+    }
+
+    const forms = await Form.find(searchParams);
     res.json(forms);
   },
 
@@ -38,7 +49,13 @@ export default ({config, db}) => resource({
 
   // POST / - Create a new entity
   async create({body}, res) {
-    let {name, description, matrixId} = body;
+    let {name, userGroupname, description, matrixId} = body;
+
+    const persistedUserGroup = await UserGroup.findOne({userGroupname: userGroupname});
+    if (!persistedUserGroup) {
+      failure(res, 'UserGroup not found with given userGroupname', 404);
+      return;
+    }
 
     const persistedMatrix = await Matrix.findById(matrixId);
     if (!persistedMatrix) {
@@ -48,6 +65,7 @@ export default ({config, db}) => resource({
 
     const persistedForm = await new Form({
       name: name,
+      userGroup: persistedUserGroup._id,
       description: description,
       matrix: persistedMatrix._id
     }).save();
