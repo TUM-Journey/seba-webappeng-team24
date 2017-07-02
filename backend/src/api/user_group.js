@@ -45,12 +45,12 @@ export default ({config, db}) => resource({
     }
 
     try {
-      await new UserGroup(newGroupData).save();
+      const persistedUserGroup = await new UserGroup(newGroupData).save();
+
+      res.status(200).send(persistedUserGroup);
     } catch (error) {
       failure(res, 'Failed to persist new user group', 500, error.errors ? error.errors : error.toString());
     }
-
-    res.sendStatus(200);
   },
 
   // PUT /:userGroupname - Update a given entity

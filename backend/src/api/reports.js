@@ -44,9 +44,9 @@ export default ({config, db}) => resource({
     else if (persistedGroup)
       newReportData['userGroup'] = persistedGroup._id;
 
-    await new Report(newReportData).save();
+    const persistedReport = await new Report(newReportData).save();
 
-    res.sendStatus(200);
+    res.status(200).send(persistedReport);
   },
 
   // DELETE /:id - Delete a given entity

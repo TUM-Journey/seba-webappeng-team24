@@ -58,8 +58,6 @@ export default ({config, db}) => resource({
       competencies: []
     }).save();
 
-    console.log(persistedFeedback);
-
     const persistedCompetencyIds = [];
     for (let i = 0; i < competencies.length; i++) {
       const competency = competencies[i];
@@ -71,13 +69,11 @@ export default ({config, db}) => resource({
         return;
       }
 
-      console.log('before FeedbackCompetency');
       const persistedCompetency = await new FeedbackCompetency({
         _creator: persistedFeedback._id,
         characteristic: mtxChr._id,
         grade: grade
       }).save();
-      console.log('after FeedbackCompetency');
 
       persistedCompetencyIds.push(persistedCompetency._id);
     }
@@ -85,7 +81,7 @@ export default ({config, db}) => resource({
     persistedFeedback.competencies = persistedCompetencyIds;
     await Feedback.update(persistedFeedback);
 
-    res.sendStatus(200);
+    res.status(200).send(persistedFeedback);
   },
 
   // DELETE /:id - Delete a given entity

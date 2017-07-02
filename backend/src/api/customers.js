@@ -47,12 +47,12 @@ export default ({config, db}) => resource({
     let {name, domain} = body;
 
     try {
-      await new Customer({name: name, domain: domain}).save();
+      const persistedCustomer = await new Customer({name: name, domain: domain}).save();
+
+      res.status(200).send(persistedCustomer);
     } catch (error) {
       failure(res, 'Failed to persist new customer', 500, error.errors ? error.errors : error.toString());
     }
-
-    res.sendStatus(200);
   },
 
   // DELETE /:id - Delete a given entity

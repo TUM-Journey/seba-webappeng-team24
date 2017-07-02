@@ -28,7 +28,7 @@ export default ({config, db}) => resource({
   async create({body}, res) {
     let {name, price, feedbackLimit, userLimit, advancedSupport} = body;
 
-    await new Plan({
+    const persistedPlan = await new Plan({
       name: name,
       price: price,
       feedbackLimit: feedbackLimit,
@@ -36,7 +36,7 @@ export default ({config, db}) => resource({
       advancedSupport: advancedSupport
     }).save();
 
-    res.sendStatus(200);
+    res.status(200).send(persistedPlan);
   },
 
   // PUT /:id - Update a given entity

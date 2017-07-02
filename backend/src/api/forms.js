@@ -45,15 +45,14 @@ export default ({config, db}) => resource({
       failure(res, 'Matrix not found with given id', 404);
       return;
     }
-    console.log(persistedMatrix);
 
-    await new Form({
+    const persistedForm = await new Form({
       name: name,
       description: description,
       matrix: persistedMatrix._id
     }).save();
 
-    res.sendStatus(200);
+    res.status(200).send(persistedForm);
   },
 
   // DELETE /:id - Delete a given entity

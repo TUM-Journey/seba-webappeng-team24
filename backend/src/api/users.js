@@ -36,8 +36,7 @@ export default ({config, db}) => resource({
     const passwordHash = await bcrypt.hash(password, salt);
 
     try {
-
-      await new User({
+      const persistedUser = await new User({
         type: type,
         name: name,
         username: username,
@@ -45,11 +44,11 @@ export default ({config, db}) => resource({
         password: passwordHash,
         position: position
       }).save();
+
+      res.status(200).send(persistedUser);
     } catch (error) {
       failure(res, 'Failed to persist new user', 500, error.errors ? error.errors : error.toString());
     }
-
-    res.sendStatus(200);
   },
 
   // PUT /:id - Update a given entity

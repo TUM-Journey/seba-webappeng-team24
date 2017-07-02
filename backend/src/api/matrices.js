@@ -54,7 +54,7 @@ export default ({config, db}) => resource({
 
     await Matrix.update(persistedMatrix);
 
-    res.sendStatus(200);
+    res.status(200).send(persistedMatrix);
   },
 
   // DELETE /:id - Delete a given entity
