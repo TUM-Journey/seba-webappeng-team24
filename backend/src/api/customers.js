@@ -17,7 +17,7 @@ export default ({config, db}) => resource({
   },
 
   // GET / - List all entities
-  async index(req, res) {
+  async list(req, res) {
     const searchParams = req.query.domain ? {domain: req.query.domain} : {};
 
     const customers = await Customer.find(searchParams);

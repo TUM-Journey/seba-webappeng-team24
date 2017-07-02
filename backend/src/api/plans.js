@@ -14,7 +14,7 @@ export default ({config, db}) => resource({
   },
 
   // GET / - List all entities
-  async index({}, res) {
+  async list({}, res) {
     const plans = await Plan.find();
     res.json(plans);
   },
