@@ -5,6 +5,7 @@ import users from './users';
 import matrices from './matrices';
 import forms from './forms';
 import feedbacks from './feedbacks';
+import feedbackRequests from './feedback_requests';
 import plans from './plans';
 import reports from './reports';
 import usergroups from './user_group';
@@ -17,6 +18,7 @@ export default ({config, db}) => {
   api.use('/users', users({config, db}));
   api.use('/matrices', matrices({config, db}));
   api.use('/forms', forms({config, db}));
+  api.use('/feedbacks/requests', feedbackRequests({config, db}));
   api.use('/feedbacks', feedbacks({config, db}));
   api.use('/plans', plans({config, db}));
   api.use('/reports', reports({config, db}));

@@ -2,6 +2,7 @@ import resource from 'resource-router-middleware';
 import Report from '../models/report';
 import User from '../models/user';
 import UserGroup from '../models/user_groups';
+import {failure} from '../lib/util';
 
 export default ({config, db}) => resource({
 
@@ -9,7 +10,7 @@ export default ({config, db}) => resource({
 
   // Preloads resource for requests with :id placeholder
   async load(req, id, callback) {
-    const report = await Report.findOne({_id: id}).populate('user');
+    const report = await Report.findOne({_id: id}).populate('user').populate('userGroup');
     const err = report ? null : '404';
 
     callback(err, report);
@@ -34,7 +35,7 @@ export default ({config, db}) => resource({
     const persistedGroup = await UserGroup.findOne({userGroupname: userGroupname});
 
     if (!persistedUser && !persistedGroup) {
-      res.sendStatus(404);
+      failure(res, "No user or userGroup found with given username/userGroupname", 404);
       return;
     }
 
