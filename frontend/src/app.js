@@ -16,19 +16,22 @@ import Middlewares from './config/middlewares';
 import AppContent from './components/app-content/app-content';
 import ViewHome from './components/view-home/view-home';
 import ViewLogin from './components/view-login/view-login';
-import ViewGiveFeedback from './components/feedback/view-give-feedback/view-give-feedback';
 import ViewRegister from './components/view-register/view-register'
+
+import Dashboard from './components/dashboard/dashboard';
 
 let app = angular.module('app', [
     uiRouter,
     ngMaterial,
     ngMdIcons,
+
     UserService.name,
     AppContent.name,
     ViewHome.name,
     ViewLogin.name,
-    ViewGiveFeedback.name,
     ViewRegister.name,
+
+    Dashboard.name
 ]);
 
 

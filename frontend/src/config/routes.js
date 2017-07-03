@@ -2,34 +2,45 @@
 
 import LoginComponent from './../components/view-login/view-login.component';
 import ViewHomeComponent from './../components/view-home/view-home.component';
-import ViewGiveFeedbackComponent from './../components/feedback/view-give-feedback/view-give-feedback.component';
-import RegisterComponent from './../components/view-register/view-register.component'
+import RegisterComponent from './../components/view-register/view-register.component';
 
+import DashboardComponent from '../components/dashboard/dashboard.component';
+import FeedbackGiveComponent from '../components/dashboard/feedback-give/feedback-give.component';
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
 export default function config($stateProvider, $urlRouterProvider) {
 
-    // For any unmatched url, redirect to /home
-    $urlRouterProvider.otherwise("/");
+  $stateProvider
+    .state('/', {
+      url: '/',
+      component: ViewHomeComponent.name
+    })
+    .state('login', {
+      url: '/login',
+      component: LoginComponent.name
+    })
+    .state('dashboard', {
+      url: '/dashboard',
+      abstract: true,
+      component: DashboardComponent.name
+    })
+    .state('dashboard.feedback-give', {
+      url: '/feedback/give',
+      views: {
+        'dashboard': {
+          component: FeedbackGiveComponent.name
+        }
+      }
+    })
+    .state('register', {
+      url: '/register',
+      component: RegisterComponent.name
+    });
 
-    $stateProvider
-        .state('/', {
-            url: '/',
-            component: ViewHomeComponent.name
-        })
-        .state('login', {
-            url: '/login',
-            component: LoginComponent.name,
-        })
-        .state('giveFeedback', {
-            url: '/feedback/give-feedback',
-            component: ViewGiveFeedbackComponent.name,
-        })
-        .state('register', {
-            url: '/register',
-            component: RegisterComponent.name,
-        })
+  // For any unmatched url, redirect to /
+  $urlRouterProvider.otherwise('/');
 
-
+  // Redirect from abstract /dashboard to a child page (TODO: change to "Your feedbacks")
+  $urlRouterProvider.when('/dashboard', '/dashboard/feedback/give');
 }
 
