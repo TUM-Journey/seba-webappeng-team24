@@ -1,8 +1,8 @@
-FROM alpine:3.4
+# FROM alpine:3.4	
 
+FROM mhart/alpine-node:latest
 # Update & install required packages
-RUN apk add --update nodejs bash git
-
+RUN apk add --update nodejs bash git 
 # Copy app source
 ADD . /www
 
@@ -10,14 +10,14 @@ ADD . /www
 WORKDIR /www
 
 #Install app dependencies
-RUN cd /www; npm install
+RUN cd /www && npm install
 
 ENV docker_env "true"
 # ENV prod_env "true"
 
 # no need since we're using the docker-compose file
 # # set your port
-# ENV PORT 8080
+ENV PORT 8080
 
 # # expose the port to outside world
 # EXPOSE  8080
