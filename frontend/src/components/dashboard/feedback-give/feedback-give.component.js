@@ -2,24 +2,24 @@
 'use strict';
 
 
-import template from './view-give-feedback.template.html';
-import './view-give-feedback.style.css';
+import template from './feedback-give.template.html';
+import './feedback-give.style.css';
 
-class ViewGiveFeedbackComponent {
+class FeedbackGiveComponent {
     constructor(){
-        this.controller = ViewGiveFeedbackComponentController;
+        this.controller = FeedbackGiveComponentController;
         this.template = template;
 
     }
 
     static get name() {
-        return 'viewGiveFeedback';
+        return 'feedbackGive';
     }
 
 
 }
 
-class ViewGiveFeedbackComponentController{
+class FeedbackGiveComponentController{
     constructor($state){
         this.$state = $state;
         this.employeesList = [
@@ -53,4 +53,4 @@ class ViewGiveFeedbackComponentController{
 }
 
 
-export default ViewGiveFeedbackComponent;
+export default FeedbackGiveComponent;
