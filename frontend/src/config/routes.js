@@ -6,6 +6,7 @@ import RegisterComponent from './../components/view-register/view-register.compo
 
 import DashboardComponent from '../components/dashboard/dashboard.component';
 import FeedbackGiveComponent from '../components/dashboard/feedback-give/feedback-give.component';
+import FeedbackMineComponent from '../components/dashboard/feedback-mine/feedback-mine.component';
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
 export default function config($stateProvider, $urlRouterProvider) {
@@ -32,6 +33,14 @@ export default function config($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('dashboard.feedback-mine', {
+      url: '/feedback/mine',
+      views: {
+        'dashboard': {
+          component: FeedbackMineComponent.name
+        }
+      }
+    })
     .state('register', {
       url: '/register',
       component: RegisterComponent.name
@@ -40,7 +49,7 @@ export default function config($stateProvider, $urlRouterProvider) {
   // For any unmatched url, redirect to /
   $urlRouterProvider.otherwise('/');
 
-  // Redirect from abstract /dashboard to a child page (TODO: change to "Your feedbacks")
-  $urlRouterProvider.when('/dashboard', '/dashboard/feedback/give');
+  // Redirect from abstract /dashboard to a child page
+  $urlRouterProvider.when('/dashboard', '/dashboard/feedback/mine');
 }
 

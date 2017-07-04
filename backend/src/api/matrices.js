@@ -35,26 +35,26 @@ export default ({config, db}) => resource({
       return;
     }
 
-    const persistedMatrix = await new Matrix({
+    const matrix = await new Matrix({
       name: name,
       characteristics: []
-    }).save();
+    });
 
     for (let i = 0; i < characteristics.length; i++) {
       let {name, description} = characteristics[i];
 
       const persistedCharacteristic = await new MatrixCharacteristic({
-        _creator: persistedMatrix._id,
+        _creator: matrix._id,
         name: name,
         description: description
       }).save();
 
-      persistedMatrix.characteristics.push(persistedCharacteristic._id);
+      matrix.characteristics.push(persistedCharacteristic._id);
     }
 
-    await Matrix.update(persistedMatrix);
+    await matrix.save();
 
-    res.status(200).send(persistedMatrix);
+    res.status(200).send(matrix);
   },
 
   // DELETE /:id - Delete a given entity

@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Condensed');
+
+header {
+  font-family: 'Cabin Condensed', sans-serif;
+  margin-bottom: 20px;
+}
+
+
+[ui-view='dashboard'] {
+  padding: 17px;
+}

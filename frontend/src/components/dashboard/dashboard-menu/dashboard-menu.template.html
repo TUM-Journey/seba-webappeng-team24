@@ -1,9 +1,29 @@
-<md-button>Your Feedback</md-button>
+<md-list>
+  <md-list-item class="md-2-line" ui-sref="dashboard.feedback-mine" ui-sref-active="md-list-item-active">
+    <div class="md-list-item-text">
+      <h3>My Feedback</h3>
+      <p>List all feedbacks left on you</p>
+    </div>
+  </md-list-item>
 
-<md-button>Your Reports</md-button>
+  <md-list-item class="md-2-line" ui-sref="dashboard.feedback-give" ui-sref-active="md-list-item-active">
+    <div class="md-list-item-text">
+      <h3>Give Feedback</h3>
+      <p>Give a feedback on your colleague</p>
+    </div>
+  </md-list-item>
 
-<a ui-sref="dashboard.feedback-give">
-  <md-button ui-sref-active="md-primary">Give feedback</md-button>
-</a>
+  <md-list-item class="md-2-line">
+    <div class="md-list-item-text">
+      <h3>Request Feedback</h3>
+      <p>Ask a colleague to evaluate your skills</p>
+    </div>
+  </md-list-item>
 
-<md-button>Request Feedback</md-button>
+  <md-list-item class="md-2-line">
+    <div class="md-list-item-text">
+      <h3>My Reports</h3>
+      <p>Generate reports for users</p>
+    </div>
+  </md-list-item>
+</md-list>
