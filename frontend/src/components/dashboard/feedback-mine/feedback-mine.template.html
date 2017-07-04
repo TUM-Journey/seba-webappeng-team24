@@ -1,0 +1,26 @@
+<header>My feedbacks</header>
+
+<md-list flex ng-show="!!$ctrl.feedbacks.length">
+  <div ng-repeat="feedback in $ctrl.feedbacks">
+    <md-list-item class="md-3-line" style="margin-top: 7px">
+      <div class="md-list-item-text">
+        <h3 layout="row" layout-align="space-between center">
+          <div><md-icon><ng-md-icon icon="account_circle"></ng-md-icon></md-icon> {{feedback.author.name}}</div>
+          <small hide-xs>{{feedback.created_at}}</small>
+        </h3>
+        <p>
+          <md-icon><ng-md-icon icon="comment"></ng-md-icon></md-icon> {{feedback.summary}}
+        </p>
+        <md-chips ng-model="feedback.competencies" ng-show="!!feedback.competencies.length" readonly="true">
+          <md-chip-template class="small">
+            <strong title="{{$chip.characteristic.description}}">{{$chip.characteristic.name}}</strong>
+            <em>{{$chip.grade}}/10</em>
+          </md-chip-template>
+        </md-chips>
+      </div>
+    </md-list-item>
+    <md-divider ng-if="!$last"></md-divider>
+  </div>
+</md-list>
+
+<h6 ng-show="!!!$ctrl.feedbacks.length" layout="row" layout-align="center center"><small>No feedbacks yet :(</small></h6>

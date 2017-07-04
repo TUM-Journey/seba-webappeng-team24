@@ -1,18 +1,12 @@
-<div layout="column" layout-padding="">
-  <div layout="row" layout-xs="column">
-    <div flex-gt-xs="30" hide-xs class="left-nav">
-      <md-card>
-        <md-card-content>
-          <dashboard-menu></dashboard-menu>
-        </md-card-content>
-      </md-card>
-    </div>
-    <div flex-gt-xs="70">
-      <md-card>
-        <md-card-content>
-          <div ui-view="dashboard" flex></div>
-        </md-card-content>
-      </md-card>
-    </div>
-  </div>
+<div layout="row" layout-xs="column" layout-align="center start" layout-align-xs="start stretch">
+    <md-card flex="25" flex-xs="100">
+      <md-card-content>
+        <dashboard-menu></dashboard-menu>
+      </md-card-content>
+    </md-card>
+    <md-card flex="65" flex-xs="100">
+      <md-card-content>
+        <div ui-view="dashboard" flex></div>
+      </md-card-content>
+    </md-card>
 </div>

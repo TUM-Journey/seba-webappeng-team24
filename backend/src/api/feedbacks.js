@@ -1,5 +1,6 @@
 import resource from 'resource-router-middleware';
 import Form from '../models/form';
+import User from '../models/user';
 import Feedback from '../models/feedback';
 import FeedbackCompetency from '../models/feedback_competency';
 import MatrixCharacteristic from '../models/matrix_characteristic';
@@ -13,6 +14,7 @@ export default ({config, db}) => resource({
   async load(req, id, callback) {
     const feedback = await Feedback.findById(id)
       .populate('competencies')
+      .populate('author')
       .populate({
         path: 'competencies',
         populate: {
@@ -28,7 +30,16 @@ export default ({config, db}) => resource({
 
   // GET / - List all entities
   async list({}, res) {
-    const feedbacks = await Feedback.find();
+    const feedbacks = await Feedback.find()
+      .populate('competencies')
+      .populate('author')
+      .populate({
+        path: 'competencies',
+        populate: {
+          path: 'characteristic',
+          model: 'MatrixCharacteristic'
+        }
+      });
     res.json(feedbacks);
   },
 
@@ -39,10 +50,16 @@ export default ({config, db}) => resource({
 
   // POST / - Create a new entity
   async create({body}, res) {
-    let {formId, summary, competencies} = body;
+    let {formId, author, summary, competencies} = body;
 
     if (competencies.length === 0) {
       failure(res, 'At least one competencies is required');
+      return;
+    }
+
+    const persistedUser = await User.findOne({username: author});
+    if (!persistedUser) {
+      failure(res, 'No user found with given username');
       return;
     }
 
@@ -52,11 +69,12 @@ export default ({config, db}) => resource({
       return;
     }
 
-    const persistedFeedback = await new Feedback({
+    const feedback = await new Feedback({
+      author: persistedUser._id,
       summary: summary,
       form: persistedForm._id,
       competencies: []
-    }).save();
+    });
 
     const persistedCompetencyIds = [];
     for (let i = 0; i < competencies.length; i++) {
@@ -70,7 +88,7 @@ export default ({config, db}) => resource({
       }
 
       const persistedCompetency = await new FeedbackCompetency({
-        _creator: persistedFeedback._id,
+        _creator: feedback._id,
         characteristic: mtxChr._id,
         grade: grade
       }).save();
@@ -78,10 +96,10 @@ export default ({config, db}) => resource({
       persistedCompetencyIds.push(persistedCompetency._id);
     }
 
-    persistedFeedback.competencies = persistedCompetencyIds;
-    await Feedback.update(persistedFeedback);
+    feedback.competencies = persistedCompetencyIds;
+    await feedback.save();
 
-    res.status(200).send(persistedFeedback);
+    res.status(200).send(feedback);
   },
 
   // DELETE /:id - Delete a given entity
