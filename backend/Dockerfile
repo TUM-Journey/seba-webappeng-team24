@@ -1,26 +1,16 @@
-FROM alpine:3.4
+FROM node:argon
 
-# Update & install required packages
-RUN apk add --update nodejs bash git
+RUN mkdir /backend
+ADD . /backend
 
-# Copy app source
-ADD . /www
+WORKDIR /backend
 
-# Set work directory to /www
-WORKDIR /www
+RUN npm install
 
-#Install app dependencies
-RUN cd /www; npm install
+ENV server:host 0.0.0.0
+ENV server:host 8080
 
-ENV docker_env "true"
-# ENV prod_env "true"
+EXPOSE  8080
 
-# no need since we're using the docker-compose file
-# # set your port
-# ENV PORT 8080
-
-# # expose the port to outside world
-# EXPOSE  8080
-
-# start command as per package.json
-CMD ["npm", "run", "dev-docker"]
+CMD ["npm", "run", "build"]
+CMD ["npm", "run", "start"]

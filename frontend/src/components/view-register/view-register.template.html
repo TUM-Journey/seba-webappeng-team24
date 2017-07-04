@@ -1,23 +1,24 @@
 <div layout="column" layout-padding="">
-	<span flex="20"></span>
-	<md-content class="login-form" layout="row" flex="35">
-		<span flex></span>
-		<md-card flex="20">
+	<md-content class="login-form" layout="row" layout-align="center">
+		<md-card flex="50">
 			<md-card-content>
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 25px">
+          <img width="128px" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNjQgNjQiIGhlaWdodD0iNjRweCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNjQgNjQiIHdpZHRoPSI2NHB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBpZD0iTGF5ZXJfMSI+PGc+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgZmlsbD0iIzc2QzJBRiIgcj0iMzIiLz48L2c+PGc+PGc+PHBhdGggZD0iTTI2LjA5NSwzNi43MzdjMC41NjItMS42MjUsMS42MjUtNC4zMTIsMC4xMjUtOS41cy0zLjY4OC03LjIxNS02LjY4OC03LjIxNWMwLDAtNS4xNTMtMC4yODMtNS41LDcuOTAzICAgICBjLTAuMzg0LDkuMDQ5LDIuNzkxLDExLjI3MSwzLjc4NywxNi40NDdsNy41MjUtMi4xNUMyNS4wNzYsMzkuOTg1LDI1LjcwMywzNy44NjksMjYuMDk1LDM2LjczN3oiIGZpbGw9IiM0RjVENzMiLz48L2c+PGc+PHBhdGggZD0iTTI2LjI2Myw0NS4wNzlsLTguMTIxLDIuMzJjMC40MjEsNS4zMjIsMy4wMTEsOS41OTcsNy40NTMsOC4zOTdjNC42MjUtMS4yNSwyLjUxMS03LjUzNCwwLjY5OS0xMC42NTkgICAgIEMyNi4yODIsNDUuMTE4LDI2LjI3NCw0NS4wOTgsMjYuMjYzLDQ1LjA3OXoiIGZpbGw9IiM0RjVENzMiLz48L2c+PC9nPjxnPjxnPjxwYXRoIGQ9Ik0zNy45MDUsMjguNzI3Yy0wLjU2Mi0xLjYyNS0xLjYyNS00LjMxMi0wLjEyNS05LjVzMy42ODgtNy4yMTUsNi42ODgtNy4yMTVjMCwwLDUuMTUzLTAuMjgzLDUuNSw3LjkwMyAgICAgYzAuMzg0LDkuMDQ5LTIuNzkxLDExLjI3MS0zLjc4NywxNi40NDdsLTcuNTI1LTIuMTVDMzguOTI0LDMxLjk3NSwzOC4yOTcsMjkuODU5LDM3LjkwNSwyOC43Mjd6IiBmaWxsPSIjNEY1RDczIi8+PC9nPjxnPjxwYXRoIGQ9Ik0zNy43MzcsMzcuMDY5bDguMTIxLDIuMzJjLTAuNDIxLDUuMzIyLTMuMDExLDkuNTk3LTcuNDUzLDguMzk3Yy00LjYyNS0xLjI1LTIuNTExLTcuNTM0LTAuNjk5LTEwLjY1OSAgICAgQzM3LjcxOCwzNy4xMDgsMzcuNzI2LDM3LjA4OCwzNy43MzcsMzcuMDY5eiIgZmlsbD0iIzRGNUQ3MyIvPjwvZz48L2c+PC9nPjxnIGlkPSJMYXllcl8yIi8+PC9zdmc+">
+        </div>
 				<form name="RegistrationForm">
 					<div layout="column" layout-align="center center" id="role_selection">
 						<label class="role_label">Choose your role:</label>
-						<md-radio-group ng-model="role" layout="row">
-							<md-radio-button value="Manager">Manager</md-radio-button>
-							<md-radio-button value="Employee" class="md-primary">Employee</md-radio-button>
+						<md-radio-group ng-model="$ctrl.register.type" layout="row">
+							<md-radio-button value="MANAGER">Manager</md-radio-button>
+							<md-radio-button value="EMPLOYEE" class="md-primary">Employee</md-radio-button>
 						</md-radio-group>
 
 					</div>
 
 					<md-input-container class="md-block">
 						<label>Fullname</label>
-						<input type="text" name="username" ng-model="$ctrl.register.fullname" required />
-						<div ng-messages="RegistrationForm.username.$error" role="alert" multiple="">
+						<input type="text" name="name" ng-model="$ctrl.register.name" required />
+						<div ng-messages="RegistrationForm.name.$error" role="alert" multiple="">
 							<div ng-message="required">Please enter your fullname.</div>
 						</div>
 					</md-input-container>
@@ -32,7 +33,7 @@
 					<md-input-container class="md-block">
 						<label>Email</label>
 						<input type="text" name="email" ng-model="$ctrl.register.email" required />
-						<div ng-messages="RegistrationForm.username.$error" role="alert" multiple="">
+						<div ng-messages="RegistrationForm.email.$error" role="alert" multiple="">
 							<div ng-message="required">Please use your work e-mail. Eg: john@company.com.</div>
 						</div>
 					</md-input-container>
@@ -45,16 +46,19 @@
 						</div>
 					</md-input-container>
 
+          <md-input-container class="md-block">
+            <label>Occupation</label>
+            <input type="text" name="position" ng-model="$ctrl.register.position" md-maxlength="64"/>
+            <div ng-messages="RegistrationForm.position.$error" role="alert" multiple="">
+              <div ng-message="required">Please enter your occupation.</div>
+            </div>
+          </md-input-container>
+
 					<div layout="column" align-items='flex-end'>
 						<md-button id="sign_up_button" ng-disabled="!RegistrationForm.$valid" ng-click="$ctrl.submit()" class="md-raised md-primary">&nbsp Sign Up! &nbsp</md-button>
 					</div>
 				</form>
 			</md-card-content>
 		</md-card>
-		<span flex></span>
 	</md-content>
-	<div layout="row" layout-align="center" id="registration_alert">
-		<p> Registration Successful! </p>
-	</div>
-	<span flex></span>
 </div>

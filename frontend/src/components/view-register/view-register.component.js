@@ -1,4 +1,3 @@
-
 'use strict';
 
 import UserService from './../../services/user/user.service';
@@ -7,46 +6,52 @@ import template from './view-register.template.html';
 import './view-register.style.css';
 
 class ViewRegisterComponent {
-	constructor() {
-		this.controller = ViewRegisterComponentController;
-		this.template = template;
+  constructor() {
+    this.controller = ViewRegisterComponentController;
+    this.template = template;
+  }
 
-	}
-
-	static get name() {
-		return 'viewRegister';
-	}
-
-
+  static get name() {
+    return 'viewRegister';
+  }
 }
 
 class ViewRegisterComponentController {
-	constructor($state, UserService) {
-		this.$state = $state;
-		this.UserService = UserService;
-	}
+  constructor($state, $mdToast, UserService) {
+    this.$state = $state;
+    this.$mdToast = $mdToast;
+    this.UserService = UserService;
+  }
 
-	$onInit() {
-		this.register = {};
-	}
+  $onInit() {
+    this.register = {};
+  }
 
-	submit() {
-		let user = this.register.username;
-		let password = this.register.password;
-		let email = this.register.email;
+  async submit() {
+    let {type, name, username, email, password, position} = this.register;
 
-		this.UserService.register(user, password, email).then(() => {
-			this.$state.go('', {});
-		});
-	}
+    try {
+      await this.UserService.register(type, name, username, email, password, position);
 
+      this.$state.go('login', {});
+      this.$mdToast.show(
+        this.$mdToast.simple()
+          .textContent('Thank you for registration! Please user your credentials to log in, ' + name)
+          .position('top')
+          .hideDelay(6000));
+    } catch (e) {
+      this.$mdToast.show(
+        this.$mdToast.simple()
+          .textContent(e.data.error)
+          .position('top')
+          .hideDelay(4000)
+      );
+    }
+  }
 
-
-	static get $inject() {
-		return ['$state', UserService.name];
-	}
-
+  static get $inject() {
+    return ['$state', '$mdToast', UserService.name];
+  }
 }
-
 
 export default ViewRegisterComponent;

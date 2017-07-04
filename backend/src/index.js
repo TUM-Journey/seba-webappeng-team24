@@ -1,57 +1,25 @@
 import http from 'http';
 import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import initializeDb from './db';
-import api from './api';
 
-import config from './config.json'
-import * as auth from './api/auth'
-import passport from 'passport'
+import setupAuth from './bootstrap/auth.init';
+import setupDatabase from './bootstrap/database.init';
+import setupMiddleware from './bootstrap/middleware.init';
+import setupResources from './bootstrap/resources.init';
 
-import { isProduction } from './config'
+import config from './config';
 
+(async () => {
+  // Init Express and HTTP Server
+  const app = express();
+  app.server = http.createServer(app);
 
-let app = express();
-app.server = http.createServer(app);
-passport.use(auth.JWTStrategy)
-app.use(passport.initialize())
+  // Bootstrapping application
+  const db = await setupDatabase(config);
+  await setupMiddleware(app, config, db);
+  await setupAuth(app, config, db);
+  await setupResources(app, config, db);
 
-// logger
-app.use(morgan('dev'));
+  // Launching server
+  await app.server.listen(config.get('server:port'), config.get('server:host'));
 
-// 3rd party middleware
-app.use(cors({
-	exposedHeaders: config.corsHeaders
-}));
-
-app.use(bodyParser.json({
-	limit: config.bodyLimit
-}));
-
-
-app.use(bodyParser.urlencoded({
-	extended: true,
-}))
-
-app.post("/login", auth.login)
-app.post("/register", auth.register)
-app.post("/company", auth.companyRegister)
-
-if (isProduction) {
-	app.use(express.static('/dist'))
-}
-
-
-// connect to db
-initializeDb(db => {
-	// api router
-	app.use('/api', passport.authenticate('jwt', { session: false }),
-		api({ config, db }));
-	app.server.listen(process.env.PORT || config.port, () => {
-		console.log(`Started on port ${app.server.address().port}`);
-	});
-});
-
-export default app;
+})().then(() => console.info('Server running on ' + config.get('server:host') + ':' + config.get('server:port')));
