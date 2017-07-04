@@ -18,7 +18,7 @@ export default (app, config, db) => {
   // Setup auth middleware
   let authMiddleware;
   if (config.get('auth:enabled') === 'true') {
-    authMiddleware = passport.authenticate('jwt');
+    authMiddleware = passport.authenticate('jwt', {session: false});
   } else {
     console.warn('Passport authentication disabled!');
     authMiddleware = (req, res, next) => {
