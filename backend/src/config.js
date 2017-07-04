@@ -9,7 +9,7 @@ nconf.defaults({
   'auth': {
     'enabled': 'true',
     'secret': 'rod[jf[013hjfmnds[pfjsdao0hj31npdsa',
-    'expiresIn': '3600'
+    'expiresIn': '2 days'
   },
   'server': {
     'host': 'localhost',
