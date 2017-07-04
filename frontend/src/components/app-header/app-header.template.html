@@ -1,7 +1,7 @@
 <md-toolbar>
     <div class="md-toolbar-tools"  layout-align="space-between center">
-        <a layout="row" >
-            <md-button  class="md-no-focus" layout="row" ng-click="$ctrl.goHome($event)">
+        <a layout="row" ui-sref="home">
+            <md-button class="md-no-focus" layout="row" >
             <md-icon><ng-md-icon icon="record_voice_over"></ng-md-icon></md-icon>
             <h2 class="logo">EVALUATI.one</h2>
              </md-button>
@@ -16,11 +16,11 @@
                         <md-icon md-menu-align-target><ng-md-icon icon="logout" ></ng-md-icon></md-icon>
                         Logout
                     </md-button>
-                     <md-button  class="md-no-focus" ng-click="$ctrl.register($event)" ng-if="!$ctrl.isAuthenticated()">
+                     <md-button  class="md-no-focus" ui-sref="register" ng-if="!$ctrl.isAuthenticated()">
                          <md-icon md-menu-align-target><ng-md-icon icon="flight_takeoff" ></ng-md-icon></md-icon>
                         Sign Up
                     </md-button>
-                    <md-button  class="md-no-focus" ng-click="$ctrl.login($event)" ng-if="!$ctrl.isAuthenticated()">
+                    <md-button  class="md-no-focus" ui-sref="login" ng-if="!$ctrl.isAuthenticated()">
                         <md-icon md-menu-align-target><ng-md-icon icon="login" ></ng-md-icon></md-icon>
                         Login
                     </md-button>
