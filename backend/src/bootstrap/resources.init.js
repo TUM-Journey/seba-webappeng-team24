@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 
 import users from '../resources/users';
 import matrices from '../resources/matrices';
@@ -9,7 +9,6 @@ import plans from '../resources/plans';
 import reports from '../resources/reports';
 import usergroups from '../resources/user_group';
 import customers from '../resources/customers';
-
 import passport from 'passport';
 
 export default (app, config, db) => {
@@ -18,7 +17,7 @@ export default (app, config, db) => {
   // Setup auth middleware
   let authMiddleware;
   if (config.get('auth:enabled') === 'true') {
-    authMiddleware = passport.authenticate('jwt', {session: false});
+    authMiddleware = passport.authenticate('jwt', { session: false });
   } else {
     console.warn('Passport authentication disabled!');
     authMiddleware = (req, res, next) => {
@@ -27,15 +26,16 @@ export default (app, config, db) => {
   }
 
   // Mount Resources API
-  route.use('/users', authMiddleware, users({config, db}));
-  route.use('/matrices', authMiddleware, matrices({config, db}));
-  route.use('/forms', authMiddleware, forms({config, db}));
-  route.use('/feedbacks/requests', authMiddleware, feedbackRequests({config, db}));
-  route.use('/feedbacks', authMiddleware, feedbacks({config, db}));
-  route.use('/plans', authMiddleware, plans({config, db}));
-  route.use('/reports', authMiddleware, reports({config, db}));
-  route.use('/usergroups', authMiddleware, usergroups({config, db}));
-  route.use('/customers', authMiddleware, customers({config, db}));
+  route.use('/users', authMiddleware, users({ config, db }));
+  route.use('/matrices', authMiddleware, matrices({ config, db }));
+  route.use('/forms', authMiddleware, forms({ config, db }));
+  route.use('/feedbacks/requests', authMiddleware, feedbackRequests({ config, db }));
+  route.use('/feedbacks', authMiddleware, feedbacks({ config, db }));
+  route.use('/plans', authMiddleware, plans({ config, db }));
+  route.use('/reports', authMiddleware, reports({ config, db }));
+  route.use('/usergroups', authMiddleware, usergroups({ config, db }));
+  route.use('/customers', authMiddleware, customers({ config, db }));
 
   app.use('/api/', route);
+
 }

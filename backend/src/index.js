@@ -1,5 +1,5 @@
 // important
-import "babel-polyfill";
+// import "babel-polyfill";
 
 import http from 'http';
 import express from 'express';
@@ -16,6 +16,9 @@ import config from './config';
   const app = express();
   app.server = http.createServer(app);
 
+  if (config.get('production') === "true") {
+    app.use(express.static('/dist'))
+  }
   // Bootstrapping application
   const db = await setupDatabase(config);
   await setupMiddleware(app, config, db);
@@ -23,10 +26,6 @@ import config from './config';
   await setupResources(app, config, db);
 
   // Launching server
-  await app.server.listen(config.get('server:port'), config.get('server:host'));
+  await app.server.listen(config.get('server_port'));
 
-})().then(() => console.info('Server running on ' + config.get('server:host') + ':' + config.get('server:port')));
-
-if (config.isProduction) {
-  app.use(express.static('/dist'))
-}
+})().then(() => console.info('Server running on ' + config.get('server_port')));

@@ -7,13 +7,13 @@ FROM mhart/alpine-node:latest
 RUN apk add --update nodejs bash git
 
 # Copy app source
-ADD . /www
+ADD . /frontend
 
 # Install app dependencies
-RUN cd /www; npm install
+# RUN cd /frontend; npm install
 
 # Set work directory to /www
-WORKDIR /www
+WORKDIR /frontend
 
 # no need since we're using the docker-compose file
 # # set your port
@@ -24,4 +24,5 @@ WORKDIR /www
 
 # start command as per package.json
 # CMD ["npm", "build-prod"]
+CMD ["npm", "install"]
 CMD ["npm", "run", "start-dev-docker"]

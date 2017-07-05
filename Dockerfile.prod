@@ -6,8 +6,6 @@ RUN apk add --update nodejs bash git
 ADD ./backend /backend
 ADD ./frontend /frontend
 
-ENV docker_env "true"
-ENV prod_env "true"
 
 RUN cd /frontend && \
 npm install && \
@@ -15,16 +13,11 @@ npm run build-prod && \
 mv /frontend/dist /dist && \
 rm -r /frontend && \
 cd /backend && \
-npm install && \
-npm run build
-
-ENV PORT 8080
-EXPOSE $PORT
-
+npm install
 
 WORKDIR /backend
 
-CMD [ "npm", "run", "run-docker"]
+CMD [ "npm", "run", "deploy"]
 # CMD [ "npm", "run", "install" ];
 # CMD [ "npm", "run", "start" ];
 

@@ -4,11 +4,14 @@ services:
     build: 
       context: ./backend/
     volumes:
-    - ./backend:/www
+    - ./backend:/backend
     ports:
     - "8080:8080"
     links:
     - mongo
+    environment:
+    - "db_url=mongodb://mongo/test"
+    - "server_port=8080"
   mongo:
     image: mongo:latest
     volumes:
@@ -20,7 +23,7 @@ services:
     build: 
       context: ./frontend/
     volumes:
-    - ./frontend:/www
+    - ./frontend:/frontend
     ports:
     - "8000:8000"
 volumes:
