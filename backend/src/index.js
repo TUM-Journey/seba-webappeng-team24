@@ -1,3 +1,6 @@
+// important
+import "babel-polyfill";
+
 import http from 'http';
 import express from 'express';
 
@@ -23,3 +26,7 @@ import config from './config';
   await app.server.listen(config.get('server:port'), config.get('server:host'));
 
 })().then(() => console.info('Server running on ' + config.get('server:host') + ':' + config.get('server:port')));
+
+if (config.isProduction) {
+  app.use(express.static('/dist'))
+}

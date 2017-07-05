@@ -1,21 +1,32 @@
-FROM alpine:3.4
+# FROM alpine:3.4
+FROM mhart/alpine-node:latest
 
 RUN apk add --update nodejs bash git
 
-ADD ./backend /app
-ADD ./frontend/dist /dist
-
-ENV PORT 8080
-EXPOSE $PORT
+ADD ./backend /backend
+ADD ./frontend /frontend
 
 ENV docker_env "true"
 ENV prod_env "true"
 
+RUN cd /frontend && \
+npm install && \
+npm run build-prod && \
+mv /frontend/dist /dist && \
+rm -r /frontend && \
+cd /backend && \
+npm install && \
+npm run build
 
-WORKDIR /app
+ENV PORT 8080
+EXPOSE $PORT
 
-CMD [ "npm", "run", "install" ];
-CMD [ "npm", "run", "start" ];
+
+WORKDIR /backend
+
+CMD [ "npm", "run", "run-docker"]
+# CMD [ "npm", "run", "install" ];
+# CMD [ "npm", "run", "start" ];
 
 
 

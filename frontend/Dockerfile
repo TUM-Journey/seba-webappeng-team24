@@ -1,8 +1,10 @@
-FROM alpine:3.4
+# FROM alpine:3.4
 
+FROM mhart/alpine-node:latest
 # Update & install required packages
-RUN apk add --update nodejs bash git
+# RUN apk add --update nodejs bash git
 
+RUN apk add --update nodejs bash git
 
 # Copy app source
 ADD . /www
