@@ -12,6 +12,7 @@ services:
     environment:
     - "db_url=mongodb://mongo/test"
     - "server_port=8080"
+    - "auth_enabled=${auth}"
   mongo:
     image: mongo:latest
     volumes:

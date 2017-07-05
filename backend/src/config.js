@@ -5,6 +5,7 @@ nconf.argv().env();
 // keep structure flat for environment variables.
 nconf.defaults({
   'db_url': 'mongodb://localhost/test',
+  'auth_enabled': 'true',
   'auth': {
     'enabled': 'true',
     'secret': 'rod[jf[013hjfmnds[pfjsdao0hj31npdsa',
