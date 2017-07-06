@@ -16,7 +16,9 @@ nconf.defaults({
     'bodyLimit': '100kb',
     'corsHeaders': ['Link']
   },
-  'production': 'false'
+  'production': 'false',
+  'admin_id': 'seba-24',
+  'admin_password': 'is_super_cool',
 });
 
 export default nconf;
