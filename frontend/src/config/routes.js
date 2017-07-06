@@ -6,7 +6,8 @@ import RegisterComponent from './../components/view-register/view-register.compo
 
 import DashboardComponent from '../components/dashboard/dashboard.component';
 import FeedbackGiveComponent from '../components/dashboard/feedback-give/feedback-give.component';
-import FeedbackMineComponent from '../components/dashboard/feedback-mine/feedback-mine.component';
+import FeedbackMineInboundComponent from '../components/dashboard/feedback-mine-inbound/feedback-mine-inbound.component';
+import FeedbackMineOutboundComponent from '../components/dashboard/feedback-mine-outbound/feedback-mine-outbound.component';
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
 export default function config($stateProvider, $urlRouterProvider) {
@@ -33,11 +34,19 @@ export default function config($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('dashboard.feedback-mine', {
-      url: '/feedback/mine',
+    .state('dashboard.feedback-mine-inbound', {
+      url: '/feedback/mine/inbound',
       views: {
         'dashboard': {
-          component: FeedbackMineComponent.name
+          component: FeedbackMineInboundComponent.name
+        }
+      }
+    })
+    .state('dashboard.feedback-mine-outbound', {
+      url: '/feedback/mine/outbound',
+      views: {
+        'dashboard': {
+          component: FeedbackMineOutboundComponent.name
         }
       }
     })
@@ -50,6 +59,6 @@ export default function config($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
   // Redirect from abstract /dashboard to a child page
-  $urlRouterProvider.when('/dashboard', '/dashboard/feedback/mine');
+  $urlRouterProvider.when('/dashboard', '/dashboard/feedback/mine/inbound');
 }
 

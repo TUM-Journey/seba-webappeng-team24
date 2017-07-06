@@ -10,7 +10,23 @@ export default class FeedbackService {
       throw new Error("Token is required to gen an access to feedbacks (protected resource)");
 
     return $resource(API_URL + '/feedbacks', null, {
-      query: {
+      listAll: {
+        method: 'GET',
+        isArray: true,
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
+      },
+      listMineInbound: {
+        url: API_URL + '/feedbacks/mine/inbound',
+        method: 'GET',
+        isArray: true,
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
+      },
+      listMineOutbound: {
+        url: API_URL + '/feedbacks/mine/outbound',
         method: 'GET',
         isArray: true,
         headers: {

@@ -1,6 +1,7 @@
 import resource from 'resource-router-middleware';
 import Form from '../models/form';
 import User from '../models/user';
+import UserGroup from '../models/user_groups';
 import Feedback from '../models/feedback';
 import FeedbackCompetency from '../models/feedback_competency';
 import MatrixCharacteristic from '../models/matrix_characteristic';
@@ -15,6 +16,8 @@ export default ({config, db}) => resource({
     const feedback = await Feedback.findById(id)
       .populate('competencies')
       .populate('author')
+      .populate('user')
+      .populate('userGroup')
       .populate({
         path: 'competencies',
         populate: {
@@ -33,6 +36,8 @@ export default ({config, db}) => resource({
     const feedbacks = await Feedback.find()
       .populate('competencies')
       .populate('author')
+      .populate('user')
+      .populate('userGroup')
       .populate({
         path: 'competencies',
         populate: {
@@ -50,16 +55,29 @@ export default ({config, db}) => resource({
 
   // POST / - Create a new entity
   async create({body}, res) {
-    let {formId, author, summary, competencies} = body;
+    let {formId, author, username, userGroupname, summary, competencies} = body;
+
+    if (author === username) {
+      failure(res, "You cant leave feedback on yourself", 400);
+      return;
+    }
 
     if (competencies.length === 0) {
       failure(res, 'At least one competencies is required');
       return;
     }
 
-    const persistedUser = await User.findOne({username: author});
-    if (!persistedUser) {
+    const persistedAuthor = await User.findOne({username: author});
+    if (!persistedAuthor) {
       failure(res, 'No user found with given username');
+      return;
+    }
+
+    const persistedUser = await User.findOne({username: username});
+    const persistedGroup = await UserGroup.findOne({userGroupname: userGroupname});
+
+    if (!persistedUser && !persistedGroup) {
+      failure(res, "No user or userGroup (adressees) found with given username/userGroupname", 404);
       return;
     }
 
@@ -69,12 +87,17 @@ export default ({config, db}) => resource({
       return;
     }
 
-    const feedback = await new Feedback({
-      author: persistedUser._id,
+    const newFeedbackData = {
+      author: persistedAuthor._id,
       summary: summary,
       form: persistedForm._id,
-      competencies: []
-    });
+      competencies: []};
+    if (persistedUser)
+      newFeedbackData['user'] = persistedUser._id;
+    else if (persistedGroup)
+      newFeedbackData['userGroup'] = persistedGroup._id;
+
+    const feedback = await new Feedback(newFeedbackData);
 
     const persistedCompetencyIds = [];
     for (let i = 0; i < competencies.length; i++) {
@@ -113,4 +136,48 @@ export default ({config, db}) => resource({
 
     res.sendStatus(202);
   }
-});
+})
+  // GET /mine - List of feedbacks on this user
+  .get('/mine/inbound', async (req, res) => {
+    if (!req.user)
+      return failure(res, "Not authorized", 401);
+
+    const meUserId = req.user.id;
+
+    const feedbacks = await Feedback.find({user: meUserId})
+      .populate('competencies')
+      .populate('author')
+      .populate('user')
+      .populate('userGroup')
+      .populate({
+        path: 'competencies',
+        populate: {
+          path: 'characteristic',
+          model: 'MatrixCharacteristic'
+        }
+      });
+
+    res.json(feedbacks);
+  })
+  // GET /mine - List of feedbacks left by this user
+  .get('/mine/outbound', async (req, res) => {
+    if (!req.user)
+      return failure(res, "Not authorized", 401);
+
+    const meUserId = req.user.id;
+
+    const feedbacks = await Feedback.find({author: meUserId})
+      .populate('competencies')
+      .populate('author')
+      .populate('user')
+      .populate('userGroup')
+      .populate({
+        path: 'competencies',
+        populate: {
+          path: 'characteristic',
+          model: 'MatrixCharacteristic'
+        }
+      });
+
+    res.json(feedbacks);
+  });

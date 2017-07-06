@@ -33,7 +33,7 @@ class ViewLoginComponentController {
     try {
       await this.UserService.login(username, password);
 
-      this.$state.go('dashboard.feedback-mine', {});
+      this.$state.go('dashboard.feedback-mine-inbound', {});
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent('Welcome back, ' + username)
