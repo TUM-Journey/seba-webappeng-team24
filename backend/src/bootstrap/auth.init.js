@@ -13,7 +13,7 @@ export default (app, config, db) => {
   // Setup Passport and Passport JWT token validation strategy
   if (config.get('auth_enabled') === 'true') {
     passport.use('auth:jwt', new JwtStrategy({
-      secretOrKey: config.get('auth:secret'),
+      secretOrKey: config.get('auth_secret'),
       jwtFromRequest: JwtExtractors.fromAuthHeader()
     }, (payload, done) => done(null, payload)));
   } else {

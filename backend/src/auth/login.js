@@ -26,7 +26,7 @@ export default async (req, res) => {
     type: persistedUser.type,
     email: persistedUser.email,
     position: persistedUser.position
-  }, config.get('auth:secret'), {expiresIn: config.get('auth:expiresIn')});
+  }, config.get('auth_secret'), {expiresIn: config.get('auth_expiresIn')});
 
   res.status(200).send(token);
 }
