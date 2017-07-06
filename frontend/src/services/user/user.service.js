@@ -23,6 +23,7 @@ export default class UserService {
 
   async login(username, password) {
     const token = await this.$http.get(`${ this.API_URL }/login?username=${username}&password=${password}`);
+    console.log("Token=", token.data);
     this.$window.localStorage.setItem(STORAGE_TOKEN_KEY, token.data);
   }
 
