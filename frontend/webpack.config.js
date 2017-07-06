@@ -24,6 +24,15 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: ['env'],
+                        plugins: [
+                          [
+                            "transform-runtime",
+                            {
+                              "polyfill": false,
+                              "regenerator": true
+                            }
+                          ]
+                        ]
                     }
                 }
             },

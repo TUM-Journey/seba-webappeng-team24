@@ -15,6 +15,10 @@ services:
     - "8080:8080"
     links:
     - mongo
+    environment:
+    - "db_url=mongodb://mongo/test"
+    - "production=true"
+    - "server_port=8080"
 volumes:
   mdb:
   mdbc:

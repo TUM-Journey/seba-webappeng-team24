@@ -1,4 +1,3 @@
-
 'use strict';
 
 import UserService from './../../services/user/user.service';
@@ -7,50 +6,58 @@ import template from './view-login.template.html';
 import './view-login.style.css';
 
 class ViewLoginComponent {
-    constructor(){
-        this.controller = ViewLoginComponentController;
-        this.template = template;
+  constructor() {
+    this.controller = ViewLoginComponentController;
+    this.template = template;
+  }
 
-    }
-
-    static get name() {
-        return 'viewLogin';
-    }
-
-
+  static get name() {
+    return 'viewLogin';
+  }
 }
 
-class ViewLoginComponentController{
-    constructor($state,UserService){
-        this.$state = $state;
-        this.UserService = UserService;
+class ViewLoginComponentController {
+  constructor($state, $mdToast, UserService) {
+    this.$state = $state;
+    this.$mdToast = $mdToast;
+    this.UserService = UserService;
+  }
+
+  $onInit() {
+    this.login = {};
+  }
+
+  async submit() {
+    const {username, password} = this.login;
+
+    try {
+      await this.UserService.login(username, password);
+
+      this.$state.go('dashboard.feedback-mine', {});
+      this.$mdToast.show(
+        this.$mdToast.simple()
+          .textContent('Welcome back, ' + username)
+          .position('top')
+          .hideDelay(4000));
+
+    } catch (e) {
+      this.$mdToast.show(
+        this.$mdToast.simple()
+          .textContent(e.data.error)
+          .position('top')
+          .hideDelay(4000)
+      );
     }
+  }
 
-    $onInit() {
-        this.login = {};
-    }
+  forgotPass() {
+    // Placeholder for forgot password routing..
+    //this.$state.go('/',{});
+  }
 
-    submit(){
-        let user = this.login.username;
-        let password = this.login.password;
-
-        this.UserService.login(user,password).then(()=> {
-            this.$state.go('movies',{});
-        });
-    }
-
-    forgotPass(){
-        // Placeholder for forgot password routing..
-        //this.$state.go('/',{});
-    }
-
-    
-
-    static get $inject(){
-        return ['$state', UserService.name];
-    }
-
+  static get $inject() {
+    return ['$state', '$mdToast', UserService.name];
+  }
 }
-
 
 export default ViewLoginComponent;

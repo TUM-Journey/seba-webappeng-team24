@@ -11,51 +11,35 @@
   "version": "0.0.1",
   "main": "dist",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --presets env\"",
-    "dev-docker": "nodemon -L -w ./src --exec \"babel-node src --presets env\"",
-    "build": "babel src -d dist --presets env",
+    "dev": "nodemon -L -w src --exec \"babel-node src --presets env\"",
+    "dev-unprotected": "nodemon -L -w src --auth_enabled=false --exec \"babel-node src --presets env \"",
+    "build": "babel src --out-dir dist --presets env",
+    "deploy": "babel src --out-dir dist --presets env && node dist/index.js",
     "start": "node dist/index.js",
-    "prestart": "npm run -s build",
-    "test": "eslint src"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module"
-    },
-    "env": {
-      "node": true,
-      "port": 8080
-    },
-    "rules": {
-      "no-console": 0,
-      "no-unused-vars": 1
-    }
+    "prestart": "npm run -s build"
   },
   "dependencies": {
-    "babel-polyfill": "^6.23.0",
+    "babel-runtime": "^6.23.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "brcypt": "^1.0.1",
-    "compression": "^1.5.2",
     "cors": "^2.7.1",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
-    "lodash": "^4.17.4",
     "mongoose": "^4.10.6",
     "mongoose-unique-validator": "^1.0.5",
-    "morgan": "^1.8.0",
+    "nconf": "^0.8.4",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
+    "passport-strategy": "^1.0.0",
     "resource-router-middleware": "^0.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.5.2",
-    "eslint": "^3.1.1",
     "nodemon": "^1.9.2"
   }
 }

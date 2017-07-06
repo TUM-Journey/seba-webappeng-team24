@@ -12,7 +12,7 @@ config.$inject = ['$stateProvider', '$urlRouterProvider'];
 export default function config($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-    .state('/', {
+    .state('home', {
       url: '/',
       component: ViewHomeComponent.name
     })

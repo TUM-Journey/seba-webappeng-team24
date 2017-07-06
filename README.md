@@ -15,26 +15,47 @@ Learn how to design web sites from the scratch including patterns for recurring 
 ## Getting Started
 
 The app itself consists of two independent parts: backend (API) server and frontend.
+
+## Quick Start 
+./dev.sh -h for the help menu.
+./dev.sh -a true to run dev docker-compose with jwt auth enabled.
+./deploy.sh to run the distribution version of docker-compose.
+
 ### Backend
 
 ```
 # Install dependencies
 npm install
 
-#Run Mongodb
+# Run Mongodb
 mongod --db-path <path-to-db-folder>
 
 # Start development live-reload server
-# only run after starting up the DB
-env PORT=8000 npm run dev
+npm run dev
+
+# Start development live-reload server with unprotected resources 
+npm run dev dev-unprotected
+(eq. npm run dev -- --auth:enabled=false)
 
 # Start production server:
-env PORT=8080 npm start
+npm run deploy
+
+# Start production server on HOST:PORT
+npm run deploy -- --server:host=0.0.0.0 --server:port=8080
 ```
+
+Backend config loading priority:
+1) Cli arguments (--param=val)
+2) Environment variables
+3) Default values defined in ./config.js
+
+Configurations are namespaced and delimited by `:`, e.g. `db:url`, `auth:enabled`. 
 
 #### Backend CRUD API
 | Request URL & Method                                   | Req Payload                                                                                                                           | Res Code | Response Body                                                           |
 |--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------|-------------------------------------------------------------------------|
+| POST /api/register                                     | { "type": enum(MANAGER,EMPLOYEE), "name": string, "username": string!, "email": string!, "password": string, "position": string? }    | 200      | Registers new User                                                      |
+| GET /api/login?username={:usrname}&password={:psw}     | { "username": string, "password": string}                                                                                             | 200/404  | JWT token                                                               |
 | GET /api/customer?domain={:domain}                     | -/-                                                                                                                                   | 200      | List of Customer entities filtered by :domain (optional)                |
 | POST /api/customers                                    | {"name": string, "domain": string}                                                                                                    | 200      | Created Customer entity                                                 |
 | PUT /api/customers/{:id}                               | {"name": string, "domain": string}                                                                                                    | 200/404  | Updated Customer entity                                                 |
@@ -75,7 +96,6 @@ env PORT=8080 npm start
 | DELETE /api/reports/{:id}                              | -/-                                                                                                                                   | 202/204  | -/-                                                                     |
 | GET /api/users                                         | -/-                                                                                                                                   | 200      | List of Users entities                                                  |
 | GET /api/users/{:id}                                   | -/-                                                                                                                                   | 200/404  | User entity with id == :id                                              |
-| POST /api/users                                        | { "type": enum(MANAGER,EMPLOYEE), "name": string, "username": string!, "email": string!, "password": string, "position": string? }    | 200      | Created User entity                                                     |
 | PUT /api/users/{:id}                                   | { "type": enum(MANAGER,EMPLOYEE)?, "name": string?, "username": string?, "email": string?, "password": string?, "position": string? } | 200/404  | Updated User entity                                                     |
 | DELETE /api/users/{:id}                                | -/-                                                                                                                                   | 202/204  | -/-                                                                     |
 | GET /api/usergroups                                    | -/-                                                                                                                                   | 200      | List of UserGroup entities                                              |
