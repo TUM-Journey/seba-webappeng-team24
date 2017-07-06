@@ -1,18 +1,17 @@
 import {Router} from 'express';
 import passport from 'passport';
 import UserType from '../models/user_type';
-import {Strategy as JwtStrategy, ExtractJwt as JwtExtractors} from 'passport-jwt';
+import {ExtractJwt as JwtExtractors, Strategy as JwtStrategy} from 'passport-jwt';
 
 import Strategy from 'passport-strategy';
 
 import login from '../auth/login';
 import register from '../auth/register';
-import customer_register from '../auth/customer-register';
 
 export default (app, config, db) => {
 
   // Setup Passport and Passport JWT token validation strategy
-  if (config.get('auth_enabled') === "true") {
+  if (config.get('auth_enabled') === 'true') {
     passport.use('auth:jwt', new JwtStrategy({
       secretOrKey: config.get('auth:secret'),
       jwtFromRequest: JwtExtractors.fromAuthHeader()
@@ -30,10 +29,10 @@ export default (app, config, db) => {
   passport.use('restrict:manager', new class extends Strategy { // Restricts access everybody but manager
     authenticate(req, options) {
       if (!req.user) {
-        this.fail("User object not found. This is a supportive strategy that requires prev strategy in chain " +
-          "to prepare user object with .type (UserType) field", 500);
+        this.fail('User object not found. This is a supportive strategy that requires prev strategy in chain ' +
+          'to prepare user object with .type (UserType) field', 500);
       } else if (req.user.type !== UserType.MANAGER) {
-        this.fail("Only manager users are allowed", 403); // HTTP 403 Forbidden
+        this.fail('Only manager users are allowed', 403); // HTTP 403 Forbidden
       } else {
         this.success(req.user);
       }
@@ -43,10 +42,10 @@ export default (app, config, db) => {
   passport.use('restrict:employee', new class extends Strategy { // Restricts access everybody but employee
     authenticate(req, options) {
       if (!req.user) {
-        this.fail("User object not found. This is a supportive strategy that requires prev strategy in chain " +
-          "to prepare user object with .type (UserType) field", 500);
+        this.fail('User object not found. This is a supportive strategy that requires prev strategy in chain ' +
+          'to prepare user object with .type (UserType) field', 500);
       } else if (req.user.type !== UserType.EMPLOYEE) {
-        this.fail("Only employees users are allowed", 403); // HTTP 403 Forbidden
+        this.fail('Only employees users are allowed', 403); // HTTP 403 Forbidden
       } else {
         this.success(req.user);
       }
@@ -60,7 +59,6 @@ export default (app, config, db) => {
 
   route.get('/login', login);
   route.post('/register', register);
-  route.post('/customer-register', customer_register);
 
   app.use('/api', route);
 }
