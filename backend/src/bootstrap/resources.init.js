@@ -1,4 +1,5 @@
-import { Router } from 'express';
+import {Router} from 'express';
+import passport from 'passport';
 
 import users from '../resources/users';
 import matrices from '../resources/matrices';
@@ -9,32 +10,50 @@ import plans from '../resources/plans';
 import reports from '../resources/reports';
 import usergroups from '../resources/user_group';
 import customers from '../resources/customers';
-import passport from 'passport';
 
 export default (app, config, db) => {
   const route = Router();
 
-  // Setup auth middleware
-  let authMiddleware;
-  if (config.get('auth_enabled') === "true") {
-    authMiddleware = passport.authenticate('jwt', { session: false });
-  } else {
-    console.warn('Passport authentication disabled!');
-    authMiddleware = (req, res, next) => {
-      next();
-    };
-  }
-
   // Mount Resources API
-  route.use('/users', authMiddleware, users({ config, db }));
-  route.use('/matrices', authMiddleware, matrices({ config, db }));
-  route.use('/forms', authMiddleware, forms({ config, db }));
-  route.use('/feedbacks/requests', authMiddleware, feedbackRequests({ config, db }));
-  route.use('/feedbacks', authMiddleware, feedbacks({ config, db }));
-  route.use('/plans', authMiddleware, plans({ config, db }));
-  route.use('/reports', authMiddleware, reports({ config, db }));
-  route.use('/usergroups', authMiddleware, usergroups({ config, db }));
-  route.use('/customers', authMiddleware, customers({ config, db }));
+  route.use('/users',
+    passport.authenticate('auth:jwt', {session: false}),
+    users({config, db}));
+
+  route.use('/matrices',
+    passport.authenticate('auth:jwt', {session: false}),
+    matrices({config, db}));
+
+  route.use('/forms',
+    passport.authenticate('auth:jwt', {session: false}),
+    passport.authenticate('restrict:manager', {session: false}),
+    forms({config, db}));
+
+  route.use('/feedbacks/requests',
+    passport.authenticate('auth:jwt', {session: false}),
+    feedbackRequests({config, db}));
+
+  route.use('/feedbacks',
+    passport.authenticate('auth:jwt', {session: false}),
+    feedbacks({config, db}));
+
+  route.use('/plans',
+    passport.authenticate('auth:jwt', {session: false}),
+    passport.authenticate('restrict:manager', {session: false}),
+    plans({config, db}));
+
+  route.use('/reports',
+    passport.authenticate('auth:jwt', {session: false}),
+    passport.authenticate('restrict:manager', {session: false}),
+    reports({config, db}));
+
+  route.use('/usergroups',
+    passport.authenticate('auth:jwt', {session: false}),
+    passport.authenticate('restrict:manager', {session: false}),
+    usergroups({config, db}));
+
+  route.use('/customers',
+    passport.authenticate('auth:jwt', {session: false}),
+    customers({config, db}));
 
   app.use('/api/', route);
 

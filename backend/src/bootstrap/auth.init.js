@@ -1,40 +1,58 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import passport from 'passport';
-import passportJwt from 'passport-jwt';
+import UserType from '../models/user_type';
+import {Strategy as JwtStrategy, ExtractJwt as JwtExtractors} from 'passport-jwt';
+
+import Strategy from 'passport-strategy';
 
 import login from '../auth/login';
 import register from '../auth/register';
-import customer_register from '../auth/customer-register'
-import passportHttp from 'passport-http'
+import customer_register from '../auth/customer-register';
 
 export default (app, config, db) => {
 
-  // Setup Passport and Passport JWT Strategy
-  const jwtStrategy = new passportJwt.Strategy({
-    secretOrKey: config.get('auth:secret'),
-    jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeader()
-  }, (payload, done) => done(null, payload));
-  // NEEDS FIX
-  // You're not checking for what's inside the payload. that means if I give it any valid JWT
-  // it will pass for any user, also I need to fix the api endpoints on postman because the port is wrong
-  // will add exposed endpoints as well
-
-
-  // basic strat is used to add a new customer to the database, this was part of the protected api,
-  // we need to control when to add customers with a different set of admin username and password
-  // this works for now, check config file for the right set of identification
-  const basicStrategy = new passportHttp.BasicStrategy(
-    (admin_id, password, done) => {
-      if ((admin_id === config.get('admin_id')) && (password === config.get('admin_password'))) {
-        return done(null, true)
+  // Setup Passport and Passport JWT token validation strategy
+  if (config.get('auth_enabled') === "true") {
+    passport.use('auth:jwt', new JwtStrategy({
+      secretOrKey: config.get('auth:secret'),
+      jwtFromRequest: JwtExtractors.fromAuthHeader()
+    }, (payload, done) => done(null, payload)));
+  } else {
+    console.warn('WARN! Passport JWT authentication disabled!');
+    passport.use('auth:jwt', new class extends Strategy { // Stub JWT strategy for test / rets MANAGER user
+      authenticate(req, options) {
+        this.success({type: UserType.MANAGER});
       }
-      return done(null, false)
-    }
-  )
-  const basicMiddleware = passport.authenticate('basic', { session: false })
+    });
+  }
 
-  passport.use('jwt', jwtStrategy);
-  passport.use('basic', basicStrategy)
+  // Authorization strategies
+  passport.use('restrict:manager', new class extends Strategy { // Restricts access everybody but manager
+    authenticate(req, options) {
+      if (!req.user) {
+        this.fail("User object not found. This is a supportive strategy that requires prev strategy in chain " +
+          "to prepare user object with .type (UserType) field", 500);
+      } else if (req.user.type !== UserType.MANAGER) {
+        this.fail("Only manager users are allowed", 403); // HTTP 403 Forbidden
+      } else {
+        this.success(req.user);
+      }
+    }
+  });
+
+  passport.use('restrict:employee', new class extends Strategy { // Restricts access everybody but employee
+    authenticate(req, options) {
+      if (!req.user) {
+        this.fail("User object not found. This is a supportive strategy that requires prev strategy in chain " +
+          "to prepare user object with .type (UserType) field", 500);
+      } else if (req.user.type !== UserType.EMPLOYEE) {
+        this.fail("Only employees users are allowed", 403); // HTTP 403 Forbidden
+      } else {
+        this.success(req.user);
+      }
+    }
+  });
+
   app.use(passport.initialize());
 
   // Mount Login/Register
@@ -42,7 +60,7 @@ export default (app, config, db) => {
 
   route.get('/login', login);
   route.post('/register', register);
-  route.post('/customer-register', basicMiddleware, customer_register)
+  route.post('/customer-register', customer_register);
 
   app.use('/api', route);
 }
