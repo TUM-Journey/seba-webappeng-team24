@@ -6,6 +6,33 @@ import Feedback from '../models/feedback';
 import FeedbackCompetency from '../models/feedback_competency';
 import MatrixCharacteristic from '../models/matrix_characteristic';
 import {failure} from '../lib/util';
+import mapToObject from 'map-to-object'
+
+function calculateAverageMatrix(competencies) {
+
+  const avgMatrix = new Map();
+
+  competencies.forEach(competency => {
+    const characteristicName = competency.characteristic.name;
+    const characteristicGrade = competency.grade;
+
+    const avgMatrixCharacteristicGrades = avgMatrix.get(characteristicName);
+    if (avgMatrixCharacteristicGrades) {
+      avgMatrixCharacteristicGrades.push(characteristicGrade);
+    } else {
+      avgMatrix.set(characteristicName, [characteristicGrade]);
+    }
+  });
+
+  avgMatrix.forEach((characteristicGrades, characteristicName) => {
+    const characteristicGradesSum = characteristicGrades.reduce((a, b) => a + b);
+    const characteristicGradesAvg = characteristicGradesSum / characteristicGrades.length;
+
+    avgMatrix.set(characteristicName, characteristicGradesAvg);
+  });
+
+  return mapToObject(avgMatrix);
+}
 
 export default ({config, db}) => resource({
 
@@ -137,6 +164,50 @@ export default ({config, db}) => resource({
     res.sendStatus(202);
   }
 })
+  // GET /matrix - Calculates an average matrix (opt filter &username={} &userGroupname={})
+  .get('/competencies/average', async (req, res) => {
+    if (!req.query.userGroupname && !req.query.username)
+      return failure(res, "UserGroupname or username query parameter is required", 400);
+
+    let searchParams = {};
+    if (req.query.userGroupname) {
+      const persistedUserGroup = await UserGroup.findOne({userGroupname: req.query.userGroupname});
+
+      if (!persistedUserGroup)
+        return failure(res, "Cant find requested user group", 400);
+
+      searchParams = {userGroup: persistedUserGroup._id};
+    } else if (req.query.username) {
+      const persistedUser = await User.findOne({username: req.query.username});
+
+      if (!persistedUser)
+        return failure(res, "Cant find requested user", 400);
+
+      searchParams = {user: persistedUser._id};
+    }
+
+    const feedbacks = await Feedback.find(searchParams)
+      .populate('competencies')
+      .populate('author')
+      .populate('user')
+      .populate('userGroup')
+      .populate({
+        path: 'competencies',
+        populate: {
+          path: 'characteristic',
+          model: 'MatrixCharacteristic'
+        }
+      });
+
+    const feedbackCompetencies = [];
+    feedbacks.forEach(feedback => {
+      feedback.competencies.forEach(competency => feedbackCompetencies.push(competency));
+    });
+
+    const avgMatrix = calculateAverageMatrix(feedbackCompetencies);
+
+    res.json(avgMatrix);
+  })
   // GET /mine - List of feedbacks on this user
   .get('/mine/inbound', async (req, res) => {
     if (!req.user)

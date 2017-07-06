@@ -27,6 +27,7 @@
     "cors": "^2.7.1",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
+    "map-to-object": "^1.0.0",
     "mongoose": "^4.10.6",
     "mongoose-unique-validator": "^1.0.5",
     "nconf": "^0.8.4",
