@@ -32,6 +32,13 @@ export default class FeedbackService {
         headers: {
           'Authorization': 'JWT ' + userToken
         }
+      },
+      userAvgMatrix: {
+        url: API_URL + '/feedbacks/competencies/average',
+        method: 'GET',
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
       }
     });
   }

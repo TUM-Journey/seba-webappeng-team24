@@ -26,10 +26,19 @@
     </div>
   </md-list-item>
 
-  <md-list-item class="md-2-line">
-    <div class="md-list-item-text">
-      <h3>My Reports</h3>
-      <p>Generate reports for users</p>
-    </div>
-  </md-list-item>
+  <!-- Manager protected -->
+  <div ng-if="$ctrl.user.isManager">
+    <md-list-item class="md-2-line" ui-sref="dashboard.feedback-review" ui-sref-active="md-list-item-active">
+      <div class="md-list-item-text">
+        <h3>Review Feedbacks</h3>
+        <p>Look through all feedbacks with average matrices</p>
+      </div>
+    </md-list-item>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text">
+        <h3>My Reports</h3>
+        <p>Generate reports for users</p>
+      </div>
+    </md-list-item>
+  </div>
 </md-list>

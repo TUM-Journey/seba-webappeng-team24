@@ -4,10 +4,20 @@ const STORAGE_TOKEN_KEY = 'jwtToken';
 
 export default class UserService {
 
-  constructor($http, $window, API_URL) {
+  constructor($http, $window, $resource, API_URL) {
     this.$http = $http;
     this.$window = $window;
     this.API_URL = API_URL;
+
+    this.$resource = $resource(API_URL + '/users', null, {
+      listAll: {
+        method: 'GET',
+        isArray: true,
+        headers: {
+          'Authorization': 'JWT ' + this.getToken()
+        }
+      }
+    });
   }
 
   async register(type, name, username, email, password, position) {
@@ -23,7 +33,6 @@ export default class UserService {
 
   async login(username, password) {
     const token = await this.$http.get(`${ this.API_URL }/login?username=${username}&password=${password}`);
-    console.log("Token=", token.data);
     this.$window.localStorage.setItem(STORAGE_TOKEN_KEY, token.data);
   }
 
@@ -47,12 +56,16 @@ export default class UserService {
     return this.$window.localStorage[STORAGE_TOKEN_KEY];
   }
 
+  listAllUsers() {
+    return this.$resource.listAll();
+  }
+
   isAuthenticated() {
     return !!this.$window.localStorage[STORAGE_TOKEN_KEY];
   }
 
   static get $inject() {
-    return ['$http', '$window', 'API_URL'];
+    return ['$http', '$window', '$resource', 'API_URL'];
   }
 
   static get name() {

@@ -1,5 +1,6 @@
 'use strict';
 
+import FeedbackService from '../../../services/feedback/feedback.service'
 import template from './feedback-mine-inbound.template.html';
 import './feedback-mine-inbound.style.css';
 
@@ -25,7 +26,7 @@ class FeedbackMineInboundComponentController {
   }
 
   static get $inject() {
-    return ['$scope', '$state', 'feedbackService'];
+    return ['$scope', '$state', FeedbackService.name];
   }
 }
 
