@@ -41,7 +41,7 @@ export default ({config, db}) => resource({
     });
 
     for (let i = 0; i < characteristics.length; i++) {
-      let {name, description} = characteristics[i];
+      let {name, description} = JSON.parse(characteristics[i]);
 
       const persistedCharacteristic = await new MatrixCharacteristic({
         _creator: matrix._id,
