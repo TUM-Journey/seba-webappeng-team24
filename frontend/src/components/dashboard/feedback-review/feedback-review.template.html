@@ -1,0 +1,54 @@
+<header>Review feedbacks</header>
+
+<div layout="row" layout-align="center center">
+  <div layout="column" flex="50">
+    <md-input-container>
+      <label>Select user</label>
+      <md-select ng-model="$ctrl.selectedUser" ng-change="$ctrl.refreshFeedbacks();$ctrl.refreshAvgMatrix();">
+        <md-option ng-value="null">None</md-option>
+        <md-option ng-repeat="user in $ctrl.users" ng-value="user">
+          {{user.name}} (username: {{user.username}})
+        </md-option>
+      </md-select>
+    </md-input-container>
+  </div>
+</div>
+
+<div ng-show="!!$ctrl.selectedUser && !!$ctrl.feedbacks.length">
+  <h6 style="margin-bottom: 10px;">Average matrix</h6>
+
+  <md-chips>
+    <md-chip ng-repeat="(name, avg) in $ctrl.avgMatrix">
+      <strong >{{name}}</strong>
+      <em>{{avg}}/10</em>
+    </md-chip>
+  </md-chips>
+</div>
+
+<div ng-show="!!$ctrl.selectedUser && !!$ctrl.feedbacks.length">
+  <h6 style="margin-bottom: 10px;">Feedbacks</h6>
+  <md-list flex>
+    <div ng-repeat="feedback in $ctrl.feedbacks">
+      <md-list-item class="md-3-line" style="margin-top: 7px">
+        <div class="md-list-item-text">
+          <h3 layout="row" layout-align="space-between center">
+            <div><md-icon><ng-md-icon icon="account_circle"></ng-md-icon></md-icon> On {{feedback.user.name ? feedback.user.name : feedback.userGroup.userGroupname}}</div>
+            <small hide-xs>{{feedback.created_at}}</small>
+          </h3>
+          <p>
+            <md-icon><ng-md-icon icon="comment"></ng-md-icon></md-icon> {{feedback.summary}}
+          </p>
+          <md-chips ng-model="feedback.competencies" ng-show="!!feedback.competencies.length" readonly="true">
+            <md-chip-template class="small">
+              <strong title="{{$chip.characteristic.description}}">{{$chip.characteristic.name}}</strong>
+              <em>{{$chip.grade}}/10</em>
+            </md-chip-template>
+          </md-chips>
+        </div>
+      </md-list-item>
+      <md-divider ng-if="!$last"></md-divider>
+    </div>
+  </md-list>
+</div>
+
+<h6 ng-show="!!$ctrl.selectedUser && !!!$ctrl.feedbacks.length" layout="row" layout-align="center center"><small>No feedbacks yet :(</small></h6>

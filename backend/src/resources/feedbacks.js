@@ -58,9 +58,41 @@ export default ({config, db}) => resource({
     callback(errorCode, feedback);
   },
 
-  // GET / - List all entities
-  async list({}, res) {
-    const feedbacks = await Feedback.find()
+  // GET / - List all entities (opt filter ?author={} &username={} &userGroupname={})
+  async list(req, res) {
+    let searchParams = {};
+    if (req.query.author) {
+      const persistedAuthor = await User.findOne({username: req.query.author});
+
+      if (!persistedAuthor) {
+        res.json({});
+        return;
+      }
+
+      searchParams = {author: persistedAuthor._id};
+    }
+
+    if (req.query.userGroupname) {
+      const persistedUserGroup = await UserGroup.findOne({userGroupname: req.query.userGroupname});
+
+      if (!persistedUserGroup) {
+        res.json({});
+        return;
+      }
+
+      searchParams = {userGroup: persistedUserGroup._id};
+    } else if (req.query.username) {
+      const persistedUser = await User.findOne({username: req.query.username});
+
+      if (!persistedUser) {
+        res.json({});
+        return;
+      }
+
+      searchParams = {user: persistedUser._id};
+    }
+
+    const feedbacks = await Feedback.find(searchParams)
       .populate('competencies')
       .populate('author')
       .populate('user')

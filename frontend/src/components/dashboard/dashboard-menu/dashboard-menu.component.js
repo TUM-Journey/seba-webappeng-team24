@@ -1,5 +1,6 @@
 'use strict';
 
+import UserService from './../../../services/user/user.service';
 import template from './dashboard-menu.template.html';
 import './dashboard-menu.style.css';
 
@@ -15,12 +16,16 @@ class DashboardMenuComponent {
 }
 
 class DashboardMenuComponentController {
-  constructor($state) {
+  constructor($state, userService) {
     this.$state = $state;
+
+    this.user = userService.getCurrentUser();
+    this.user.isManager = this.user.type === 'MANAGER';
+    this.user.isEmployee = this.user.type === 'EMPLOYEE';
   }
 
   static get $inject() {
-    return ['$state'];
+    return ['$state', UserService.name];
   }
 }
 
