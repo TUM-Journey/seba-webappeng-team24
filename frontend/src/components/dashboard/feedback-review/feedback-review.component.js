@@ -6,7 +6,6 @@ import template from './feedback-review.template.html';
 import './feedback-review.style.css';
 import pdf from 'pdfjs'
 import helvetica from '../../../Helvetica.json'
-import ngFileSaver from 'angular-file-saver'
 
 class FeedbackReviewComponent {
   constructor() {
@@ -77,7 +76,7 @@ class FeedbackReviewComponentController {
   }
 
   static get $inject() {
-    return ['$scope', '$state', FeedbackService.name, UserService.name, ngFileSaver.FileSaver, ngFileSaver.Blob];
+    return ['$scope', '$state', FeedbackService.name, UserService.name, 'FileSaver', 'Blob'];
   }
 }
 
