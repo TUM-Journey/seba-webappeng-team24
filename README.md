@@ -18,8 +18,11 @@ The app itself consists of two independent parts: backend (API) server and front
 
 ## Quick Start 
 - `./dev.sh -h` for the help menu.
-- `./dev.sh -a true` to run dev docker-compose with jwt auth enabled.
-- `./deploy.sh` to run the distribution version of docker-compose.
+- `./dev.sh -a true|false ` to run dev docker-compose with jwt auth enabled.
+- `./dev.sh -a true|false -d` to run docker-compose with development environment
+- `./dev.sh -a true|false -p` to run docker-compose with prod environment (not ready)
+- `./dev.sh -k` to kill docker-compose env. (if for whatever reason it's not killed already)
+
 
 The script uses mongodb instance seeded with test domain data. Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
 
