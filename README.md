@@ -35,13 +35,13 @@ npm run dev
 
 # Start development live-reload server with unprotected resources 
 npm run dev dev-unprotected
-(eq. npm run dev -- --auth:enabled=false)
+(eq. npm run dev -- --auth_enabled=false)
 
 # Start production server:
 npm run deploy
 
 # Start production server on HOST:PORT
-npm run deploy -- --server:host=0.0.0.0 --server:port=8080
+npm run deploy -- --server_port=8000
 ```
 
 Backend config loading priority:
@@ -133,56 +133,6 @@ npm run start
 
 #Start dev server:
 npm run start-dev
-```
-
-### Docker-Compose
-```
-# Run the development stack from the root directory of seba
-
-docker-compose up 
-
-# you might also use the --build flag if you want to 
-# rebuild the images.
-# use the -d flag to run everything as a daemon.
-# Both the frontend and the backend code should be available
-# and hot reloadable.
-# PORTS are 8080 for the backend 8000 for the frontend
-
-# Kill the development stack 
-
-docker-compose down
-
-# NOTES:
-
-# First add a company, then register a user with the right domain
-# finally login with the username + password
-# Simple API Link (not complete): https://documenter.getpostman.com/view/1033727/evaluatione/6Z6sAsy 
-
-# docker by default creates lots of junk such as orphan containers and images
-# run the docker-gc container to get rid all that junk
-
-docker pull spotify/docker-gc
-
-# and then run
-
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc:ro spotify/docker-gc
-
-#everytime you want to remove the junk.
-
-```
-
-### Build your docker
-```
-docker build -t seba/evaluati-one .
-#            ^       ^            ^
-#          tag   tag name   Dockerfile location
-
-# run your docker
-docker run -p 8080:8080 seba/evaluati-one
-#                 ^            ^
-#          bind the port    container tag
-#          to your host
-#          machine port  
 ```
 
 ## Credits

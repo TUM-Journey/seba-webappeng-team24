@@ -5,7 +5,7 @@ while getopts ":a:h" opt; do
   case $opt in
     a) auth_enabled="$OPTARG"
     ;;
-		h) echo "	Usage: `basename $0` 
+		h) echo "	Usage: `basename $0`
 		-a true | false -> enables jwt authentication
 		-h shows this "
     exit 1
@@ -19,4 +19,4 @@ while getopts ":a:h" opt; do
   esac
 done
 export auth=$auth_enabled
-docker-compose up --build --remove-orphans
+docker-compose --file ./deploy/dev/docker-compose.yml up --build --remove-orphans --force-recreate
