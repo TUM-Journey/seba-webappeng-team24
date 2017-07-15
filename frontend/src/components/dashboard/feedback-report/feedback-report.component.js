@@ -1,5 +1,5 @@
 'use strict';
-
+// this will hold a list of reports
 import FeedbackService from '../../../services/feedback/feedback.service';
 import UserService from '../../../services/user/user.service';
 import template from './feedback-report.template.html';
