@@ -1,0 +1,5 @@
+{"_id":{"$oid":"596a0c147ba5ec6907e09d35"},"_creator":{"$oid":"596a0c147ba5ec6907e09d34"},"name":"Leadership","description":"Leadership is both a research area and a practical skill encompassing the ability of an individual or organization to lead or guide other individuals and teams","__v":0}
+{"_id":{"$oid":"596a0c147ba5ec6907e09d36"},"_creator":{"$oid":"596a0c147ba5ec6907e09d34"},"name":"Business Storytelling","description":"How good is she/he at storytelling?","__v":0}
+{"_id":{"$oid":"596a0c147ba5ec6907e09d37"},"_creator":{"$oid":"596a0c147ba5ec6907e09d34"},"name":"Crisis Management","description":"How good he/she responds to a crisis","__v":0}
+{"_id":{"$oid":"596a0c147ba5ec6907e09d38"},"_creator":{"$oid":"596a0c147ba5ec6907e09d34"},"name":"Delegation","description":"How good employee can delegate his/her tasks","__v":0}
+{"_id":{"$oid":"596a0c147ba5ec6907e09d39"},"_creator":{"$oid":"596a0c147ba5ec6907e09d34"},"name":"Mentoring","description":"Is he/she a good mentor?","__v":0}

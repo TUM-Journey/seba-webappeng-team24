@@ -1,0 +1,5 @@
+{"_id":{"$oid":"596a0e697ba5ec6907e09d3f"},"_creator":{"$oid":"596a0e697ba5ec6907e09d3e"},"characteristic":{"$oid":"596a0c147ba5ec6907e09d35"},"grade":5,"__v":0}
+{"_id":{"$oid":"596a0e697ba5ec6907e09d40"},"_creator":{"$oid":"596a0e697ba5ec6907e09d3e"},"characteristic":{"$oid":"596a0c147ba5ec6907e09d36"},"grade":8,"__v":0}
+{"_id":{"$oid":"596a0e697ba5ec6907e09d41"},"_creator":{"$oid":"596a0e697ba5ec6907e09d3e"},"characteristic":{"$oid":"596a0c147ba5ec6907e09d37"},"grade":5,"__v":0}
+{"_id":{"$oid":"596a0e697ba5ec6907e09d42"},"_creator":{"$oid":"596a0e697ba5ec6907e09d3e"},"characteristic":{"$oid":"596a0c147ba5ec6907e09d38"},"grade":8,"__v":0}
+{"_id":{"$oid":"596a0e697ba5ec6907e09d43"},"_creator":{"$oid":"596a0e697ba5ec6907e09d3e"},"characteristic":{"$oid":"596a0c147ba5ec6907e09d39"},"grade":10,"__v":0}

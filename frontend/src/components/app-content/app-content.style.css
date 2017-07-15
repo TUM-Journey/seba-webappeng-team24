@@ -7,6 +7,10 @@ body {
     font-size: 1.6em;
 }
 
+md-select {
+  font-size: 0.7em !important;
+}
+
 .tooltip-multiline {
     height: auto !important;
 }

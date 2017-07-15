@@ -9,8 +9,8 @@ services:
     - "27017:27017"
   prod-server:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: ../../
+      dockerfile: ./deploy/prod/Dockerfile
     ports:
     - "8080:8080"
     links:
@@ -22,4 +22,3 @@ services:
 volumes:
   mdb:
   mdbc:
-    
