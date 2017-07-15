@@ -39,9 +39,21 @@ export default class FeedbackService {
         headers: {
           'Authorization': 'JWT ' + userToken
         }
+      },
+      addFeedback: {
+        url: API_URL + '/feedbacks/',
+        method: 'POST'
       }
     });
   }
+
+  // async addFeedback(id, summary, competencies) {
+  //   return this.$http.post(`${ this.API_URL }/feedbacks`, {
+  //     formId: id,
+  //     summary: summary,
+  //     competencies: competencies
+  //   });
+  // }
 
   static get $inject() {
     return ['$resource', 'API_URL', UserService.name];

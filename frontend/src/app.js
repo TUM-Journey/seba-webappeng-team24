@@ -10,6 +10,8 @@ import 'angular-material/angular-material.css';
 
 import UserService from './services/user/user';
 import FeedbackService from './services/feedback/feedback';
+import EmployeesService from './services/employees/employees';
+import MatricesService from './services/matrices/matrices';
 
 import Routes from './config/routes';
 import Middlewares from './config/middlewares';
@@ -30,6 +32,8 @@ let app = angular.module('app', [
 
   UserService.name,
   FeedbackService.name,
+  EmployeesService.name,
+  MatricesService.name,
 
   AppContent.name,
   ViewHome.name,
