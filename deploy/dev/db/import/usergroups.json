@@ -1,0 +1,2 @@
+{"_id":{"$oid":"596a09ef7ba5ec6907e09d32"},"userGroupname":"tum-managers","description":"A group of test TUM manager users","users":[{"$oid":"596a09567ba5ec6907e09d2f"}],"__v":0}
+{"_id":{"$oid":"596a0a067ba5ec6907e09d33"},"userGroupname":"tum-global","description":"A group of all test TUM users","users":[{"$oid":"596a09567ba5ec6907e09d2f"},{"$oid":"596a09a57ba5ec6907e09d31"}],"__v":0}
