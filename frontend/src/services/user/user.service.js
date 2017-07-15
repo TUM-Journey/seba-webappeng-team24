@@ -16,6 +16,15 @@ export default class UserService {
         headers: {
           'Authorization': 'JWT ' + this.getToken()
         }
+      },
+      listUserGroups: {
+        url: API_URL + '/users/:username/usergroups',
+        params: {username: "@username"},
+        method: 'GET',
+        isArray: true,
+        headers: {
+          'Authorization': 'JWT ' + this.getToken()
+        }
       }
     });
   }
@@ -56,8 +65,16 @@ export default class UserService {
     return this.$window.localStorage[STORAGE_TOKEN_KEY];
   }
 
-  listAllUsers() {
-    return this.$resource.listAll();
+  async listAllUsers() {
+    return await this.$resource.listAll().$promise;
+  }
+
+  async searchNotMeUsers(name) {
+    return await this.$resource.listAll({"notme": "true", "search": name}).$promise;
+  }
+
+  async getUserGroups(username) {
+    return await this.$resource.listUserGroups({username: username}).$promise;
   }
 
   isAuthenticated() {

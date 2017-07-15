@@ -38,7 +38,15 @@ export default ({config, db}) => resource({
       }
     }
 
-    const forms = await Form.find(searchParams);
+    const forms = await Form.find(searchParams)
+      .populate('matrix')
+      .populate({
+        path: 'matrix',
+        populate: {
+          path: 'characteristics',
+          model: 'MatrixCharacteristic'
+        }
+      });
     res.json(forms);
   },
 

@@ -39,6 +39,13 @@ export default class FeedbackService {
         headers: {
           'Authorization': 'JWT ' + userToken
         }
+      },
+      persistFeedback: {
+        url: API_URL + '/feedbacks/',
+        method: 'POST',
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
       }
     });
   }

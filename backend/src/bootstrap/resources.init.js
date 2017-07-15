@@ -25,7 +25,7 @@ export default (app, config, db) => {
 
   route.use('/forms',
     passport.authenticate('auth:jwt', {session: false}),
-    passport.authenticate('restrict:manager', {session: false}),
+    //passport.authenticate('restrict:manager', {session: false}), // unrestrict GET
     forms({config, db}));
 
   route.use('/feedbacks/requests',
