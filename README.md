@@ -17,9 +17,11 @@ Learn how to design web sites from the scratch including patterns for recurring 
 The app itself consists of two independent parts: backend (API) server and frontend.
 
 ## Quick Start 
-./dev.sh -h for the help menu.
-./dev.sh -a true to run dev docker-compose with jwt auth enabled.
-./deploy.sh to run the distribution version of docker-compose.
+- `./dev.sh -h` for the help menu.
+- `./dev.sh -a true` to run dev docker-compose with jwt auth enabled.
+- `./deploy.sh` to run the distribution version of docker-compose.
+
+The script uses mongodb instance seeded with test domain data. Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
 
 ### Backend
 
