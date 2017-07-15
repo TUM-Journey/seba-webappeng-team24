@@ -25,13 +25,13 @@ module.exports = {
                     options: {
                         presets: ['env'],
                         plugins: [
-                          [
-                            "transform-runtime",
-                            {
-                              "polyfill": false,
-                              "regenerator": true
-                            }
-                          ]
+                            [
+                                "transform-runtime",
+                                {
+                                    "polyfill": false,
+                                    "regenerator": true
+                                }
+                            ]
                         ]
                     }
                 }
@@ -84,7 +84,6 @@ module.exports = {
     ],
     // Webpack dev server configuration
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 8000
     }

@@ -24,5 +24,5 @@ WORKDIR /frontend
 
 # start command as per package.json
 # CMD ["npm", "build-prod"]
-CMD ["npm", "install"]
+CMD ["npm", "run", "watch"]
 CMD ["npm", "run", "start-dev-docker"]
