@@ -28,10 +28,6 @@ class AppHeaderComponentController {
 
     }
 
-    openMenu($mdMenu, ev) {
-        $mdMenu.open(ev);
-    }
-
     isAuthenticated() {
         return this.UserService.isAuthenticated();
     }

@@ -6,6 +6,8 @@ export default class FeedbackService {
 
   constructor($resource, API_URL, userService) {
     const userToken = userService.getToken();
+    const user = userService.getCurrentUser();
+    console.log("User is:", user)
     if (!userToken)
       throw new Error("Token is required to gen an access to feedbacks (protected resource)");
 

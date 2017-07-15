@@ -5,7 +5,7 @@ import UserGroup from '../models/user_groups';
 import Feedback from '../models/feedback';
 import FeedbackCompetency from '../models/feedback_competency';
 import MatrixCharacteristic from '../models/matrix_characteristic';
-import {failure} from '../lib/util';
+import { failure } from '../lib/util';
 import mapToObject from 'map-to-object'
 
 function calculateAverageMatrix(competencies) {
@@ -34,7 +34,7 @@ function calculateAverageMatrix(competencies) {
   return mapToObject(avgMatrix);
 }
 
-export default ({config, db}) => resource({
+export default ({ config, db }) => resource({
 
   id: 'feedback',
 
@@ -62,34 +62,34 @@ export default ({config, db}) => resource({
   async list(req, res) {
     let searchParams = {};
     if (req.query.author) {
-      const persistedAuthor = await User.findOne({username: req.query.author});
+      const persistedAuthor = await User.findOne({ username: req.query.author });
 
       if (!persistedAuthor) {
         res.json({});
         return;
       }
 
-      searchParams = {author: persistedAuthor._id};
+      searchParams = { author: persistedAuthor._id };
     }
 
     if (req.query.userGroupname) {
-      const persistedUserGroup = await UserGroup.findOne({userGroupname: req.query.userGroupname});
+      const persistedUserGroup = await UserGroup.findOne({ userGroupname: req.query.userGroupname });
 
       if (!persistedUserGroup) {
         res.json({});
         return;
       }
 
-      searchParams = {userGroup: persistedUserGroup._id};
+      searchParams = { userGroup: persistedUserGroup._id };
     } else if (req.query.username) {
-      const persistedUser = await User.findOne({username: req.query.username});
+      const persistedUser = await User.findOne({ username: req.query.username });
 
       if (!persistedUser) {
         res.json({});
         return;
       }
 
-      searchParams = {user: persistedUser._id};
+      searchParams = { user: persistedUser._id };
     }
 
     const feedbacks = await Feedback.find(searchParams)
@@ -108,13 +108,13 @@ export default ({config, db}) => resource({
   },
 
   // GET /:id - Return a given entity
-  async read({feedback}, res) {
+  async read({ feedback }, res) {
     res.json(feedback);
   },
 
   // POST / - Create a new entity
-  async create({body}, res) {
-    let {formId, author, username, userGroupname, summary, competencies} = body;
+  async create({ body }, res) {
+    let { formId, author, username, userGroupname, summary, competencies } = body;
 
     if (author === username) {
       failure(res, "You cant leave feedback on yourself", 400);
@@ -126,14 +126,14 @@ export default ({config, db}) => resource({
       return;
     }
 
-    const persistedAuthor = await User.findOne({username: author});
+    const persistedAuthor = await User.findOne({ username: author });
     if (!persistedAuthor) {
       failure(res, 'No user found with given username');
       return;
     }
 
-    const persistedUser = await User.findOne({username: username});
-    const persistedGroup = await UserGroup.findOne({userGroupname: userGroupname});
+    const persistedUser = await User.findOne({ username: username });
+    const persistedGroup = await UserGroup.findOne({ userGroupname: userGroupname });
 
     if (!persistedUser && !persistedGroup) {
       failure(res, "No user or userGroup (adressees) found with given username/userGroupname", 404);
@@ -150,7 +150,8 @@ export default ({config, db}) => resource({
       author: persistedAuthor._id,
       summary: summary,
       form: persistedForm._id,
-      competencies: []};
+      competencies: []
+    };
     if (persistedUser)
       newFeedbackData['user'] = persistedUser._id;
     else if (persistedGroup)
@@ -161,7 +162,7 @@ export default ({config, db}) => resource({
     const persistedCompetencyIds = [];
     for (let i = 0; i < competencies.length; i++) {
       const competency = competencies[i];
-      const {characteristicId, grade} = competency;
+      const { characteristicId, grade } = competency;
 
       const mtxChr = await MatrixCharacteristic.findById(characteristicId);
       if (!mtxChr) {
@@ -185,7 +186,7 @@ export default ({config, db}) => resource({
   },
 
   // DELETE /:id - Delete a given entity
-  async delete({feedback}, res) {
+  async delete({ feedback }, res) {
 
     for (let i = 0; i < feedback.competencies.length; i++) {
       await FeedbackCompetency.remove(feedback.competencies[i]);
@@ -203,19 +204,19 @@ export default ({config, db}) => resource({
 
     let searchParams = {};
     if (req.query.userGroupname) {
-      const persistedUserGroup = await UserGroup.findOne({userGroupname: req.query.userGroupname});
+      const persistedUserGroup = await UserGroup.findOne({ userGroupname: req.query.userGroupname });
 
       if (!persistedUserGroup)
         return failure(res, "Cant find requested user group", 400);
 
-      searchParams = {userGroup: persistedUserGroup._id};
+      searchParams = { userGroup: persistedUserGroup._id };
     } else if (req.query.username) {
-      const persistedUser = await User.findOne({username: req.query.username});
+      const persistedUser = await User.findOne({ username: req.query.username });
 
       if (!persistedUser)
         return failure(res, "Cant find requested user", 400);
 
-      searchParams = {user: persistedUser._id};
+      searchParams = { user: persistedUser._id };
     }
 
     const feedbacks = await Feedback.find(searchParams)
@@ -247,7 +248,7 @@ export default ({config, db}) => resource({
 
     const meUserId = req.user.id;
 
-    const feedbacks = await Feedback.find({user: meUserId})
+    const feedbacks = await Feedback.find({ user: meUserId })
       .populate('competencies')
       .populate('author')
       .populate('user')
@@ -269,7 +270,7 @@ export default ({config, db}) => resource({
 
     const meUserId = req.user.id;
 
-    const feedbacks = await Feedback.find({author: meUserId})
+    const feedbacks = await Feedback.find({ author: meUserId })
       .populate('competencies')
       .populate('author')
       .populate('user')

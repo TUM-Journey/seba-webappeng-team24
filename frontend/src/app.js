@@ -3,7 +3,7 @@
 import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import ngResource from 'angular-resource';
-
+import ngFileSaver from 'angular-file-saver'
 import ngMaterial from 'angular-material';
 import ngMdIcons from 'angular-material-icons';
 import 'angular-material/angular-material.css';
@@ -24,10 +24,9 @@ import Dashboard from './components/dashboard/dashboard';
 let app = angular.module('app', [
   uiRouter,
   ngResource,
-
+  ngFileSaver,
   ngMaterial,
   ngMdIcons,
-
   UserService.name,
   FeedbackService.name,
 

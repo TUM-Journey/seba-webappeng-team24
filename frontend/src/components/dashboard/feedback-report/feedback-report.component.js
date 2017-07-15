@@ -4,7 +4,6 @@ import FeedbackService from '../../../services/feedback/feedback.service';
 import UserService from '../../../services/user/user.service';
 import template from './feedback-report.template.html';
 import './feedback-report.style.css';
-import pdfjs from 'pdfjs';
 
 class FeedbackReportComponent {
 	constructor() {
@@ -32,10 +31,6 @@ class FeedbackReportComponentController {
 		this.avgMatrix = null;
 		this.check = 0
 	}
-	generatePdf() {
-		//TODO
-	}
-
 
 	refreshFeedbacks() {
 		if (!this.selectedUser) {
