@@ -1,11 +1,10 @@
 <header>Give Feedback</header>
 
-<form id="giveFeedbackForm" action="" class="page-content">
+<form name="$ctrl.giveFeedbackForm" action="" class="page-content">
   <div layout-gt-sm="row">
     <md-autocomplete flex required
-                     md-input-name="autocompleteField"
+                     md-input-name="employee"
                      md-min-length="1"
-                     md-no-cache="$ctrl.noCache"
                      md-selected-item="$ctrl.feedback.employee"
                      md-search-text="$ctrl.searchText"
                      md-items="item in $ctrl.querySearch($ctrl.searchText)"
@@ -14,7 +13,7 @@
       <md-item-template>
         <span md-highlight-text="$ctrl.searchText">{{item.name}}</span>
       </md-item-template>
-      <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+      <div ng-messages="$ctrl.giveFeedbackForm.employee.$error" ng-if="$ctrl.giveFeedbackForm.employee.$touched">
         <div ng-message="required">You <b>must</b> select an Employee.</div>
         <div ng-message="md-require-match">Please select an existing employee.</div>
         <div ng-message="minlength">Your entry is not long enough.</div>
@@ -24,7 +23,7 @@
   </div>
   <md-input-container class="md-block">
     <label>Your Feedback</label>
-    <textarea  ng-model="$ctrl.feedback.summary" md-maxlength="350" rows="5" md-select-on-focus></textarea>
+    <textarea name="summary"  ng-model="$ctrl.feedback.summary" md-maxlength="350" rows="5" md-select-on-focus></textarea>
   </md-input-container>
   <div class="md-block">
     <label class="form-section-title ">Competency</label>
@@ -35,20 +34,14 @@
       <div layout-gt-sm="row" ng-repeat="characteristic in competency.characteristics track by $index">
         <label flex="25">{{characteristic.name}}</label>
         <fieldset class="rating">
-            <input ng-model="$ctrl.feedback.characteristics[characteristic._id]" ng-value="{{rating}}" ng-repeat-start="rating in $ctrl.ratings" type="radio" id="star{{rating}}_{{$index}}_{{characteristic._id}}" name="{{characteristic._id}}" value="{{rating}}" /><label class = "full" for="star{{rating}}_{{$index}}_{{characteristic._id}}" ng-repeat-end></label>
+            <input ng-model="$ctrl.feedback.characteristics[characteristic._id]" ng-required="!$ctrl.feedback.characteristics[characteristic._id]" ng-value="{{rating}}" ng-repeat-start="rating in $ctrl.ratings" type="radio" id="star{{rating}}_{{$index}}_{{characteristic._id}}" name="{{characteristic._id}}" value="{{rating}}" /><label class = "full" for="star{{rating}}_{{$index}}_{{characteristic._id}}" ng-repeat-end></label>
         </fieldset>
       </div>
     </div>
     </md-input-container>
 
-    <md-input-container class="md-block">
-      <md-checkbox class="md-primary" ng-model="$ctrl.feedback.isanonymous" aria-label="Checkbox 1">
-        Post as Anonymous
-      </md-checkbox>
-    </md-input-container>
-
     <div layout="row" layout-align="center">
-      <md-button ng-click="$ctrl.submit()" class="md-raised md-primary">Submit</md-button>
+      <md-button ng-click="$ctrl.submit()" ng-disabled="$ctrl.giveFeedbackForm.employee.$untouched || $ctrl.giveFeedbackForm.employee.$invalid || $ctrl.giveFeedbackForm.summary.$untouched || $ctrl.giveFeedbackForm.summary.$invalid || $ctrl.giveFeedbackForm.employee.$untouched || $ctrl.giveFeedbackForm.employee.$invalid" class="md-raised md-primary">Submit</md-button>
     </div>
   </div>
 </form>

@@ -42,6 +42,7 @@ class FeedbackGiveComponentController{
     }
 
     submit() {
+      var that = this;
       this.FeedbackService.addFeedback({
         "username": this.feedback.employee.username,
         "author": this.currentUser.username,
@@ -54,11 +55,14 @@ class FeedbackGiveComponentController{
           }
         })
       },function () {
-          this.$mdToast.show(
-            this.$mdToast.simple()
+          that.$mdToast.show(
+            that.$mdToast.simple()
               .textContent('Sent successfully')
               .position('top')
               .hideDelay(6000));
+
+          that.feedback = angular.copy({});
+          that.feedback.employee = null;
         },
         function () {
           alert('error')
