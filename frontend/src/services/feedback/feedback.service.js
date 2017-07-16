@@ -40,8 +40,8 @@ export default class FeedbackService {
         method: 'GET',
         headers: {
           'Authorization': 'JWT ' + userToken
-        }
-      }
+        },
+      },
     });
   }
 

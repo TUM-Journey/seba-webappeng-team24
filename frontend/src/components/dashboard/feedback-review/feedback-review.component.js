@@ -103,17 +103,29 @@ class FeedbackReviewComponentController {
     }).br()
 
     console.log(this.avgMatrix)
-    doc.text("Averages", { textAlign: 'center', fontSize: 14 })
+    doc.text("Averages", { textAlign: 'center', fontSize: 14 }).br()
+    let table = doc.table({
+      widths: [null, null],
+      borderWidth: 3,
+      padding: 5,
+    })
+    // fix this
+    for (let competency of this.feedbacks[0].competencies) {
+      let tr = table.row()
+      tr.cell(competency.characteristic.name, { textAlign: 'center' })
+      tr.cell(this.avgMatrix[competency.characteristic.name], { textAlign: 'center' })
+      // doc.text(competency.characteristic.name + ":" + this.avgMatrix[competency.characteristic.name])
+    }
 
     for (var i = 0; i < this.feedbacks.length; i++) {
       let feedback = this.feedbacks[i]
       // console.log(feedback)
       doc.text('  #' + i)
-      doc.text('  Author: ' + feedback.author.name, { fontSize: 12, color: "#00008b" }).br()
-      doc.text('  Summary: ' + feedback.summary).br()
-      var d = new Date(feedback.created_at)
+      doc.text('  Author: ' + feedback.author.name, { fontSize: 12, color: "#00008b" })
+      doc.text('  Summary: ' + feedback.summary)
+      let d = new Date(feedback.created_at)
       doc.text('  Submitted at: ' + d.toLocaleString()).br()
-      var table = doc.table({
+      let table = doc.table({
         widths: [null, null],
         borderWidth: 3,
         padding: 10,
