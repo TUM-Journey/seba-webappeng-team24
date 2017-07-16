@@ -75,7 +75,7 @@ export default ({config, db}) => resource({
     res.send(persistedCustomer.subscriptions);
   })
 
-  // POST /:id/members - Creates new subscription
+  // POST /:customerId/subscriptions - Creates new subscription
   .post('/:customerId/subscriptions', async (req, res) => {
     const customerId = req.params.customerId;
     const {planId, paymentMethod} = req.body;
@@ -108,7 +108,7 @@ export default ({config, db}) => resource({
     res.status(200).send(persistedSubscription);
   })
 
-  // DELETE /:id/members/:username - Removes user from the user group
+  // DELETE /:customerId/subscriptions/:subscriptionId - Removes subscription
   .delete('/:customerId/subscriptions/:subscriptionId', async (req, res) => {
     let {customerId, subscriptionId} = req.params;
 
