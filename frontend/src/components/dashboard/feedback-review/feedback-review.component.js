@@ -26,6 +26,7 @@ class FeedbackReviewComponentController {
   constructor($scope, $state, feedbackService, userService, FileSaver, Blob) {
     this.FileSaver = FileSaver;
     this.Blob = Blob;
+    this.$scope = $scope;
     this.$state = $state;
     this.feedbackService = feedbackService;
     this.userService = userService;
@@ -51,6 +52,15 @@ class FeedbackReviewComponentController {
       var d = new Date(feedback.created_at)
       feedback.created_at = d.toLocaleString()
     }
+  }
+
+  async deleteFeedback(feedback){
+    console.log(feedback._id);
+    const deleteFeedbackRequest = await this.feedbackService.removeFeedback({id: feedback._id}).$promise;
+
+    this.refreshFeedbacks();
+    this.refreshAvgMatrix();
+    this.$scope.$apply();
   }
 
   save(doc) {
