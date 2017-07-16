@@ -78,6 +78,10 @@ export default class UserService {
     return await this.$resource.listAll().$promise;
   }
 
+  fetchAllUsers() {
+    return this.$resource.listAll();
+  }
+
   async searchNotMeUsers(name) {
     return await this.$resource.listAll({"notme": "true", "search": name}).$promise;
   }
