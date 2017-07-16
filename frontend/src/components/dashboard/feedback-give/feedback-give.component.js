@@ -81,7 +81,7 @@ class FeedbackGiveComponentController {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent('Thank you! Your feedback has been saved.')
-          .position('top')
+          .position('top center')
           .hideDelay(4000));
 
     } catch (e) {
@@ -89,7 +89,7 @@ class FeedbackGiveComponentController {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent(e.data && e.data.error ? e.data.error : e)
-          .position('top')
+          .position('top center')
           .hideDelay(4000)
       );
     }

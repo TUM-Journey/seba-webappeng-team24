@@ -9,3 +9,8 @@ header {
 [ui-view='dashboard'] {
   padding: 17px;
 }
+
+.dashboard{
+  padding: 10px;
+}
+
