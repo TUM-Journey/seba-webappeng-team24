@@ -5,9 +5,9 @@ while getopts ":a:pdkh" opt; do
   case $opt in
     a) auth_enabled="$OPTARG"; export auth=$auth_enabled
     ;;
-    p) docker-compose --file deploy/prod/docker-compose-prod.yml up --build --remove-orphans --force-recreate
+    p) docker-compose --file deploy/prod/docker-compose-prod.yml up --build --remove-orphans
     ;;
-    d) docker-compose --file deploy/dev/docker-compose.yml up --build --remove-orphans --force-recreate
+    d) docker-compose --file deploy/dev/docker-compose.yml up --build --remove-orphans
     ;;
     k) docker-compose down
     ;;

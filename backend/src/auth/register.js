@@ -2,6 +2,7 @@ import User from '../models/user';
 import Customer from '../models/customer';
 import bcrypt from 'bcryptjs';
 import { failure } from '../lib/util';
+import UserGroup from '../models/user_groups'
 
 const BCRYPT_SALT_ROUNDS = 10;
 
@@ -34,9 +35,28 @@ export default async (req, res) => {
       password: passwordHash,
       position: position
     }).save();
-
+    const user = await User.findOne({ username: username })
+    let ug = await getUserGroup()
+    console.log(user)
+    ug.users.push(user._id);
+    console.log(ug)
+    UserGroup.update({ '_id': ug._id }, { $push: { 'users': user._id } }, (err, res) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(res)
+      }
+    })
+    // TODO: update user group
     res.sendStatus(200);
   } catch (error) {
     failure(res, 'Failed to persist new user', 500, error.errors ? error.errors : error.toString());
+  }
+}
+async function getUserGroup() {
+  const userGroups = await UserGroup.find();
+  for (let userGroup of userGroups) {
+    if (userGroup.userGroupname === 'tum-global')
+      return userGroup
   }
 }
