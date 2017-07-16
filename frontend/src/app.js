@@ -41,7 +41,7 @@ let app = angular.module('app', [
 ]);
 
 
-app.constant('API_URL', api_url);
+app.constant('API_URL', config.api_url);
 app.config(Routes);
 app.config(Middlewares);
 
