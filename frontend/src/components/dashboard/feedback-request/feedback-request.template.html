@@ -7,7 +7,7 @@
   <md-list-item class="md-2-line" ng-repeat="inRequest in $ctrl.incomingRequests">
     <div class="md-list-item-text">
       <h3>From <strong>{{inRequest.author.name}}</strong></h3>
-      <p><i>Requested at {{inRequest.created_at}}</i></p>
+      <p><i>Requested at {{inRequest.created_at | date:'medium'}}</i></p>
     </div>
     <md-button class="md-secondary" ng-click="$ctrl.feedbackOnRequest(inRequest)">Respond</md-button>
   </md-list-item>
@@ -22,7 +22,7 @@
   <md-list-item class="md-2-line" ng-repeat="outRequest in $ctrl.outcomingRequests">
     <div class="md-list-item-text">
       <h3>To <strong>{{outRequest.user.name}}</strong></h3>
-      <p><i>Requested at {{outRequest.created_at}}</i></p>
+      <p><i>Requested at {{outRequest.created_at | date:'medium'}}</i></p>
     </div>
   </md-list-item>
 

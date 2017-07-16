@@ -1,25 +1,25 @@
 <md-list>
-  <md-list-item class="md-2-line dashmenu" ui-sref="dashboard.feedback-mine-inbound" ui-sref-active="md-list-item-active">
+  <md-list-item class="md-2-line" ui-sref="dashboard.feedback-mine-inbound" ui-sref-active="md-list-item-active">
     <div class="md-list-item-text">
       <h3>My Inbound Feedback</h3>
       <p>List all feedbacks left on you</p>
     </div>
   </md-list-item>
-  <md-list-item class="md-2-line dashmenu" ui-sref="dashboard.feedback-mine-outbound" ui-sref-active="md-list-item-active">
+  <md-list-item class="md-2-line" ui-sref="dashboard.feedback-mine-outbound" ui-sref-active="md-list-item-active">
     <div class="md-list-item-text">
       <h3>My Outbound Feedback</h3>
       <p>List all feedbacks left by you</p>
     </div>
   </md-list-item>
 
-  <md-list-item class="md-2-line dashmenu" ui-sref="dashboard.feedback-give" ui-sref-active="md-list-item-active">
+  <md-list-item class="md-2-line" ui-sref="dashboard.feedback-give" ui-sref-active="md-list-item-active">
     <div class="md-list-item-text">
       <h3>Give Feedback</h3>
       <p>Give a feedback on your colleague</p>
     </div>
   </md-list-item>
 
-  <md-list-item class="md-2-line dashmenu" ui-sref="dashboard.feedback-request" ui-sref-active="md-list-item-active">
+  <md-list-item class="md-2-line" ui-sref="dashboard.feedback-request" ui-sref-active="md-list-item-active">
     <div class="md-list-item-text">
       <h3>Feedback requests</h3>
       <p>Ask a colleague to leave feedback and track incoming feedback requests</p>
@@ -28,7 +28,7 @@
 
   <!-- Manager protected -->
   <div ng-if="$ctrl.user.isManager">
-    <md-list-item class="md-2-line dashmenu" ui-sref="dashboard.feedback-review" ui-sref-active="md-list-item-active">
+    <md-list-item class="md-2-line" ui-sref="dashboard.feedback-review" ui-sref-active="md-list-item-active">
       <div class="md-list-item-text">
         <h3>Review Feedbacks</h3>
         <p>Look through all feedbacks with average matrices</p>

@@ -15,7 +15,7 @@
 </div>
 
 <div ng-show="!!$ctrl.selectedUser && !!$ctrl.feedbacks.length">
-  <h6 style="margin-bottom: 10px;">Average matrix</h6>
+  <h6 style="margin-bottom: 10px; font-size: 0.74em;">Average matrix</h6>
 
   <md-chips>
     <md-chip ng-repeat="(name, avg) in $ctrl.avgMatrix">
@@ -26,14 +26,14 @@
 </div>
 
 <div ng-show="!!$ctrl.selectedUser && !!$ctrl.feedbacks.length">
-  <h6 style="margin-bottom: 10px;">Feedbacks</h6>
+  <h6 style="margin-top: 20px; margin-bottom: 25px; font-size: 0.74em;">Feedbacks</h6>
   <md-list flex>
     <div ng-repeat="feedback in $ctrl.feedbacks">
       <md-list-item class="md-3-line" style="margin-top: 7px">
         <div class="md-list-item-text">
           <h3 layout="row" layout-align="space-between center">
             <div><md-icon><ng-md-icon icon="account_circle"></ng-md-icon></md-icon> On {{feedback.user.name ? feedback.user.name : feedback.userGroup.userGroupname}}</div>
-            <small hide-xs>{{feedback.created_at}}</small>
+            <small hide-xs>{{feedback.created_at | date:'medium' }}</small>
           </h3>
           <p>
             <md-icon><ng-md-icon icon="comment"></ng-md-icon></md-icon> {{feedback.summary}}
@@ -51,4 +51,4 @@
   </md-list>
 </div>
 
-<h6 ng-show="!!$ctrl.selectedUser && !!!$ctrl.feedbacks.length" layout="row" layout-align="center center"><small>You don't have any feedbacks yet.</small></h6>
+<h6 ng-show="!!$ctrl.selectedUser && !!!$ctrl.feedbacks.length" layout="row" layout-align="center center"><small>This user doesn't have any feedbacks yet.</small></h6>
