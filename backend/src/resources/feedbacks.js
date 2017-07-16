@@ -28,7 +28,7 @@ function calculateAverageMatrix(competencies) {
     const characteristicGradesSum = characteristicGrades.reduce((a, b) => a + b);
     const characteristicGradesAvg = characteristicGradesSum / characteristicGrades.length;
 
-    avgMatrix.set(characteristicName, characteristicGradesAvg);
+    avgMatrix.set(characteristicName, characteristicGradesAvg.toFixed(1));
   });
 
   return mapToObject(avgMatrix);
