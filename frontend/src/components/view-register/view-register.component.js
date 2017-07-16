@@ -37,14 +37,14 @@ class ViewRegisterComponentController {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent('Thank you for registration! Please user your credentials to log in, ' + name)
-          .position('top')
+          .position('top center')
           .capsule(true)
           .hideDelay(6000));
     } catch (e) {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent(e.data.error)
-          .position('top')
+          .position('top center')
           .capsule(true)
           .hideDelay(4000)
       );

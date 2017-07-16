@@ -37,7 +37,7 @@ class ViewLoginComponentController {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent('Welcome back, ' + username)
-          .position('top')
+          .position('top center')
           .capsule(true)
           .hideDelay(4000));
 
@@ -45,7 +45,7 @@ class ViewLoginComponentController {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent(e.data.error)
-          .position('top')
+          .position('top center')
           .hideDelay(4000)
           .capsule(true)
       );
