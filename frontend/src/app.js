@@ -21,7 +21,6 @@ import ViewLogin from './components/view-login/view-login';
 import ViewRegister from './components/view-register/view-register';
 
 import Dashboard from './components/dashboard/dashboard';
-import './styles/app.css'
 
 let app = angular.module('app', [
   uiRouter,
