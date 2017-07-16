@@ -6,23 +6,24 @@ services:
     volumes:
     - ../../backend:/backend
     ports:
-    - "8080:8080"
+    - "${server_port}:${server_port}"
     links:
     - persistence-mongo-dev
     environment:
     - "db_url=mongodb://persistence-mongo-dev/test"
-    - "server_port=8080"
+    - "server_port=${server_port}"
     - "auth_enabled=${auth}"
-    - "api_url=http://localhost:8080/api"
   persistence-mongo-dev:
     build:
       context: ./db/
     ports:
     - "27017:27017"
   frontend-server:
+    environment:
+      - "api_url=${protocol}://${server_domain}:${server_port}/api"
     build:
       context: ../../frontend/
     volumes:
     - ../../frontend:/frontend
     ports:
-    - "8000:8000"
+    - "${fe_port}:8000"
