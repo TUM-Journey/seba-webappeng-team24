@@ -31,6 +31,8 @@ To setup developer environment you can use `./dev.sh` script that will setup con
 
 Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
 
+**Warning!** No JWT Auth mode that bypasses pasportjs is not supported and must be used only for testing purposes. Some endpoints require user id and fetch it from req params that are issued by passportjs, therefore they wont work in this mode. 
+
 ### Backend
 
 You may also want to start backend directly via npm scripts:
