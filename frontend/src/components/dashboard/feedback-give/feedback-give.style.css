@@ -1,0 +1,21 @@
+.md-thumb:after, .md-track-fill{
+      background-color: rgb(73,155,234) !important;
+      border-color: rgb(73,155,234) !important;
+}
+
+/* .md-focus-thumb, .md-focus-ring{
+   background-color: rgb(73,155,234) !important;
+} */
+
+.md-sign{
+  background-color: rgb(73,155,234) !important;
+      border-top-color: rgb(73,155,234) !important;
+}
+
+.md-sign:after, .md-sign{
+ border-top-color: rgb(73,155,234) !important;
+}
+
+.feedback{
+   background-color: rgb(73,155,234) !important;
+}

@@ -36,16 +36,18 @@ class ViewLoginComponentController {
       this.$state.go('dashboard.feedback-mine-inbound', {});
       this.$mdToast.show(
         this.$mdToast.simple()
-          .textContent('Welcome back, ' + username)
-          .position('top')
+          .textContent('Welcome back, ' + username + '.')
+          .position('top center')
+          .capsule(true)
           .hideDelay(4000));
 
     } catch (e) {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent(e.data.error)
-          .position('top')
+          .position('top center')
           .hideDelay(4000)
+          .capsule(true)
       );
     }
   }

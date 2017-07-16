@@ -13,7 +13,7 @@ export default async (req, res) => {
 
   const persistedUser = await User.findOne({username: username});
   if (!persistedUser)
-    return failure(res, 'No user found with given username', 404);
+    return failure(res, 'This user does not exist.', 404);
 
   const persistedUserPasswordHash = persistedUser.password;
   if (!await bcrypt.compare(password, persistedUserPasswordHash))
