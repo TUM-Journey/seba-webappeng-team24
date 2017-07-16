@@ -20,14 +20,16 @@ The app itself consists of two independent parts: backend (API) server and front
 
 The app is based on MEAN stack and is tested on NodeJS 7 but should work on NodeJS 5+. It also uses Docker for deployement.
 
-### Docker
+### Docker Development Environment
+To setup developer environment you can use `./dev.sh` script that will setup containers needed including the mongodb instance seeded with test domain data. It mounts volumes binded to your local machine so that you can edit code locally and see all changes directly without reloading the container, **therefore `npm install` is required prior using the script.**
+
 - `./dev.sh -h` for the help menu.
 - `./dev.sh -a true|false ` to run dev docker-compose with jwt auth enabled.
 - `./dev.sh -a true|false -d` to run docker-compose with development environment
 - `./dev.sh -a true|false -p` to run docker-compose with prod environment (not ready)
 - `./dev.sh -k` to kill docker-compose env. (if for whatever reason it's not killed already)
 
-The script uses mongodb instance seeded with test domain data. Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
+Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
 
 ### Backend
 
