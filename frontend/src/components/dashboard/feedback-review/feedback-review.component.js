@@ -73,7 +73,7 @@ class FeedbackReviewComponentController {
 
     // Trying to load this fucking image into a buffer so that I can use it as an argument
     // in new pdf.Image(buffer)
-    var header = doc.header().table({ widths: [null, null], paddingBottom: 1 * pdf.cm }).row()
+    var header = doc.header().table({ widths: [null, null], paddingBottom: 2 * pdf.cm }).row()
     var buffer = fetch(icon)
       .then((response) => {
         return response.blob()
@@ -93,28 +93,31 @@ class FeedbackReviewComponentController {
         underline: true,
         color: 0x569cd6
       })
+
     doc.footer()
       .pageNumber((curr, total) => `${curr} / ${total}`, { textAlign: 'center', fontSize: 16 })
+
     doc.text("Feedback Report of " + this.feedbacks[0].user.name, {
       fontSize: 16, font: new pdf.Font(helveticaBold)
       , color: "#ff0000", textAlign: 'center'
     }).br()
 
+    console.log(this.avgMatrix)
+    doc.text("Averages", { textAlign: 'center', fontSize: 14 })
 
-    for (let feedback of this.feedbacks) {
-      console.log(feedback)
+    for (var i = 0; i < this.feedbacks.length; i++) {
+      let feedback = this.feedbacks[i]
+      // console.log(feedback)
+      doc.text('  #' + i)
       doc.text('  Author: ' + feedback.author.name, { fontSize: 12, color: "#00008b" }).br()
       doc.text('  Summary: ' + feedback.summary).br()
       var d = new Date(feedback.created_at)
       doc.text('  Submitted at: ' + d.toLocaleString()).br()
       var table = doc.table({
         widths: [null, null],
-        borderHorizontalWidths: function (i) { return i < 2 ? 1 : 0.1 },
+        borderWidth: 3,
         padding: 10,
       })
-      let th = table.header({ font: new pdf.Font(helveticaBold), borderBottomWidth: 1.5 })
-      th.cell('Matrix Characteristic', { textAlign: 'center' })
-      th.cell('Grade', { textAlign: 'center' })
       for (let competency of feedback.competencies) {
         let tr = table.row()
         tr.cell(competency.characteristic.name, { textAlign: 'center' })

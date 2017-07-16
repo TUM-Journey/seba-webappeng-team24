@@ -15,7 +15,7 @@ export default async (req, res) => {
   }
 
   const emailDomain = emailParts[1];
-  const persistedCustomer = await Customer.findOne({ domain: '@' + emailDomain });
+  const persistedCustomer = await Customer.findOne({ domain: emailDomain });
   if (!persistedCustomer) {
     failure(res, 'Failed to find a customer by domain = ' + emailDomain, 404);
     return;

@@ -9,7 +9,6 @@ import FeedbackGiveComponent from '../components/dashboard/feedback-give/feedbac
 import FeedbackMineInboundComponent from '../components/dashboard/feedback-mine-inbound/feedback-mine-inbound.component';
 import FeedbackMineOutboundComponent from '../components/dashboard/feedback-mine-outbound/feedback-mine-outbound.component';
 import FeedbackReviewComponent from '../components/dashboard/feedback-review/feedback-review.component';
-import FeedbackReportComponent from '../components/dashboard/feedback-report/feedback-report.component';
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
 export default function config($stateProvider, $urlRouterProvider) {
@@ -57,14 +56,6 @@ export default function config($stateProvider, $urlRouterProvider) {
       views: {
         'dashboard': {
           component: FeedbackReviewComponent.name
-        }
-      }
-    })
-    .state('dashboard.feedback-report', {
-      url: '/feedback/report',
-      views: {
-        'dashboard': {
-          component: FeedbackReportComponent.name
         }
       }
     })

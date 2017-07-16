@@ -8,7 +8,6 @@ import FeedbackGiveComponent from './feedback-give/feedback-give';
 import FeedbackMineInboundComponent from './feedback-mine-inbound/feedback-mine-inbound';
 import FeedbackMineOutboundComponent from './feedback-mine-outbound/feedback-mine-outbound';
 import FeedbackReviewComponent from './feedback-review/feedback-review';
-import FeedbackReportComponent from './feedback-report/feedback-report';
 
 export default angular.module('Dashboard', [
   DashboardMenuComponent.name,

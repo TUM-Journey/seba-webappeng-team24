@@ -56,7 +56,7 @@
   </md-list>
 </div>
 
-<div layout="row" layout-align="center">
+<div ng-show=" !!$ctrl.feedbacks.length" layout="row" layout-align="center">
   <md-button ng-click="$ctrl.generatePdf()" ng-class="md-raised">Export PDF</md-button>
 </div>
 
