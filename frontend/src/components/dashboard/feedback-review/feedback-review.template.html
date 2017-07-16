@@ -32,10 +32,12 @@
       <md-list-item class="md-3-line" style="margin-top: 7px">
         <div class="md-list-item-text">
           <h3 layout="row" layout-align="space-between center">
+
             <div>
               <md-icon aria-label="account_icon">
                 <ng-md-icon icon="account_circle"></ng-md-icon>
               </md-icon> On {{feedback.user.name ? feedback.user.name : feedback.userGroup.userGroupname}}</div>
+
             <small hide-xs>{{feedback.created_at}}</small>
           </h3>
           <p style="padding-top: 1em; padding-bottom: 1em">

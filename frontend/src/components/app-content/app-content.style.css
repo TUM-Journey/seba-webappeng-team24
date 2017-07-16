@@ -4,7 +4,7 @@ body {
     font-family: 'Cabin', sans-serif;
     font-weight: normal;
     color: #2c2e35 !important;
-    font-size: 1.6em;
+    font-size: 1.4em;
 }
 
 md-select {
@@ -13,4 +13,8 @@ md-select {
 
 .tooltip-multiline {
     height: auto !important;
+}
+
+.md-chips md-chip.small {
+  height: 25px !important;
 }

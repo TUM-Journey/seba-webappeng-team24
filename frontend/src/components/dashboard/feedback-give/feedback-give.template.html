@@ -1,59 +1,48 @@
 <header>Give Feedback</header>
 
-<form action="" class="page-content">
+<form name="feedback">
   <div layout-gt-sm="row">
     <md-autocomplete flex required
-                     md-input-name="autocompleteField"
-                     md-min-length="0"
-                     md-no-cache="$ctrl.noCache"
-                     md-selected-item="$ctrl.selectedItem"
-                     md-search-text="$ctrl.searchText"
-                     md-items="item in $ctrl.querySearch($ctrl.searchText)"
-                     md-item-text="item.name"
-                     md-floating-label="Choose Employee">
+                     md-selected-item="feedback.author"
+                     md-input-name="user"
+                     md-min-length="1"
+                     md-search-text="searchUserQuery"
+                     md-items="item in $ctrl.searchUser(searchUserQuery)"
+                     md-item-text="item.username"
+                     md-floating-label="Type user name"
+                     md-selected-item-change="$ctrl.loadEligibleForm(item)"
+                     md-search-text-change="feedback.form=null">
       <md-item-template>
-        <span md-highlight-text="$ctrl.searchText">{{item.name}}</span>
+        {{item.name}} (<strong>{{item.username}}</strong><span ng-if="item.position">, {{item.position}}</span>)
       </md-item-template>
-      <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
-        <div ng-message="required">You <b>must</b> have a favorite state.</div>
-        <div ng-message="md-require-match">Please select an existing state.</div>
-        <div ng-message="minlength">Your entry is not long enough.</div>
-        <div ng-message="maxlength">Your entry is too long.</div>
+      <div ng-messages="feedback.user.$error" ng-if="feedback.user.$touched">
+        <div ng-message="required">You <b>must</b> specify user first.</div>
       </div>
     </md-autocomplete>
   </div>
-  <md-input-container class="md-block">
-    <label>Your Feedback</label>
-    <textarea  ng-model="feedback.text" md-maxlength="350" rows="5" md-select-on-focus></textarea>
-  </md-input-container>
-  <div class="md-block">
-    <label class="form-section-title ">Competency</label>
-    <div layout-gt-sm="row" ng-repeat="competency in $ctrl.competencyList track by $index">
-
-      <label flex="25">{{competency.name}}</label>
-      <fieldset class="rating">
-        <input type="radio" id="star5_{{$index}}" name="rating_{{$index}}" value="5" /><label class = "full" for="star5_{{$index}}" title="Awesome _{{$index}}- 5 stars"></label>
-        <input type="radio" id="star4half_{{$index}}" name="rating_{{$index}}" value="4 and a half" /><label class="half" for="star4half_{{$index}}" title="Pretty _{{$index}}good - 4.5 stars"></label>
-        <input type="radio" id="star4_{{$index}}" name="rating_{{$index}}" value="4" /><label class = "full" for="star4_{{$index}}" title="Pretty _{{$index}}good - 4 stars"></label>
-        <input type="radio" id="star3half_{{$index}}" name="rating_{{$index}}" value="3 and a half" /><label class="half" for="star3half_{{$index}}" title="Meh _{{$index}}- 3.5 stars"></label>
-        <input type="radio" id="star3_{{$index}}" name="rating_{{$index}}" value="3" /><label class = "full" for="star3_{{$index}}" title="Meh _{{$index}}- 3 stars"></label>
-        <input type="radio" id="star2half_{{$index}}" name="rating_{{$index}}" value="2 and a half" /><label class="half" for="star2half_{{$index}}" title="Kinda _{{$index}}bad - 2.5 stars"></label>
-        <input type="radio" id="star2_{{$index}}" name="rating_{{$index}}" value="2" /><label class = "full" for="star2_{{$index}}" title="Kinda _{{$index}}bad - 2 stars"></label>
-        <input type="radio" id="star1half_{{$index}}" name="rating_{{$index}}" value="1 and a half" /><label class="half" for="star1half_{{$index}}" title="Meh _{{$index}}- 1.5 stars"></label>
-        <input type="radio" id="star1_{{$index}}" name="rating_{{$index}}" value="1" /><label class = "full" for="star1_{{$index}}" title="Sucks _{{$index}}big time - 1 star"></label>
-        <input type="radio" id="starhalf_{{$index}}" name="rating_{{$index}}" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-      </fieldset>
-    </div>
-    </md-input-container>
+  <div ng-if="!!feedback.form">
 
     <md-input-container class="md-block">
-      <md-checkbox class="md-primary" ng-model="feeback.anonymous" aria-label="Checkbox 1">
-        Post as Anonymous
-      </md-checkbox>
+      <label>Summary</label>
+      <textarea ng-model="feedback.summary" maxlength="350" rows="5" md-select-on-focus></textarea>
     </md-input-container>
 
-    <div layout="row" layout-align="center">
-      <md-button class="md-raised md-primary">Submit</md-button>
+    <div class="md-block">
+      <label class="form-section-title">Competency</label>
+
+      <div layout ng-repeat="characteristic in feedback.form.matrix.characteristics track by $index">
+        <div flex="20" layout layout-align="center center">
+          <span class="md-body-1">{{characteristic.name}}</span>
+        </div>
+        <md-slider flex md-discrete ng-model="feedback.competencies[characteristic._id]" min="0" max="10" aria-label="ranking"></md-slider>
+      </div>
+
+      <div layout="row" layout-align="center">
+        <md-button class="md-raised md-primary" ng-click="$ctrl.saveFeedback(feedback)">Submit</md-button>
+      </div>
     </div>
+
   </div>
+  <h6 ng-show="!!!feedback.form" layout="row" layout-align="center center"><small>Please choose a feedbackee to load a feedback form.</small></h6>
+
 </form>

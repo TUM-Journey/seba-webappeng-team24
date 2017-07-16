@@ -122,13 +122,13 @@ export default ({ config, db }) => resource({
     }
 
     if (competencies.length === 0) {
-      failure(res, 'At least one competencies is required');
+      failure(res, 'At least one competencies is required', 400);
       return;
     }
 
     const persistedAuthor = await User.findOne({ username: author });
     if (!persistedAuthor) {
-      failure(res, 'No user found with given username');
+      failure(res, 'No user found with given username', 404);
       return;
     }
 
@@ -142,7 +142,7 @@ export default ({ config, db }) => resource({
 
     const persistedForm = await Form.findById(formId);
     if (!persistedForm) {
-      failure(res, 'No form found with given id');
+      failure(res, 'No form found with given id', 404);
       return;
     }
 
@@ -245,6 +245,8 @@ export default ({ config, db }) => resource({
   .get('/mine/inbound', async (req, res) => {
     if (!req.user)
       return failure(res, "Not authorized", 401);
+    else if (!req.user.id)
+      return failure(res, "Failed to retrieve user id (no auth mode?)");
 
     const meUserId = req.user.id;
 
@@ -267,6 +269,8 @@ export default ({ config, db }) => resource({
   .get('/mine/outbound', async (req, res) => {
     if (!req.user)
       return failure(res, "Not authorized", 401);
+    else if (!req.user.id)
+      return failure(res, "Failed to retrieve user id (no auth mode?)");
 
     const meUserId = req.user.id;
 

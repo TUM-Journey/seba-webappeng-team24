@@ -10,6 +10,7 @@ import 'angular-material/angular-material.css';
 
 import UserService from './services/user/user';
 import FeedbackService from './services/feedback/feedback';
+import FormService from './services/form/form';
 
 import Routes from './config/routes';
 import Middlewares from './config/middlewares';
@@ -29,6 +30,7 @@ let app = angular.module('app', [
   ngMdIcons,
   UserService.name,
   FeedbackService.name,
+  FormService.name,
 
   AppContent.name,
   ViewHome.name,

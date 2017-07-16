@@ -30,7 +30,7 @@ class FeedbackReviewComponentController {
     this.feedbackService = feedbackService;
     this.userService = userService;
 
-    this.users = userService.listAllUsers();
+    this.users = userService.fetchAllUsers();
 
     this.selectedUser = null;
     this.feedbacks = null;
