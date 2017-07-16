@@ -25,13 +25,13 @@ module.exports = {
                     options: {
                         presets: ['env'],
                         plugins: [
-                          [
-                            "transform-runtime",
-                            {
-                              "polyfill": false,
-                              "regenerator": true
-                            }
-                          ]
+                            [
+                                "transform-runtime",
+                                {
+                                    "polyfill": false,
+                                    "regenerator": true
+                                }
+                            ]
                         ]
                     }
                 }
@@ -64,7 +64,13 @@ module.exports = {
                     'file-loader'
                 ]
             },
+            // Load Json
 
+            {
+                test: /\.json$/,
+                exclude: /node_modules/,
+                loader: 'json-loader'
+            },
         ]
     },
 
@@ -84,9 +90,11 @@ module.exports = {
     ],
     // Webpack dev server configuration
     devServer: {
+
         watchOptions: {
             poll: 1000
         },
+
         compress: true,
         port: 8000
     }

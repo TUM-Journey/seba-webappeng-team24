@@ -8,7 +8,7 @@
         </a>
 
         <span flex></span>
-                    <md-button ng-if="$ctrl.isAuthenticated()">
+                    <md-button ng-if="$ctrl.isAuthenticated()" ui-sref="dashboard.feedback-mine-inbound">
                         <md-icon md-menu-align-target><ng-md-icon icon="account_circle" ></ng-md-icon></md-icon>
                         {{$ctrl.getCurrentUser()}}
                     </md-button>
