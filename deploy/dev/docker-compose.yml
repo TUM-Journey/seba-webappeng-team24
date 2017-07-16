@@ -13,6 +13,7 @@ services:
     - "db_url=mongodb://persistence-mongo-dev/test"
     - "server_port=8080"
     - "auth_enabled=${auth}"
+    - "api_url=http://localhost:8080/api"
   persistence-mongo-dev:
     build:
       context: ./db/

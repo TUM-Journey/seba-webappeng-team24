@@ -19,7 +19,7 @@ import AppContent from './components/app-content/app-content';
 import ViewHome from './components/view-home/view-home';
 import ViewLogin from './components/view-login/view-login';
 import ViewRegister from './components/view-register/view-register';
-
+import api_url from './config/config'
 import Dashboard from './components/dashboard/dashboard';
 
 let app = angular.module('app', [
@@ -41,7 +41,7 @@ let app = angular.module('app', [
 ]);
 
 
-app.constant('API_URL', 'http://localhost:8080/api');
+app.constant('API_URL', api_url);
 app.config(Routes);
 app.config(Middlewares);
 

@@ -16,10 +16,17 @@ module.exports = {
     },
     module: {
         rules: [
+            // Envify
+            {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                loader: 'transform-loader?envify'
+            },
             // Load JS Files
             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
+                // include: path.resolve(__dirname, '/src'),
                 use: {
                     loader: 'babel-loader',
                     options: {
