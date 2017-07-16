@@ -23,10 +23,9 @@ class FeedbackReviewComponent {
 
 class FeedbackReviewComponentController {
 
-  constructor($scope, $state, feedbackService, userService, FileSaver, Blob) {
+  constructor($state, feedbackService, userService, FileSaver, Blob) {
     this.FileSaver = FileSaver;
     this.Blob = Blob;
-    this.$scope = $scope;
     this.$state = $state;
     this.feedbackService = feedbackService;
     this.userService = userService;
@@ -55,19 +54,16 @@ class FeedbackReviewComponentController {
   }
 
   async deleteFeedback(feedback){
-    console.log(feedback._id);
-    const deleteFeedbackRequest = await this.feedbackService.removeFeedback({id: feedback._id}).$promise;
+    await this.feedbackService.removeFeedback({id: feedback._id}).$promise;
 
     this.refreshFeedbacks();
     this.refreshAvgMatrix();
-    this.$scope.$apply();
   }
 
   save(doc) {
     return doc.asBuffer()
       .then(buf => {
         const blob = new this.Blob([buf], { type: 'application/pdf' })
-        console.log(this.feedbacks)
         let pdfName = this.feedbacks[0].user.name + "_" + this.title_date + '.pdf'
         return this.FileSaver.saveAs(blob, pdfName)
 
@@ -135,7 +131,6 @@ class FeedbackReviewComponentController {
     doc.text("Individual Feedbacks", { textAlign: 'center', fontSize: 13, color: '#0000FF', underline: true }).br()
     for (var i = 0; i < this.feedbacks.length; i++) {
       let feedback = this.feedbacks[i]
-      // console.log(feedback)
       doc.text('  #' + i)
       doc.text('  Author: ' + feedback.author.name, { fontSize: 11, color: "#00008b" })
       doc.text('  Summary: ' + feedback.summary)
@@ -154,7 +149,6 @@ class FeedbackReviewComponentController {
       doc.text("  ").br()
     }
     const file = this.save(doc)
-    console.log(file)
 
   }
 
@@ -169,7 +163,7 @@ class FeedbackReviewComponentController {
   }
 
   static get $inject() {
-    return ['$scope', '$state', FeedbackService.name, UserService.name, 'FileSaver', 'Blob'];
+    return ['$state', FeedbackService.name, UserService.name, 'FileSaver', 'Blob'];
   }
 }
 
