@@ -6,6 +6,8 @@ export default class FeedbackService {
 
   constructor($resource, API_URL, userService) {
     const userToken = userService.getToken();
+    const user = userService.getCurrentUser();
+    console.log("User is:", user)
     if (!userToken)
       throw new Error("Token is required to gen an access to feedbacks (protected resource)");
 
@@ -38,6 +40,7 @@ export default class FeedbackService {
         method: 'GET',
         headers: {
           'Authorization': 'JWT ' + userToken
+
         }
       },
       persistFeedback: {
@@ -70,6 +73,7 @@ export default class FeedbackService {
           'Authorization': 'JWT ' + userToken
         }
       }
+
     });
   }
 

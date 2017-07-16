@@ -16,5 +16,5 @@ export default angular.module('Dashboard', [
   FeedbackRequestComponent.name,
   FeedbackMineInboundComponent.name,
   FeedbackMineOutboundComponent.name,
-  FeedbackReviewComponent.name
+  FeedbackReviewComponent.name,
 ]).component(DashboardComponent.name, new DashboardComponent);

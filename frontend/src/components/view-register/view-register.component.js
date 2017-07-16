@@ -28,7 +28,7 @@ class ViewRegisterComponentController {
   }
 
   async submit() {
-    let {type, name, username, email, password, position} = this.register;
+    let { type, name, username, email, password, position } = this.register;
 
     try {
       await this.UserService.register(type, name, username, email, password, position);

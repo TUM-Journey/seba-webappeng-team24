@@ -1,12 +1,12 @@
 import User from '../models/user';
 import Customer from '../models/customer';
 import bcrypt from 'bcryptjs';
-import {failure} from '../lib/util';
+import { failure } from '../lib/util';
 
 const BCRYPT_SALT_ROUNDS = 10;
 
 export default async (req, res) => {
-  let {type, name, username, email, password, position} = req.body;
+  let { type, name, username, email, password, position } = req.body;
 
   const emailParts = email.split('@');
   if (emailParts.length < 2) {
@@ -15,7 +15,7 @@ export default async (req, res) => {
   }
 
   const emailDomain = emailParts[1];
-  const persistedCustomer = await Customer.findOne({domain: emailDomain});
+  const persistedCustomer = await Customer.findOne({ domain: emailDomain });
   if (!persistedCustomer) {
     failure(res, 'Failed to find a customer by domain = ' + emailDomain, 404);
     return;
