@@ -64,26 +64,31 @@ class FeedbackReviewComponentController {
       })
   }
 
+
   generatePdf() {
 
     const doc = new pdf.Document({
       font: new pdf.Font(helvetica),
-      padding: 10
+      padding: 10,
+      fontSize: 10,
     })
-
-    // Trying to load this fucking image into a buffer so that I can use it as an argument
+    // Trying to load this image into a buffer so that I can use it as an argument
     // in new pdf.Image(buffer)
-    var header = doc.header().table({ widths: [null, null], paddingBottom: 2 * pdf.cm }).row()
-    var buffer = fetch(icon)
-      .then((response) => {
-        return response.blob()
-      })
-      .then((blob) => {
-        var fr = new FileReader()
-        var buffer = fr.readAsArrayBuffer(blob)
-        console.log(buffer)
-      })
-    // header.cell().image(new pdf.Image(buffer), { height: 2 * pdf.cm })
+    // const toDataURL = url => fetch(url)
+    //   .then(response => response.blob())
+    //   .then(blob => new Promise((resolve, reject) => {
+    //     const reader = new FileReader()
+    //     reader.onloadend = () => resolve(reader.result)
+    //     reader.onerror = reject
+    //     reader.readAsDataURL(blob)
+    //   }))
+
+    // toDataURL(icon)
+    //   .then(dataUrl => {
+    //     console.log('RESULT:', dataUrl)
+    //   })
+    var header = doc.header().table({ widths: [null, null], paddingBottom: 1 * pdf.cm }).row()
+    // header.cell().image(new pdf.Image(dataUrl), { height: 2 * pdf.cm })
     header.cell().text("Evaluati.one", { fontSize: 16, color: '#ff0000' })
     header.cell().text({ textAlign: 'right' })
       .add('Generated at: ' + this.generation_date).br()
@@ -94,6 +99,7 @@ class FeedbackReviewComponentController {
         color: 0x569cd6
       })
 
+
     doc.footer()
       .pageNumber((curr, total) => `${curr} / ${total}`, { textAlign: 'center', fontSize: 16 })
 
@@ -102,11 +108,11 @@ class FeedbackReviewComponentController {
       , color: "#ff0000", textAlign: 'center'
     }).br()
 
-    doc.text("Averages", { textAlign: 'center', fontSize: 14, color: '#0000FF', underline: true }).br()
+    doc.text("Averages", { textAlign: 'center', fontSize: 13, color: '#0000FF', underline: true }).br()
     let table = doc.table({
       widths: [null, null],
-      borderWidth: 3,
-      padding: 10,
+      borderWidth: 1.5,
+      padding: 5,
     })
     // fix this hack
     for (let competency of this.feedbacks[0].competencies) {
@@ -116,19 +122,19 @@ class FeedbackReviewComponentController {
       // doc.text(competency.characteristic.name + ":" + this.avgMatrix[competency.characteristic.name])
     }
     doc.text("  ").br()
-    doc.text("Individual Feedbacks", { textAlign: 'center', fontSize: 14, color: '#0000FF', underline: true }).br()
+    doc.text("Individual Feedbacks", { textAlign: 'center', fontSize: 13, color: '#0000FF', underline: true }).br()
     for (var i = 0; i < this.feedbacks.length; i++) {
       let feedback = this.feedbacks[i]
       // console.log(feedback)
       doc.text('  #' + i)
-      doc.text('  Author: ' + feedback.author.name, { fontSize: 12, color: "#00008b" })
+      doc.text('  Author: ' + feedback.author.name, { fontSize: 11, color: "#00008b" })
       doc.text('  Summary: ' + feedback.summary)
       let d = new Date(feedback.created_at)
       doc.text('  Submitted at: ' + d.toLocaleString()).br()
       let table = doc.table({
         widths: [null, null],
-        borderWidth: 3,
-        padding: 10,
+        borderWidth: 1.5,
+        padding: 5,
       })
       for (let competency of feedback.competencies) {
         let tr = table.row()
