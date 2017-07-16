@@ -6,7 +6,7 @@
       <div class="md-list-item-text">
         <h3 layout="row" layout-align="space-between center">
           <div><md-icon><ng-md-icon icon="account_circle"></ng-md-icon></md-icon>From {{feedback.author.name}}</div>
-          <small hide-xs>{{feedback.created_at}}</small>
+          <small hide-xs>{{feedback.created_at | date:'medium' }}</small>
         </h3>
         <p>
           <md-icon><ng-md-icon icon="comment"></ng-md-icon></md-icon> {{feedback.summary}}

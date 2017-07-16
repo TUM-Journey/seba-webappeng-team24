@@ -9,8 +9,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 .login-form md-card md-card-content {
     border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);   
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     align-content: center;
+    padding: 20px 80px 30px 80px;
 }
 
 .md-block label {
