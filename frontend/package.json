@@ -51,6 +51,6 @@
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1 ./dist",
     "start-dev": "webpack-dev-server --progress --open",
-    "start-dev-docker": "webpack-dev-server --progress --host 0.0.0.0 --content-base dist/ "
+    "start-dev-docker": "webpack-dev-server --progress --host 0.0.0.0/ "
   }
 }
