@@ -2,8 +2,10 @@ version: '3'
 services:
   mongo:
     image: mongo:latest
+    build: 
+      context: ../dev/db/
     volumes:
-    - mdb:/data/db
+    - mdb:/data/mongod
     - mdbc:/data/configdb
     ports:
     - "27017:27017"
@@ -12,13 +14,15 @@ services:
       context: ../../
       dockerfile: ./deploy/prod/Dockerfile
     ports:
-    - "8080:8080"
+    - "${server_port}:${server_port}"
     links:
     - mongo
     environment:
     - "db_url=mongodb://mongo/test"
     - "production=true"
-    - "server_port=8080"
+    - "server_port=${server_port}"
+    - "auth_enabled=${auth}"
+    - "api_url=${protocol}://${server_domain}:${server_port}/api"
 volumes:
   mdb:
   mdbc:

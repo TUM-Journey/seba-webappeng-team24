@@ -3,8 +3,8 @@ FROM mhart/alpine-node:latest
 
 RUN apk add --update nodejs bash git
 
-ADD ./backend /backend
-ADD ./frontend /frontend
+ADD /backend /backend
+ADD /frontend /frontend
 
 
 RUN cd /frontend && \

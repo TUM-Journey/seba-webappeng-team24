@@ -16,18 +16,26 @@ Learn how to design web sites from the scratch including patterns for recurring 
 
 The app itself consists of two independent parts: backend (API) server and frontend.
 
+
+## Quick Start 
+- `./build.sh -h` for the help menu to be able to build a docker environment.
+
 ### Requirements
 
 The app is based on MEAN stack and is tested on NodeJS 7 but should work on NodeJS 5+. It also uses Docker for deployement.
 
 ### Docker Development Environment
-To setup developer environment you can use `./dev.sh` script that will setup containers needed including the mongodb instance seeded with test domain data. It mounts volumes binded to your local machine so that you can edit code locally and see all changes directly without reloading the container, **therefore `npm install` is required prior using the script.**
-
-- `./dev.sh -h` for the help menu.
-- `./dev.sh -a true|false ` to run dev docker-compose with jwt auth enabled.
-- `./dev.sh -a true|false -d` to run docker-compose with development environment
-- `./dev.sh -a true|false -p` to run docker-compose with prod environment (not ready)
-- `./dev.sh -k` to kill docker-compose env. (if for whatever reason it's not killed already)
+To setup developer environment you can use `./build.sh` script that will setup containers needed including the mongodb instance seeded with test domain data. It mounts volumes binded to your local machine so that you can edit code locally and see all changes directly without reloading the container, **therefore `npm install` is required prior using the script.**
+Usage: build.sh
+    -a true | false -> enables jwt authentication.
+    -p <number> eg:80 -> sets the backend server port.
+    -o <number> eg:8000 -> sets the frontend server port. Only for development environment.
+    -d <domain_string> eg:51.15.72.225 0-> sets the url of the server.
+    -f <protocol_string> eg: http - sets the protocol string of the server.
+    -x runs docker-compose up with dev config .
+    -z runs docker-compose up with prod config.
+    -k kills every container, image and volume, give you a clean slate.
+    -h shows this
 
 Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
 
