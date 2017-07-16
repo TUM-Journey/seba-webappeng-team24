@@ -36,8 +36,8 @@ class FeedbackReviewComponentController {
       this.feedbacks = [];
       return;
     }
-    this.feedbacks = this.feedbackService.listAll({ username: this.selectedUser.username });
 
+    this.feedbacks = this.feedbackService.listAll({username: this.selectedUser.username});
   }
 
   refreshAvgMatrix() {
@@ -46,7 +46,7 @@ class FeedbackReviewComponentController {
       return;
     }
 
-    this.avgMatrix = this.feedbackService.userAvgMatrix({ username: this.selectedUser.username });
+    this.avgMatrix = this.feedbackService.userAvgMatrix({username: this.selectedUser.username});
   }
 
   static get $inject() {
