@@ -39,6 +39,36 @@ export default class FeedbackService {
         headers: {
           'Authorization': 'JWT ' + userToken
         }
+      },
+      persistFeedback: {
+        url: API_URL + '/feedbacks/',
+        method: 'POST',
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
+      },
+      listAllRequests: {
+        url: API_URL + '/feedbacks/requests',
+        method: 'GET',
+        isArray: true,
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
+      },
+      requestFeedback: {
+        url: API_URL + '/feedbacks/requests',
+        method: 'POST',
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
+      },
+      removeFeedbackRequest: {
+        url: API_URL + '/feedbacks/requests/:requestId',
+        params: {requestId: "@requestId"},
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'JWT ' + userToken
+        }
       }
     });
   }
