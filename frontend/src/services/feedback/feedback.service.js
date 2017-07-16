@@ -72,8 +72,15 @@ export default class FeedbackService {
         headers: {
           'Authorization': 'JWT ' + userToken
         }
+      },
+      removeFeedback: {
+        url: API_URL + '/feedbacks/:id',
+        params: {id: "@id"},
+        method: 'DELETE',
+         headers: {
+          'Authorization': 'JWT ' + userToken
+        }
       }
-
     });
   }
 

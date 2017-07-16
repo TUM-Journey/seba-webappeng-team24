@@ -16,13 +16,34 @@ Learn how to design web sites from the scratch including patterns for recurring 
 
 The app itself consists of two independent parts: backend (API) server and frontend.
 
+
 ## Quick Start 
 - `./build.sh -h` for the help menu to be able to build a docker environment.
 
+### Requirements
 
-The script uses mongodb instance seeded with test domain data. Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
+The app is based on MEAN stack and is tested on NodeJS 7 but should work on NodeJS 5+. It also uses Docker for deployement.
+
+### Docker Development Environment
+To setup developer environment you can use `./build.sh` script that will setup containers needed including the mongodb instance seeded with test domain data. It mounts volumes binded to your local machine so that you can edit code locally and see all changes directly without reloading the container, **therefore `npm install` is required prior using the script.**
+Usage: build.sh
+    -a true | false -> enables jwt authentication.
+    -p <number> eg:80 -> sets the backend server port.
+    -o <number> eg:8000 -> sets the frontend server port. Only for development environment.
+    -d <domain_string> eg:51.15.72.225 0-> sets the url of the server.
+    -f <protocol_string> eg: http - sets the protocol string of the server.
+    -x runs docker-compose up with dev config .
+    -z runs docker-compose up with prod config.
+    -k kills every container, image and volume, give you a clean slate.
+    -h shows this
+
+Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
+
+**Warning!** No JWT Auth mode that bypasses pasportjs is not supported and must be used only for testing purposes. Some endpoints require user id and fetch it from req params that are issued by passportjs, therefore they wont work in this mode. 
 
 ### Backend
+
+You may also want to start backend directly via npm scripts:
 
 ```
 # Install dependencies
@@ -50,9 +71,28 @@ Backend config loading priority:
 2) Environment variables
 3) Default values defined in ./config.js
 
-Configurations are namespaced and delimited by `:`, e.g. `db:url`, `auth:enabled`. 
+### Frontend
 
-#### Backend CRUD API
+To run frontend with npm use these cmds:
+
+```
+# Install dependencies
+npm install
+
+# Build assest
+npm run build 
+
+# Watch the assets
+npm run watch 
+
+# Start server:
+npm run start
+
+# Start dev server:
+npm run start-dev
+```
+
+## Backend REST API
 | Request URL & Method                                   | Req Payload                                                                                                                           | Res Code | Response Body                                                           |
 |--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------|-------------------------------------------------------------------------|
 | POST /api/register                                     | { "type": enum(MANAGER,EMPLOYEE), "name": string, "username": string!, "email": string!, "password": string, "position": string? }    | 200      | Registers new User                                                      |
@@ -98,9 +138,11 @@ Configurations are namespaced and delimited by `:`, e.g. `db:url`, `auth:enabled
 | GET /api/reports/{:id}                                 | -/-                                                                                                                                   | 200/404  | Report entity with id == :id                                            |
 | POST /api/reports                                      | { "username": string?, userGroupname: string?, "document": string }                                                                   | 200      | Created Report entity                                                   |
 | DELETE /api/reports/{:id}                              | -/-                                                                                                                                   | 202/204  | -/-                                                                     |
-| GET /api/users                                         | -/-                                                                                                                                   | 200      | List of Users entities                                                  |
-| GET /api/users/{:id}                                   | -/-                                                                                                                                   | 200/404  | User entity with id == :id                                              |
-| PUT /api/users/{:id}                                   | { "type": enum(MANAGER,EMPLOYEE)?, "name": string?, "username": string?, "email": string?, "password": string?, "position": string? } | 200/404  | Updated User entity                                                     |
+| GET /api/users?notme={true|false}&search={name}        | -/-                                                                                                                                   | 200      | List of Users entities                                                  |
+| GET /api/users/{:username}                             | -/-                                                                                                                                   | 200/404  | User entity with username == :username                                  |
+| GET /api/users/{:username}/usergroups                  | -/-                                                                                                                                   | 200/404  | List UserGroups the user with given username is a member of             |
+| GET /api/users/{:username}/closest                     | -/-                                                                                                                                   | 200/404  | List users of UserGroups the user with given username is a member of    |
+| PUT /api/users/{:username}                             | { "type": enum(MANAGER,EMPLOYEE)?, "name": string?, "username": string?, "email": string?, "password": string?, "position": string? } | 200/404  | Updated User entity                                                     |
 | DELETE /api/users/{:id}                                | -/-                                                                                                                                   | 202/204  | -/-                                                                     |
 | GET /api/usergroups                                    | -/-                                                                                                                                   | 200      | List of UserGroup entities                                              |
 | GET /api/usergroups/{:id}                              | -/-                                                                                                                                   | 200/404  | UserGroup entity with id == :id                                         |
@@ -116,25 +158,11 @@ Configurations are namespaced and delimited by `:`, e.g. `db:url`, `auth:enabled
 
 Postman examples are available [here](https://www.getpostman.com/collections/6e5f6a01b7a1435338af) (auth dropped).
 
-### Frontend
-```
-cd frontend
-
-# Install dependencies
-npm install
-
-# Build assest
-npm run build 
-
-# Watch the assets
-npm run watch 
-
-# Start server:
-npm run start
-
-#Start dev server:
-npm run start-dev
-```
+## Team
+- ILLIA OVCHYNNIKOV (@wingsofovnia)
+- MARK WILSON (@markywilson)
+- ANIL KARATAS (@NiggyWizzyWoz)
+- BURAK ÖZAFSAR (@PigJuicer)
 
 ## Credits
 
