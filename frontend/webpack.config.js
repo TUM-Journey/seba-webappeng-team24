@@ -84,9 +84,6 @@ module.exports = {
     ],
     // Webpack dev server configuration
     devServer: {
-        watchOptions: {
-            poll: 1000
-        },
         compress: true,
         port: 8000
     }
