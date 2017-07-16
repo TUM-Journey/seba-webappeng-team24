@@ -102,21 +102,21 @@ class FeedbackReviewComponentController {
       , color: "#ff0000", textAlign: 'center'
     }).br()
 
-    console.log(this.avgMatrix)
-    doc.text("Averages", { textAlign: 'center', fontSize: 14 }).br()
+    doc.text("Averages", { textAlign: 'center', fontSize: 14, color: '#0000FF', underline: true }).br()
     let table = doc.table({
       widths: [null, null],
       borderWidth: 3,
-      padding: 5,
+      padding: 10,
     })
-    // fix this
+    // fix this hack
     for (let competency of this.feedbacks[0].competencies) {
       let tr = table.row()
       tr.cell(competency.characteristic.name, { textAlign: 'center' })
-      tr.cell(this.avgMatrix[competency.characteristic.name], { textAlign: 'center' })
+      tr.cell(this.avgMatrix[competency.characteristic.name] + '/10', { textAlign: 'center' })
       // doc.text(competency.characteristic.name + ":" + this.avgMatrix[competency.characteristic.name])
     }
-
+    doc.text("  ").br()
+    doc.text("Individual Feedbacks", { textAlign: 'center', fontSize: 14, color: '#0000FF', underline: true }).br()
     for (var i = 0; i < this.feedbacks.length; i++) {
       let feedback = this.feedbacks[i]
       // console.log(feedback)
@@ -135,6 +135,7 @@ class FeedbackReviewComponentController {
         tr.cell(competency.characteristic.name, { textAlign: 'center' })
         tr.cell(competency.grade + "/10", { textAlign: 'center' })
       }
+      doc.text("  ").br()
     }
     const file = this.save(doc)
     console.log(file)
