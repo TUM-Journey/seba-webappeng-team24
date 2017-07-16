@@ -19,7 +19,7 @@
 
   <md-chips>
     <md-chip ng-repeat="(name, avg) in $ctrl.avgMatrix">
-      <strong >{{name}}</strong>
+      <strong>{{name}}</strong>
       <em>{{avg}}/10</em>
     </md-chip>
   </md-chips>
@@ -32,11 +32,16 @@
       <md-list-item class="md-3-line" style="margin-top: 7px">
         <div class="md-list-item-text">
           <h3 layout="row" layout-align="space-between center">
-            <div><md-icon><ng-md-icon icon="account_circle"></ng-md-icon></md-icon> From {{feedback.user.name ? feedback.user.name : feedback.userGroup.userGroupname}}</div>
+            <div>
+              <md-icon>
+                <ng-md-icon icon="account_circle"></ng-md-icon>
+              </md-icon> From {{feedback.author.name ? feedback.author.name : feedback.userGroup.userGroupname}}</div>
             <small hide-xs>{{feedback.created_at}}</small>
           </h3>
           <p>
-            <md-icon><ng-md-icon icon="comment"></ng-md-icon></md-icon> {{feedback.summary}}
+            <md-icon>
+              <ng-md-icon icon="comment"></ng-md-icon>
+            </md-icon> {{feedback.summary}}
           </p>
           <md-chips ng-model="feedback.competencies" ng-show="!!feedback.competencies.length" readonly="true">
             <md-chip-template class="small">
