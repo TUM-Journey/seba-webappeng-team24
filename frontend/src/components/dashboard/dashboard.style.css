@@ -9,3 +9,11 @@ header {
 [ui-view='dashboard'] {
   padding: 17px;
 }
+
+.dashboard{
+  padding: 0px;
+}
+
+md-list{
+  padding: 0px;
+}

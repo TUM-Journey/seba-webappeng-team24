@@ -84,9 +84,15 @@ module.exports = {
     ],
     // Webpack dev server configuration
     devServer: {
+
+       watchOptions: {
+            poll: 1000
+        },
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 8000
+
+
     }
 
 };
