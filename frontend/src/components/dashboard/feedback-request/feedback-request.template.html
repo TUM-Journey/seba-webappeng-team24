@@ -1,0 +1,74 @@
+<header>Request Feedback</header>
+
+<div ng-show="$ctrl.incomingRequests && $ctrl.incomingRequests.length > 0">
+  <h5 style="margin-bottom: 5px">
+    <md-icon><ng-md-icon icon="call_received"></ng-md-icon></md-icon> Incoming pending requests
+  </h5>
+  <md-list-item class="md-2-line" ng-repeat="inRequest in $ctrl.incomingRequests">
+    <div class="md-list-item-text">
+      <h3>From <strong>{{inRequest.author.name}}</strong></h3>
+      <p><i>Requested at {{inRequest.created_at}}</i></p>
+    </div>
+    <md-button class="md-secondary" ng-click="$ctrl.feedbackOnRequest(inRequest)">Respond</md-button>
+  </md-list-item>
+
+  <br/>
+</div>
+
+<div ng-show="$ctrl.outcomingRequests && $ctrl.outcomingRequests.length > 0">
+  <h5 style="margin-bottom: 5px">
+    <md-icon><ng-md-icon icon="call_made"></ng-md-icon></md-icon> Outcoming pending requests
+  </h5>
+  <md-list-item class="md-2-line" ng-repeat="outRequest in $ctrl.outcomingRequests">
+    <div class="md-list-item-text">
+      <h3>To <strong>{{outRequest.user.name}}</strong></h3>
+      <p><i>Requested at {{outRequest.created_at}}</i></p>
+    </div>
+  </md-list-item>
+
+  <br/>
+</div>
+
+<h5>Users from your groups</h5>
+<md-grid-list md-cols="4" md-row-height="150px">
+  <md-grid-tile ng-repeat="user in $ctrl.closestUsers">
+    <div layout="column" layout-align="center center">
+      <div>
+        <md-icon style="width:80px;height:80px"><ng-md-icon size="80" icon="account_circle"></ng-md-icon></md-icon>
+      </div>
+      <div>
+        {{user.name}}
+      </div>
+      <div>
+        <md-button ng-click="$ctrl.requestFeedback(user)">Request</md-button>
+      </div>
+    </div>
+  </md-grid-tile>
+</md-grid-list>
+
+<br/>
+
+<form name="feedbackRequest">
+  <div layout layout-align="center">
+    <div flex="60">
+      <md-autocomplete flex
+                       md-selected-item="feedbackRequest.requestee"
+                       md-input-name="user"
+                       md-min-length="1"
+                       md-search-text="searchUserQuery"
+                       md-items="item in $ctrl.searchUser(searchUserQuery)"
+                       md-item-text="item.username"
+                       md-floating-label="Type a user name">
+        <md-item-template>
+          {{item.name}} (<strong>{{item.username}}</strong><span ng-if="item.position">, {{item.position}}</span>)
+        </md-item-template>
+      </md-autocomplete>
+    </div>
+    <md-button ng-click="$ctrl.requestFeedback(feedbackRequest.requestee)"
+               title="Request feedback"
+               ng-disabled="!feedbackRequest.requestee"
+               class="md-icon-button launch">
+      <md-icon ><ng-md-icon icon="send"></ng-md-icon></md-icon>
+    </md-button>
+  </div>
+</form>

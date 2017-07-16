@@ -18,7 +18,7 @@ class FeedbackGiveComponent {
 }
 
 class FeedbackGiveComponentController {
-  constructor($state, $scope, $mdToast, userService, formService, feedbackService) {
+  constructor($state, $scope, $mdToast, $timeout, userService, formService, feedbackService) {
     this.$state = $state;
     this.$scope = $scope;
     this.$mdToast = $mdToast;
@@ -26,6 +26,13 @@ class FeedbackGiveComponentController {
     this.userService = userService;
     this.formService = formService;
     this.feedbackService = feedbackService;
+
+    if ($state.params.feedbackRequest) {
+      $timeout(() => {
+        $scope.feedback = {author: $state.params.feedbackRequest.author};
+        this.loadEligibleForm($scope.feedback.author);
+      });
+    }
   }
 
   async searchUser(name) {
@@ -67,16 +74,21 @@ class FeedbackGiveComponentController {
     try {
       await this.feedbackService.persistFeedback(newFeedback).$promise;
 
+      if (this.$state.params.feedbackRequest)
+        await this.feedbackService.removeFeedbackRequest({requestId: this.$state.params.feedbackRequest._id}).$promise;
+
       this.$state.go('dashboard.feedback-mine-outbound', {});
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent('Thank you! Your feedback has been saved.')
           .position('top')
           .hideDelay(4000));
+
     } catch (e) {
+      console.error(e);
       this.$mdToast.show(
         this.$mdToast.simple()
-          .textContent(e.data.error)
+          .textContent(e.data && e.data.error ? e.data.error : e)
           .position('top')
           .hideDelay(4000)
       );
@@ -84,7 +96,7 @@ class FeedbackGiveComponentController {
   }
 
   static get $inject() {
-    return ['$state', '$scope', '$mdToast', UserService.name, FormService.name, FeedbackService.name];
+    return ['$state', '$scope', '$mdToast', '$timeout', UserService.name, FormService.name, FeedbackService.name];
   }
 
 }

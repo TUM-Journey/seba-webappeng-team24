@@ -71,7 +71,7 @@ export default ({config, db}) => resource({
     res.sendStatus(202);
   }
 })
-  // GET /:username/usergroups - List of customer's subscriptions
+  // GET /:username/usergroups - List of customer's groups
   .get('/:username/usergroups', async (req, res) => {
     const username = req.params.username;
 
@@ -81,4 +81,32 @@ export default ({config, db}) => resource({
 
     const persistedUserGroups = await UserGroup.find({users: persistedUser._id});
     res.json(persistedUserGroups);
+  })
+
+  // GET /:username/closest
+  .get('/:username/closest', async (req, res) => {
+    const username = req.params.username;
+
+    const persistedUser = await User.findOne({username: username});
+    if (!persistedUser)
+      return failure(res, 'User not found!', 404);
+
+    const persistedUserGroups = await UserGroup.find({users: persistedUser._id});
+
+    const closestUsers = [];
+    for (let i = 0; i < persistedUserGroups.length; i++) {
+      const ug = persistedUserGroups[i];
+
+      for (let j = 0; j < ug.users.length; j++) {
+        const closestUserId = ug.users[j];
+        const closestUser = await User.findOne({_id: closestUserId});
+
+        if (req.user && req.user.id && closestUser._id == req.user.id)
+          continue; // ingore this user
+
+        closestUsers.push(closestUser);
+      }
+    }
+
+    res.json(closestUsers);
   });

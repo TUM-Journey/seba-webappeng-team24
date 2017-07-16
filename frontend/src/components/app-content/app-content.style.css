@@ -14,3 +14,7 @@ md-select {
 .tooltip-multiline {
     height: auto !important;
 }
+
+.md-chips md-chip.small {
+  height: 25px !important;
+}

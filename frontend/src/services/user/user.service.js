@@ -25,6 +25,15 @@ export default class UserService {
         headers: {
           'Authorization': 'JWT ' + this.getToken()
         }
+      },
+      listClosestUsers: {
+        url: API_URL + '/users/:username/closest',
+        params: {username: "@username"},
+        method: 'GET',
+        isArray: true,
+        headers: {
+          'Authorization': 'JWT ' + this.getToken()
+        }
       }
     });
   }
@@ -75,6 +84,10 @@ export default class UserService {
 
   async getUserGroups(username) {
     return await this.$resource.listUserGroups({username: username}).$promise;
+  }
+
+  listMyClosestUsers() {
+    return this.$resource.listClosestUsers({username: this.getCurrentUser().username});
   }
 
   isAuthenticated() {

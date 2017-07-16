@@ -6,6 +6,7 @@ import RegisterComponent from './../components/view-register/view-register.compo
 
 import DashboardComponent from '../components/dashboard/dashboard.component';
 import FeedbackGiveComponent from '../components/dashboard/feedback-give/feedback-give.component';
+import FeedbackRequestComponent from '../components/dashboard/feedback-request/feedback-request.component';
 import FeedbackMineInboundComponent from '../components/dashboard/feedback-mine-inbound/feedback-mine-inbound.component';
 import FeedbackMineOutboundComponent from '../components/dashboard/feedback-mine-outbound/feedback-mine-outbound.component';
 import FeedbackReviewComponent from '../components/dashboard/feedback-review/feedback-review.component';
@@ -32,6 +33,17 @@ export default function config($stateProvider, $urlRouterProvider) {
       views: {
         'dashboard': {
           component: FeedbackGiveComponent.name
+        }
+      },
+      params: {
+        feedbackRequest: null
+      }
+    })
+    .state('dashboard.feedback-request', {
+      url: '/feedback/request',
+      views: {
+        'dashboard': {
+          component: FeedbackRequestComponent.name
         }
       }
     })
