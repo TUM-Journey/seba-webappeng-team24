@@ -37,9 +37,9 @@ export default async (req, res) => {
     }).save();
     const user = await User.findOne({ username: username })
     let ug = await getUserGroup()
-    console.log(user)
+    // console.log(user)
     ug.users.push(user._id);
-    console.log(ug)
+    // console.log(ug)
     UserGroup.update({ '_id': ug._id }, { $push: { 'users': user._id } }, (err, res) => {
       if (err) {
         console.log(err)
