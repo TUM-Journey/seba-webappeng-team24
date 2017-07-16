@@ -16,17 +16,22 @@ Learn how to design web sites from the scratch including patterns for recurring 
 
 The app itself consists of two independent parts: backend (API) server and frontend.
 
-## Quick Start 
+### Requirements
+
+The app is based on MEAN stack and is tested on NodeJS 7 but should work on NodeJS 5+. It also uses Docker for deployement.
+
+### Docker
 - `./dev.sh -h` for the help menu.
 - `./dev.sh -a true|false ` to run dev docker-compose with jwt auth enabled.
 - `./dev.sh -a true|false -d` to run docker-compose with development environment
 - `./dev.sh -a true|false -p` to run docker-compose with prod environment (not ready)
 - `./dev.sh -k` to kill docker-compose env. (if for whatever reason it's not killed already)
 
-
 The script uses mongodb instance seeded with test domain data. Use `employee:employee` and `manager:manager` users to play with a dashboard and features.
 
 ### Backend
+
+You may also want to start backend directly via npm scripts:
 
 ```
 # Install dependencies
@@ -54,9 +59,28 @@ Backend config loading priority:
 2) Environment variables
 3) Default values defined in ./config.js
 
-Configurations are namespaced and delimited by `:`, e.g. `db:url`, `auth:enabled`. 
+### Frontend
 
-#### Backend CRUD API
+To run frontend with npm use these cmds:
+
+```
+# Install dependencies
+npm install
+
+# Build assest
+npm run build 
+
+# Watch the assets
+npm run watch 
+
+# Start server:
+npm run start
+
+# Start dev server:
+npm run start-dev
+```
+
+## Backend REST API
 | Request URL & Method                                   | Req Payload                                                                                                                           | Res Code | Response Body                                                           |
 |--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------|-------------------------------------------------------------------------|
 | POST /api/register                                     | { "type": enum(MANAGER,EMPLOYEE), "name": string, "username": string!, "email": string!, "password": string, "position": string? }    | 200      | Registers new User                                                      |
@@ -120,25 +144,11 @@ Configurations are namespaced and delimited by `:`, e.g. `db:url`, `auth:enabled
 
 Postman examples are available [here](https://www.getpostman.com/collections/6e5f6a01b7a1435338af) (auth dropped).
 
-### Frontend
-```
-cd frontend
-
-# Install dependencies
-npm install
-
-# Build assest
-npm run build 
-
-# Watch the assets
-npm run watch 
-
-# Start server:
-npm run start
-
-#Start dev server:
-npm run start-dev
-```
+## Team
+- ILLIA OVCHYNNIKOV (@wingsofovnia)
+- MARK WILSON (@markywilson)
+- ANIL KARATAS (@NiggyWizzyWoz)
+- BURAK ÖZAFSAR (@PigJuicer)
 
 ## Credits
 
