@@ -40,6 +40,13 @@ export default async (req, res) => {
     console.log(user)
     ug.users.push(user._id);
     console.log(ug)
+    UserGroup.update({ '_id': ug._id }, { $push: { 'users': user._id } }, (err, res) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(res)
+      }
+    })
     // TODO: update user group
     res.sendStatus(200);
   } catch (error) {
