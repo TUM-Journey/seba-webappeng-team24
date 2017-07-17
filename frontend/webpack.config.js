@@ -86,7 +86,7 @@ module.exports = {
 
     plugins: [
         new webpack.EnvironmentPlugin({
-            'url': '',
+            'url': 'api',
         }),
         // new UglifyJSPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
