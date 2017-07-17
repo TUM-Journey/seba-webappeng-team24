@@ -13,8 +13,7 @@ while getopts ":a:p:d:f:o:khxz" opt; do
     ;;
     f) protocol="$OPTARG"; export protocol=$protocol
     ;;
-
-    z) docker-compose --file deploy/prod/docker-compose.yml up --build --remove-orphans
+    z) docker-compose --file deploy/prod/docker-compose.yml up --build --remove-orphans --force-recreate
     ;;
     x) docker-compose --file deploy/dev/docker-compose.yml up --build --remove-orphans
     ;;

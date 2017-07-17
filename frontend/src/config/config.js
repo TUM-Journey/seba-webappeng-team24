@@ -1,5 +1,5 @@
 
 
 export default {
-	"api_url": process.env.api_url
+	"api_url": process.env.url
 }

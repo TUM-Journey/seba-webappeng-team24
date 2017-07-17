@@ -22,7 +22,7 @@ services:
     - "production=true"
     - "server_port=${server_port}"
     - "auth_enabled=${auth}"
-    - "api_url=${protocol}://${server_domain}:${server_port}/api"
+    - "url=${protocol}://${server_domain}:${server_port}/api"
 volumes:
   mdb:
   mdbc:

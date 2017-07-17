@@ -3,7 +3,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
 
     entry: {
@@ -16,33 +16,36 @@ module.exports = {
     },
     module: {
         rules: [
-            // Envify
-            {
-                test: /\.js$/,
-                exclude: /(node_modules)/,
-                loader: 'transform-loader?envify'
-            },
             // Load JS Files
             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
                 // include: path.resolve(__dirname, '/src'),
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env'],
-                        plugins: [
-                            [
-                                "transform-runtime",
-                                {
-                                    "polyfill": false,
-                                    "regenerator": true
-                                }
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['env'],
+                            plugins: [
+                                [
+                                    "transform-runtime",
+                                    {
+                                        "polyfill": false,
+                                        "regenerator": true
+                                    }
+                                ]
                             ]
-                        ]
+                        }
                     }
-                }
+                ]
             },
+            // {
+            //     test: /\.js$/,
+            //     exclude: /(node_modules)/,
+            //     loader: 'transform-loader?envify',
+            //     include: path.resolve(__dirname, 'src/'),
+            //     enforce: "pre",
+            // },
             // Load HTML
             {
                 test: /\.html$/,
@@ -82,6 +85,10 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.EnvironmentPlugin({
+            'url': '',
+        }),
+        // new UglifyJSPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor'],
             async: true
